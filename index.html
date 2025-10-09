@@ -1,138 +1,120 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Salon India • PhonePe Style</title>
-<meta name="description" content="Bharat ke salon owners ke liye simple register • list • booking demo (local storage)." />
-<style>
-/* ========= PHONEPE STYLE – LIGHT THEME ========= */
-:root{
-  --brand:#5b2be0;        /* PhonePe-ish purple */
-  --brand-2:#6236ff;
-  --ink:#101828;          /* text */
-  --muted:#667085;
-  --bg:#ffffff;
-  --card:#ffffff;
-  --line:#e5e7eb;
-  --soft:#f4f6fb;         /* page background */
-  --ok:#16a34a; --warn:#f59e0b; --err:#ef4444;
-  --radius:18px;
-  --shadow:0 8px 24px rgba(17, 24, 39, .06);
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Salon India • Register • List • Book</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:#f6f9fc;color:#111}
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:980px;margin:0 auto;padding:16px}
 
-*{box-sizing:border-box}
-html,body{margin:0;padding:0;background:var(--soft);color:var(--ink);
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
-a{color:inherit;text-decoration:none}
-.wrap{max-width:900px;margin:0 auto;padding:14px}
+    /* Header */
+    header{position:sticky;top:0;z-index:10;background:#0078ff;color:#fff;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:12px 16px;border-radius:0 0 14px 14px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+    header h1{font-size:20px;display:flex;gap:8px;align-items:center}
+    nav a{margin-left:12px;font-weight:600}
+    nav a.btn{background:#fff;color:#0078ff;padding:8px 12px;border-radius:999px}
 
-/* Top App Bar */
-.appbar{
-  position:sticky;top:0;z-index:10;background:var(--bg);
-  display:flex;align-items:center;gap:10px;padding:12px 14px;margin:0 auto;
-  border-bottom:1px solid var(--line);
-}
-.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;}
-.logo .dot{width:34px;height:34px;border-radius:12px;background:var(--brand);
-  display:inline-flex;align-items:center;justify-content:center;color:#fff;}
-.badge{font-size:11px;padding:4px 8px;border-radius:999px;background:#ede9fe;color:#5b2be0;margin-left:6px}
+    /* Hero */
+    .hero{position:relative}
+    .hero img{width:100%;height:240px;object-fit:cover;border-radius:0 0 16px 16px;display:block}
+    .hero h2{position:absolute;left:0;right:0;bottom:36px;text-align:center;color:#fff;
+      font-size:24px;text-shadow:0 2px 8px rgba(0,0,0,.5)}
 
-/* Tabs (PhonePe style) */
-.tabs{display:flex;gap:10px;overflow:auto;padding:10px 14px;background:var(--bg);position:sticky;top:58px;z-index:9;border-bottom:1px solid var(--line)}
-.tab{white-space:nowrap;background:#f6f7fb;border:1px solid var(--line);padding:10px 14px;border-radius:999px;font-weight:600}
-.tab.active{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;border-color:transparent}
+    /* Sections / cards */
+    .section{padding:16px}
+    .card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:16px;
+      box-shadow:0 6px 18px rgba(0,0,0,.06)}
+    .h2{font-size:18px;font-weight:800;margin-bottom:10px}
 
-/* Hero / KPIs */
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
-.kpis{display:grid;gap:12px;margin-top:12px}
-.kpi{background:#fff;border:1px dashed var(--line);border-radius:16px;padding:14px;text-align:center}
-.kpi .v{font-size:22px;font-weight:800}
-.kpi .t{font-size:12px;color:var(--muted)}
+    /* Inputs & buttons */
+    .row{display:flex;gap:10px;flex-wrap:wrap}
+    input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e5e7eb;border-radius:12px;background:#fff;outline:none}
+    input:focus,select:focus,textarea:focus{border-color:#b9d3ff;box-shadow:0 0 0 4px #eaf3ff}
+    .btn{background:#0078ff;color:#fff;border:0;border-radius:12px;padding:12px 16px;font-weight:700;cursor:pointer}
+    .btn.gray{background:#eef2f7;color:#111;border:1px solid #e5e7eb}
+    .full{width:100%}
 
-/* Controls */
-.row{display:flex;gap:10px;flex-wrap:wrap}
-.input, select, input[type="text"], input[type="number"], input[type="tel"]{
-  width:100%;padding:13px 14px;border-radius:14px;border:1px solid var(--line);
-  background:#fff;outline:none;
-}
-input:focus, select:focus{border-color:#b9c2ff;box-shadow:0 0 0 4px #ebe9ff}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  padding:12px 16px;border-radius:14px;border:1px solid var(--line);background:#f6f7fb;font-weight:700}
-.btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;border-color:transparent}
-.btn.full{width:100%}
+    /* List cards */
+    .list{display:grid;gap:12px}
+    @media(min-width:720px){.list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    .item{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:16px;display:grid;gap:6px}
+    .badges{display:flex;gap:6px;flex-wrap:wrap}
+    .tag{font-size:12px;background:#edf2ff;color:#1f3bb3;border:1px solid #dbe5ff;border-radius:999px;padding:4px 8px}
 
-/* List */
-.list{display:grid;gap:12px;margin-top:12px}
-.item{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;display:grid;gap:6px}
-.item h4{margin:0;font-size:16px}
-.badges{display:flex;gap:6px;flex-wrap:wrap}
-.tag{font-size:11px;background:#eef2ff;color:#3730a3;border:1px solid #e0e7ff;padding:4px 8px;border-radius:999px}
-
-/* Section titles */
-.h2{font-size:18px;font-weight:800;margin:8px 0 12px}
-.muted{color:var(--muted)}
-
-/* Bottom spacing */
-.sp{height:24px}
-
-/* Hide sections utility */
-.hidden{display:none}
-
-/* Small helper */
-hr.sep{border:0;border-top:1px dashed var(--line);margin:10px 0}
-</style>
+    .muted{color:#667085}
+    .sp{height:16px}
+    footer{text-align:center;padding:18px;background:#fff;border-top:1px solid #eee;margin-top:18px}
+    .hide{display:none}
+  </style>
 </head>
 <body>
-  <!-- App Bar -->
-  <div class="appbar wrap" style="padding-left:14px;padding-right:14px">
-    <div class="logo">
-      <div class="dot">💈</div>
-      Salon India <span class="badge">PhonePe style</span>
-    </div>
-    <div style="margin-left:auto;font-size:12px;color:var(--muted)">Demo • Local data</div>
-  </div>
 
-  <!-- Tabs -->
-  <div class="tabs wrap" id="tabs">
-    <a class="tab active" data-screen="home">Home</a>
-    <a class="tab" data-screen="list">Salon List</a>
-    <a class="tab" data-screen="register">Owner Register</a>
-  </div>
+  <!-- Header -->
+  <header>
+    <h1>💈 Salon India</h1>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#register">Register</a>
+      <a href="#list" class="btn">Salon List</a>
+    </nav>
+  </header>
 
-  <div class="wrap" id="screen-home">
+  <!-- Hero -->
+  <section id="home" class="hero">
+    <img src="https://images.unsplash.com/photo-1512690459411-b9245aed614b?q=80&w=1600&auto=format&fit=crop" alt="Salon banner">
+    <h2>Register • List • Book Easily</h2>
+  </section>
+
+  <!-- About / CTA -->
+  <section class="wrap section">
     <div class="card">
-      <div class="h2">Ek jagah • easy booking</div>
-      <div class="muted">Owners apna salon add karein. Customers list me salon khoj kar WhatsApp se baat kar sakte hain.</div>
-      <div class="kpis" style="grid-template-columns:repeat(3,1fr)">
-        <div class="kpi"><div class="v" id="kTotal">0</div><div class="t">Total Salons</div></div>
-        <div class="kpi"><div class="v" id="kToday">0</div><div class="t">Today Tokens</div></div>
-        <div class="kpi"><div class="v" id="kCity">—</div><div class="t">Top City</div></div>
-      </div>
-      <div style="margin-top:12px" class="row">
-        <a class="btn primary" data-screen="register">+ Add your Salon</a>
-        <a class="btn" data-screen="list">Browse salons</a>
+      <div class="h2">Bharat ke salon owners ke liye smart platform</div>
+      <p class="muted">Owners apna page register karein, rate list set karein, aur customers WhatsApp se booking karein — sab kuch ek jagah.</p>
+      <div class="sp"></div>
+      <div class="row">
+        <a class="btn" href="#register">+ Register your Salon</a>
+        <a class="btn gray" href="#list">Browse salons</a>
       </div>
     </div>
+  </section>
 
-    <div class="sp"></div>
-
+  <!-- Register -->
+  <section id="register" class="wrap section">
+    <div class="h2">📝 Owner Register</div>
     <div class="card">
-      <div class="h2">How it works?</div>
-      <ol class="muted" style="margin:0;padding-left:18px;line-height:1.6">
-        <li>Owner form bhare → Create Account.</li>
-        <li>Salon list me aapka card aa jayega.</li>
-        <li>Customer search/filter kare → WhatsApp pe baat kare.</li>
-      </ol>
+      <div class="row">
+        <input id="owner"  placeholder="Owner Name">
+        <input id="mobile" placeholder="Mobile (10-digit)" inputmode="numeric" maxlength="10">
+        <input id="salon"  placeholder="Salon Name">
+        <input id="city"   placeholder="City / Area">
+        <input id="slug"   placeholder="Short Link (slug) — e.g., kamlesh-salon">
+      </div>
+      <div class="sp"></div>
+      <div class="muted" style="margin-bottom:8px">Services & Prices (₹)</div>
+      <div class="row">
+        <input id="pHaircut" type="number" placeholder="Haircut (₹)" value="120">
+        <input id="pShave"   type="number" placeholder="Shave (₹)"   value="60">
+        <input id="pBeard"   type="number" placeholder="Beard (₹)"   value="80">
+        <input id="pFacial"  type="number" placeholder="Facial (₹)"  value="300">
+      </div>
+      <div class="sp"></div>
+      <input id="wa" placeholder="WhatsApp Number (e.g., 91XXXXXXXXXX)">
+      <div class="sp"></div>
+      <button id="btnCreate" class="btn full">Create Account</button>
+      <div id="msg" class="muted" style="margin-top:10px"></div>
     </div>
-  </div>
+  </section>
 
-  <!-- Salon List -->
-  <div class="wrap hidden" id="screen-list">
+  <!-- List -->
+  <section id="list" class="wrap section">
     <div class="h2">🔎 Salon List</div>
     <div class="card">
       <div class="row">
-        <input id="qCity" class="input" placeholder="City / Area" />
+        <input id="qCity" placeholder="City / Area">
         <select id="qService">
           <option value="">Any service</option>
           <option value="haircut">Haircut</option>
@@ -140,446 +122,112 @@ hr.sep{border:0;border-top:1px dashed var(--line);margin:10px 0}
           <option value="beard">Beard</option>
           <option value="facial">Facial</option>
         </select>
-        <input id="qText" class="input" placeholder="Search name" />
-        <button class="btn" id="btnSearch">Search</button>
+        <input id="qText" placeholder="Search name">
+        <button id="btnSearch" class="btn">Search</button>
       </div>
     </div>
-    <div class="list" id="list"></div>
-  </div>
+    <div class="sp"></div>
+    <div id="listOut" class="list"></div>
+  </section>
 
-  <!-- Register -->
-  <div class="wrap hidden" id="screen-register">
-    <div class="h2">📝 Owner Register</div>
-    <div class="card">
-      <div class="row">
-        <input id="owner" class="input" placeholder="Owner Name" />
-        <input id="mobile" class="input" placeholder="Mobile (10-digit)" inputmode="numeric" maxlength="10" />
-        <input id="salon" class="input" placeholder="Salon Name" />
-        <input id="city"  class="input" placeholder="City / Area" />
-        <input id="slug"  class="input" placeholder="Short Link (slug) — e.g., kamlesh-salon" />
-      </div>
-      <hr class="sep" />
-      <div class="row">
-        <div style="flex:1">
-          <div class="muted" style="font-size:12px;margin-bottom:6px">Services & Prices (₹)</div>
-          <div class="row">
-            <input id="pHaircut" class="input" type="number" placeholder="Haircut (₹)" value="120" />
-            <input id="pShave"   class="input" type="number" placeholder="Shave (₹)"   value="60" />
-            <input id="pBeard"   class="input" type="number" placeholder="Beard (₹)"   value="80" />
-            <input id="pFacial"  class="input" type="number" placeholder="Facial (₹)"  value="300" />
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <input id="wa" class="input" placeholder="WhatsApp Number (e.g., 91XXXXXXXXXX)" />
-      </div>
-      <div class="row">
-        <button class="btn primary full" id="btnCreate">Create Account</button>
-      </div>
-      <div id="msg" class="muted" style="margin-top:8px"></div>
-    </div>
-  </div>
+  <footer>Made with ❤️ by Kamlesh Banjare • Free hosting on GitHub Pages</footer>
 
 <script>
-/* ======= MIN JS (no libraries) ======= */
-const $ = sel => document.querySelector(sel);
-const $$ = sel => Array.from(document.querySelector
-<!DOCTYPE html><html lang="hi">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Salon India — Register • List • Book</title>
-  <meta name="description" content="Bharat ke salon owners ke liye free MVP: register, apna page banao, customers token/booking lein." />
-  <style>
-    :root{
-  --bg:white;
-  --fg:black;
-}
- --muted:#9aa3b2;--card:#0e1528;--line:#243047;--brand:#22d3ee;--ok:#34d399;--warn:#fbbf24;--err:#fb7185;
-    }
-    *{box-sizing:border-box}
-   body {
-  margin: 0;
-  background: white;
-  color: black;
-} ;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Noto Sans',sans-serif}
-    .wrap{max-width:1040px;margin:0 auto;padding:20px}
-    header{display:flex;gap:12px;align-items:center;justify-content:space-between}
-    h1{margin:0;font-size:clamp(18px,3vw,28px)}
-    nav{display:flex;gap:8px;flex-wrap:wrap}
-    a.btn,button{padding:10px 14px;border-radius:12px;border:1px solid #2a3956;background: white; color:black; text-decoration:none;cursor:pointer}
-    a.btn:hover,button:hover{border-color:var(--brand);box-shadow:0 0 0 3px #22d3ee22}
-    .grid{display:grid;gap:14px}
-    .two{grid-template-columns:1fr;}
-    @media(min-width:900px){.two{grid-template-columns:1.2fr .8fr}}
-    .card background:white;(180deg,#0e1528aa,#0e1528);border:1px solid var(--line);border-radius:16px;padding:16px}
-    label{display:block;font-size:13px;color:var(--muted);margin:6px 0}
-    input,select,textarea{width:100%;padding:12px;border-radius:12px;border:1px solid #2a3956;background:white;color:black;outline:none}
-    input:focus,select:focus,textarea:focus{border-color:var(--brand);box-shadow:0 0 0 3px #22d3ee33}
-    .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-    .kpi{border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center}
-    .kpi h3{margin:0;font-size:22px}
-    .list{display:grid;grid-template-columns:1fr;gap:10px}
-    @media(min-width:760px){.list{grid-template-columns:repeat(2,1fr)}}
-    .item{border:1px solid var(--line);border-radius:14px;padding:14px;background:white;}
-    .item h3{margin:0 0 4px}
-    .pill{display:inline-flex;gap:6px;align-items:center;border:1px dashed #2a3956;padding:6px 10px;border-radius:999px;color:#cbd5e1;font-size:12px}
-    .muted{color:var(--muted)}
-    footer{opacity:.7;text-align:center;padding:28px 0;font-size:12px}
-    .sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-  </style>
-</head>
-<body>
-  <div class="wrap">
-    <header>
-      <h1>💈 Salon India — Register • List • Book</h1>
-      <nav>
-        <a class="btn" href="#home">Home</a>
-        <a class="btn" href="#directory">Salon List</a>
-        <a class="btn" href="#register">Owner Register</a>
-        <a class="btn" id="ownerBtn" href="#owner">Owner Dashboard</a>
-      </nav>
-    </header><!-- HOME -->
-<section id="home" class="card">
-  <div class="grid two">
-    <div>
-      <h2>Ek jagah par saare salons — owners ke liye free shuruaat</h2>
-      <p>Owners register karein, apna page banayein, rate list set karein. Customers aake **token/booking** lein. Yeh MVP aap <b>GitHub Pages</b> par free host kar sakte hain. (Data abhi <b>iss device</b> ke local storage me rehta hai — demo ke liye best.)</p>
-      <div class="pill">🚀 MVP • 📱 Mobile-first • 🆓 Free Hosting • 🇮🇳 Hindi</div>
-    </div>
-    <div>
-      <div class="kpis">
-        <div class="kpi"><h3 id="kpiSalons">0</h3><p class="muted">Total Salons</p></div>
-        <div class="kpi"><h3 id="kpiBookings">0</h3><p class="muted">Today Tokens</p></div>
-        <div class="kpi"><h3 id="kpiCity">—</h3><p class="muted">Top City</p></div>
-      </div>
-    </div>
-  </div>
-</section>
+  // ---- Data store (localStorage) ----
+  const LS = "salon-india:v1";
+  const load = () => JSON.parse(localStorage.getItem(LS)||"[]");
+  const save = (a) => localStorage.setItem(LS, JSON.stringify(a));
 
-<!-- DIRECTORY -->
-<section id="directory" class="card">
-  <h2>🔎 Salon List (Directory)</h2>
-  <div class="grid" style="grid-template-columns:2fr 2fr 2fr 1fr">
-    <input id="qCity" placeholder="City / Area" />
-    <select id="qService">
-      <option value="">Any service</option>
-      <option>Haircut</option>
-      <option>Shave</option>
-      <option>Beard Trim</option>
-      <option>Facial</option>
-    </select>
-    <input id="qText" placeholder="Search name" />
-    <button id="qFind">Search</button>
-  </div>
-  <div id="dirList" class="list" style="margin-top:12px"></div>
-</section>
+  // ---- Register handler ----
+  const $ = s=>document.querySelector(s);
+  const $$ = s=>Array.from(document.querySelectorAll(s));
 
-<!-- REGISTER -->
-<section id="register" class="card">
-  <h2>📝 Owner Register</h2>
-  <form id="regForm">
-    <label>Owner Name</label>
-    <input id="rOwner" required />
-    <label>Mobile (10-digit)</label>
-    <input id="rPhone" pattern="[0-9]{10}" inputmode="numeric" required />
-    <label>Salon Name</label>
-    <input id="rName" required />
-    <label>City / Area</label>
-    <input id="rCity" required />
-    <label>Short Link (slug) — jaise: kamlesh-salon</label>
-    <input id="rSlug" placeholder="unique-hyphen-name" required />
-    <label>Services & Prices (₹)</label>
-    <div class="grid" style="grid-template-columns:repeat(4,1fr)">
-      <div><small>Haircut</small><input id="rpHaircut" type="number" value="120" /></div>
-      <div><small>Shave</small><input id="rpShave" type="number" value="60" /></div>
-      <div><small>Beard</small><input id="rpBeard" type="number" value="80" /></div>
-      <div><small>Facial</small><input id="rpFacial" type="number" value="300" /></div>
-    </div>
-    <label>WhatsApp Number (with country code, e.g., 91XXXXXXXXXX)</label>
-    <input id="rWA" placeholder="91XXXXXXXXXX" />
-    <div class="grid" style="grid-template-columns:1fr 1fr">
-      <button type="submit">Create Account</button>
-      <button type="button" id="rLogin" class="btn">Already Registered? Login</button>
-    </div>
-    <small id="regMsg" class="muted"></small>
-  </form>
-</section>
-
-<!-- OWNER DASHBOARD -->
-<section id="owner" class="card">
-  <h2>📟 Owner Dashboard</h2>
-  <div id="ownerGate" class="muted">Login ya register karke aaiye.</div>
-  <div id="ownerWrap" style="display:none">
-    <div class="grid two">
-      <div>
-        <label>Average Service Time (minutes)</label>
-        <input id="oAvg" type="number" min="5" max="120" step="5" value="15" />
-        <label>Total Chairs</label>
-        <select id="oChairs"><option>1</option><option>2</option><option>3</option><option>4</option></select>
-        <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:8px">
-          <button id="oSave">Save Settings</button>
-          <button id="oShare" class="btn">Share Public Link</button>
-        </div>
-        <small class="muted">Public page: <span id="oLink">—</span></small>
-      </div>
-      <div>
-        <h3 style="margin:0 0 6px">Queue</h3>
-        <ol id="oQueue"></ol>
-        <div class="grid" style="grid-template-columns:1fr 1fr">
-          <button id="oComplete">Complete Current</button>
-          <button id="oReset" class="btn">Reset Day</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PUBLIC SALON PAGE -->
-<section id="public" class="card" style="display:none">
-  <div id="pubHead"></div>
-  <div class="grid two">
-    <div>
-      <h3>🎟️ Get Token / Book</h3>
-      <form id="pForm">
-        <label>Full Name</label>
-        <input id="pName" required />
-        <label>Service</label>
-        <select id="pSvc"></select>
-        <label>Phone (optional)</label>
-        <input id="pPhone" inputmode="numeric" pattern="[0-9]{10}" />
-        <label>Notes (optional)</label>
-        <textarea id="pNotes" rows="2"></textarea>
-        <div class="grid" style="grid-template-columns:1fr 1fr">
-          <button type="submit">Generate Token</button>
-          <button type="button" id="pWA" class="btn">WhatsApp</button>
-        </div>
-        <small id="pMsg" class="muted"></small>
-      </form>
-    </div>
-    <div>
-      <h3 style="margin:0 0 6px">Live Status</h3>
-      <div id="pStatus" class="muted">—</div>
-      <h4>Price List</h4>
-      <ul id="pPrices"></ul>
-    </div>
-  </div>
-</section>
-
-<footer>Made for demo — Host on GitHub Pages. Data local storage only (no server).</footer>
-
-  </div>  <script>
-    // --------- Simple Store (localStorage) ---------
-    const LS = {
-      get:(k,def)=>{try{return JSON.parse(localStorage.getItem(k)) ?? def}catch{return def}},
-      set:(k,v)=>localStorage.setItem(k,JSON.stringify(v))
+  $("#btnCreate").addEventListener("click", ()=>{
+    const salon = {
+      id: Date.now(),
+      owner: $("#owner").value.trim(),
+      mobile: $("#mobile").value.trim(),
+      name: $("#salon").value.trim(),
+      city: ($("#city").value.trim()||"").toLowerCase(),
+      slug: ($("#slug").value.trim()||"").toLowerCase().replace(/\s+/g,"-"),
+      price: {
+        haircut: +$("#pHaircut").value||0,
+        shave:   +$("#pShave").value||0,
+        beard:   +$("#pBeard").value||0,
+        facial:  +$("#pFacial").value||0
+      },
+      wa: $("#wa").value.trim()
     };
 
-    // Data models
-    // salons: [{id, owner, phone, name, city, slug, wa, prices, avg, chairs, nextToken, queue:[] }]
-    let salons = LS.get('salons', []);
-    let currentOwnerId = LS.get('owner_id', null);
-
-    // Helpers
-    const $ = id=>document.getElementById(id);
-    const slugify = s=>s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
-    const findSalonBySlug = slug => salons.find(x=>x.slug===slug);
-    const findSalonById = id => salons.find(x=>x.id===id);
-
-    function save(){ LS.set('salons', salons); LS.set('owner_id', currentOwnerId); paintKPIs(); }
-
-    function paintKPIs(){
-      // Total salons
-      $('#kpiSalons').textContent = salons.length;
-      // Today tokens sum (rough: queue length across salons)
-      const today = salons.reduce((a,s)=>a + (s?.queue?.length||0) + (s.nextToken-1), 0);
-      $('#kpiBookings').textContent = today;
-      // Top city: simple mode
-      const map = {};
-      salons.forEach(s=>{map[s.city]=(map[s.city]||0)+1});
-      let topCity = '—', max=0; Object.entries(map).forEach(([c,n])=>{if(n>max){max=n;topCity=c}});
-      $('#kpiCity').textContent = topCity;
+    if(!salon.owner || !/^\d{10}$/.test(salon.mobile) || !salon.name || !salon.city){
+      showMsg("⚠️ Owner, 10-digit mobile, Salon name aur City zaroori hain.", "warn"); return;
     }
-
-    // --------- Directory ---------
-    const dirList = $('#dirList');
-    function renderDirectory(list){
-      dirList.innerHTML = '';
-      if(!list.length){ dirList.innerHTML = '<p class="muted">No salons found.</p>'; return; }
-      list.forEach(s=>{
-        const el = document.createElement('div'); el.className='item';
-        el.innerHTML = `<h3>${s.name}</h3>
-          <div class="muted">${s.city} • Avg ${s.avg||15}m • Chairs ${s.chairs||1}</div>
-          <div style="margin:8px 0">Services: Haircut ₹${s.prices.Haircut}, Shave ₹${s.prices.Shave}, Beard ₹${s.prices.Beard}, Facial ₹${s.prices.Facial}</div>
-          <div class="grid" style="grid-template-columns:1fr 1fr">
-            <a class="btn" href="?salon=${encodeURIComponent(s.slug)}#public">Open Page</a>
-            <button class="btn" onclick="copyLink('${s.slug}')">Copy Link</button>
-          </div>`;
-        dirList.appendChild(el);
-      });
+    const all = load();
+    if(salon.slug && all.some(s=>s.slug===salon.slug)){
+      showMsg("⚠️ Ye short link (slug) pehle se use me hai. Alag try karein.", "warn"); return;
     }
+    all.push(salon); save(all);
+    showMsg("✅ Salon add ho gaya! (Salon List me dekh sakte ho)", "ok");
+    ["owner","mobile","salon","city","slug","wa","pHaircut","pShave","pBeard","pFacial"]
+      .forEach(id=>$("#"+id).value="");
+  });
 
-    function searchDirectory(){
-      const city = $('#qCity').value.trim().toLowerCase();
-      const svc = $('#qService').value;
-      const txt = $('#qText').value.trim().toLowerCase();
-      let list = salons.filter(s=>
-        (!city || s.city.toLowerCase().includes(city)) &&
-        (!txt || s.name.toLowerCase().includes(txt) || s.owner.toLowerCase().includes(txt))
-      );
-      if(svc){ list = list.filter(s=> s.prices && s.prices[svc.replace(' ','')] != null ); }
-      renderDirectory(list);
-    }
-    $('#qFind').onclick=searchDirectory;
+  function showMsg(t, type){
+    const el=$("#msg"); el.textContent=t; el.style.color= type==="ok"?"#16a34a":"#b45309";
+  }
 
-    function copyLink(slug){
-      const url = location.origin + location.pathname + `?salon=${encodeURIComponent(slug)}#public`;
-      navigator.clipboard.writeText(url).then(()=>alert('Link copied'));
-    }
+  // ---- Render list + search ----
+  function renderList(){
+    const qCity = $("#qCity").value.trim().toLowerCase();
+    const qService = $("#qService").value;
+    const qText = $("#qText").value.trim().toLowerCase();
 
-    // --------- Register / Login ---------
-    $('#regForm').addEventListener('submit', (e)=>{
-      e.preventDefault();
-      const owner = $('#rOwner').value.trim();
-      const phone = $('#rPhone').value.trim();
-      const name = $('#rName').value.trim();
-      const city = $('#rCity').value.trim();
-      let slug = slugify($('#rSlug').value.trim());
-      if(!owner||!phone||!name||!city||!slug){ return; }
-      if(findSalonBySlug(slug)){ slug = slug + '-' + (Math.random()*100|0); }
-      const salon = {
-        id: Date.now(), owner, phone, name, city, slug,
-        wa: $('#rWA').value.trim(),
-        prices:{
-          Haircut:+$('#rpHaircut').value||120,
-          Shave:+$('#rpShave').value||60,
-          Beard:+$('#rpBeard').value||80,
-          Facial:+$('#rpFacial').value||300,
-        },
-        avg:15, chairs:1, nextToken:1, queue:[]
-      };
-      salons.push(salon); currentOwnerId = salon.id; save();
-      $('#regMsg').textContent = `✅ Account created. Public link: ${location.origin + location.pathname}?salon=${salon.slug}#public`;
-      location.hash = '#owner';
-      paintOwner();
+    const out = $("#listOut"); out.innerHTML = "";
+    let rows = load().filter(s=>{
+      const byCity = qCity ? s.city.includes(qCity) : true;
+      const byText = qText ? (s.name.toLowerCase().includes(qText) || s.owner.toLowerCase().includes(qText)) : true;
+      const bySrv  = qService ? (s.price[qService] > 0) : true;
+      return byCity && byText && bySrv;
     });
 
-    $('#rLogin').onclick=()=>{
-      const phone = prompt('Enter your 10-digit mobile');
-      const found = salons.find(s=>s.phone.replace(/\D/g,'')===String(phone||'').replace(/\D/g,''));
-      if(found){ currentOwnerId = found.id; save(); location.hash='#owner'; paintOwner(); }
-      else { alert('Number not found. Please register.'); }
-    };
-
-    // --------- Owner Dashboard ---------
-    const oWrap = $('#ownerWrap');
-    const oGate = $('#ownerGate');
-    const oQueue = $('#oQueue');
-
-    function paintOwner(){
-      const s = findSalonById(currentOwnerId);
-      if(!s){ oWrap.style.display='none'; oGate.style.display=''; oGate.textContent='Login ya register karke aaiye.'; return; }
-      oGate.style.display='none'; oWrap.style.display='';
-      $('#oAvg').value = s.avg; $('#oChairs').value = String(s.chairs);
-      const link = location.origin + location.pathname + `?salon=${encodeURIComponent(s.slug)}#public`;
-      $('#oLink').textContent = link;
-      // Queue
-      oQueue.innerHTML = '';
-      s.queue.forEach((q,i)=>{
-        const li = document.createElement('li');
-        li.textContent = `#${q.token} • ${q.name} — ${q.service}${q.phone?` • ${q.phone}`:''}`;
-        const b = document.createElement('button'); b.textContent='×'; b.className='btn'; b.style.marginLeft='8px';
-        b.onclick=()=>{ s.queue.splice(i,1); save(); paintOwner(); };
-        li.appendChild(b); oQueue.appendChild(li);
-      });
+    if(!rows.length){
+      out.innerHTML = `<div class="card muted">Koi salon nahi mila. Filters change karein ya Register karein.</div>`;
+      return;
     }
 
-    $('#oSave').onclick=()=>{
-      const s = findSalonById(currentOwnerId); if(!s) return;
-      s.avg = Math.max(5, +$('#oAvg').value||15);
-      s.chairs = Math.max(1, +$('#oChairs').value||1);
-      save(); alert('Saved');
-    };
-    $('#oShare').onclick=()=>{
-      const s = findSalonById(currentOwnerId); if(!s) return;
-      const url = location.origin + location.pathname + `?salon=${encodeURIComponent(s.slug)}#public`;
-      try{ navigator.share({title:s.name, text:'Book your turn here', url}); }
-      catch{ navigator.clipboard.writeText(url); alert('Link copied'); }
-    };
-    $('#oReset').onclick=()=>{
-      const s = findSalonById(currentOwnerId); if(!s) return;
-      if(confirm('Reset tokens & queue for today?')){ s.nextToken=1; s.queue=[]; save(); paintOwner(); }
-    };
-    $('#oComplete').onclick=()=>{
-      const s = findSalonById(currentOwnerId); if(!s) return;
-      if(s.queue.length){ const cur = s.queue.shift(); save(); paintOwner(); }
-    };
+    rows.forEach(s=>{
+      const wa = s.wa ? `https://wa.me/${s.wa}?text=Namaste%20${encodeURIComponent(s.name)}%20ke%20baare%20me` : "";
+      const el = document.createElement("div");
+      el.className="item";
+      el.innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+          <div>
+            <div style="font-weight:800;font-size:16px">💈 ${s.name}</div>
+            <div class="muted">Owner: ${s.owner} • City: ${s.city}</div>
+          </div>
+          ${wa?`<a class="btn" target="_blank" href="${wa}">WhatsApp</a>`:""}
+        </div>
+        <div class="badges">
+          <span class="tag">✂️ Haircut ₹${s.price.haircut||"-"}</span>
+          <span class="tag">🪒 Shave ₹${s.price.shave||"-"}</span>
+          <span class="tag">🧔 Beard ₹${s.price.beard||"-"}</span>
+          <span class="tag">💆 Facial ₹${s.price.facial||"-"}</span>
+        </div>
+      `;
+      out.appendChild(el);
+    });
+  }
+  $("#btnSearch").addEventListener("click", renderList);
 
-    // --------- Public Salon Page ---------
-    function eta(s){
-      const waiting = Math.max(0, s.queue.length - s.chairs);
-      return Math.max(0, Math.ceil(waiting / Math.max(1,s.chairs)) * s.avg);
-    }
-
-    function openPublic(slug){
-      const s = findSalonBySlug(slug);
-      if(!s){ alert('Salon not found'); return; }
-      $('#home').style.display='none';
-      $('#directory').style.display='none';
-      $('#register').style.display='none';
-      $('#owner').style.display='none';
-      $('#public').style.display='';
-      $('#pubHead').innerHTML = `<h2 style="margin:0">${s.name}</h2><div class="muted">${s.city} • Avg ${s.avg}m • Chairs ${s.chairs}</div>`;
-      const svc = $('#pSvc'); svc.innerHTML=''; ['Haircut','Shave','Beard Trim','Facial'].forEach(k=>{
-        const opt=document.createElement('option'); opt.value=k; opt.textContent=`${k}`; svc.appendChild(opt);
-      });
-      const ul = $('#pPrices'); ul.innerHTML='';
-      ul.innerHTML = `<li>Haircut: ₹${s.prices.Haircut}</li><li>Shave: ₹${s.prices.Shave}</li><li>Beard Trim: ₹${s.prices.Beard}</li><li>Facial: ₹${s.prices.Facial}</li>`;
-      const stat = ()=> $('#pStatus').textContent = `Queue: ${s.queue.length} • ETA: ${eta(s)} minutes`;
-      stat();
-
-      // Token form
-      $('#pForm').onsubmit=(e)=>{
-        e.preventDefault();
-        const name = $('#pName').value.trim(); if(!name) return;
-        const q = { token: s.nextToken++, name, service: $('#pSvc').value, phone: $('#pPhone').value.trim(), notes: $('#pNotes').value.trim(), time: Date.now() };
-        s.queue.push(q); save();
-        $('#pMsg').textContent = `✅ Token #${q.token} generated. ETA ${eta(s)} minutes.`; stat();
-        $('#pForm').reset();
-      };
-
-      $('#pWA').onclick=()=>{
-        const name = $('#pName').value.trim()||'Customer';
-        const msg = encodeURIComponent(`Hello! I want a token at ${s.name}. My name: ${name}.`);
-        const n = (s.wa||'').replace(/\D/g,'');
-        const url = n?`https://wa.me/${n}?text=${msg}`:`https://wa.me/?text=${msg}`;
-        window.open(url,'_blank');
-      };
-    }
-
-    // --------- Router ---------
-    function route(){
-      // Default show base sections
-      $('#home').style.display='';
-      $('#directory').style.display='';
-      $('#register').style.display='';
-      $('#owner').style.display='';
-      $('#public').style.display='none';
-      paintOwner(); searchDirectory(); paintKPIs();
-      const params = new URLSearchParams(location.search);
-      const slug = params.get('salon');
-      if(location.hash==='#public' && slug){ openPublic(slug); }
-    }
-
-    window.addEventListener('hashchange', route);
-    window.addEventListener('load', route);
-
-    // On first load, seed with one demo salon if none
-    if(salons.length===0){
-      salons.push({
-        id:1, owner:'Demo Owner', phone:'9999999999', name:'Demo Salon', city:'Raipur', slug:'demo-salon', wa:'919999999999',
-        prices:{Haircut:120,Shave:60,Beard:80,Facial:300}, avg:15, chairs:1, nextToken:1, queue:[]
-      }); save();
-    }
-  </script></body>
+  // ---- Smooth scroll on hash change ----
+  function goHash(){
+    const id = location.hash||"#home";
+    const el = document.querySelector(id);
+    if(el){ el.scrollIntoView({behavior:"smooth",block:"start"}); }
+    if(id==="#list") renderList();
+  }
+  window.addEventListener("hashchange", goHash);
+  window.addEventListener("load", goHash);
+</script>
+</body>
 </html>

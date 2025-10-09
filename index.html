@@ -1,4 +1,189 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Salon India • PhonePe Style</title>
+<meta name="description" content="Bharat ke salon owners ke liye simple register • list • booking demo (local storage)." />
+<style>
+/* ========= PHONEPE STYLE – LIGHT THEME ========= */
+:root{
+  --brand:#5b2be0;        /* PhonePe-ish purple */
+  --brand-2:#6236ff;
+  --ink:#101828;          /* text */
+  --muted:#667085;
+  --bg:#ffffff;
+  --card:#ffffff;
+  --line:#e5e7eb;
+  --soft:#f4f6fb;         /* page background */
+  --ok:#16a34a; --warn:#f59e0b; --err:#ef4444;
+  --radius:18px;
+  --shadow:0 8px 24px rgba(17, 24, 39, .06);
+}
 
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--soft);color:var(--ink);
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:900px;margin:0 auto;padding:14px}
+
+/* Top App Bar */
+.appbar{
+  position:sticky;top:0;z-index:10;background:var(--bg);
+  display:flex;align-items:center;gap:10px;padding:12px 14px;margin:0 auto;
+  border-bottom:1px solid var(--line);
+}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;}
+.logo .dot{width:34px;height:34px;border-radius:12px;background:var(--brand);
+  display:inline-flex;align-items:center;justify-content:center;color:#fff;}
+.badge{font-size:11px;padding:4px 8px;border-radius:999px;background:#ede9fe;color:#5b2be0;margin-left:6px}
+
+/* Tabs (PhonePe style) */
+.tabs{display:flex;gap:10px;overflow:auto;padding:10px 14px;background:var(--bg);position:sticky;top:58px;z-index:9;border-bottom:1px solid var(--line)}
+.tab{white-space:nowrap;background:#f6f7fb;border:1px solid var(--line);padding:10px 14px;border-radius:999px;font-weight:600}
+.tab.active{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;border-color:transparent}
+
+/* Hero / KPIs */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
+.kpis{display:grid;gap:12px;margin-top:12px}
+.kpi{background:#fff;border:1px dashed var(--line);border-radius:16px;padding:14px;text-align:center}
+.kpi .v{font-size:22px;font-weight:800}
+.kpi .t{font-size:12px;color:var(--muted)}
+
+/* Controls */
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.input, select, input[type="text"], input[type="number"], input[type="tel"]{
+  width:100%;padding:13px 14px;border-radius:14px;border:1px solid var(--line);
+  background:#fff;outline:none;
+}
+input:focus, select:focus{border-color:#b9c2ff;box-shadow:0 0 0 4px #ebe9ff}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 16px;border-radius:14px;border:1px solid var(--line);background:#f6f7fb;font-weight:700}
+.btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;border-color:transparent}
+.btn.full{width:100%}
+
+/* List */
+.list{display:grid;gap:12px;margin-top:12px}
+.item{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;display:grid;gap:6px}
+.item h4{margin:0;font-size:16px}
+.badges{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:11px;background:#eef2ff;color:#3730a3;border:1px solid #e0e7ff;padding:4px 8px;border-radius:999px}
+
+/* Section titles */
+.h2{font-size:18px;font-weight:800;margin:8px 0 12px}
+.muted{color:var(--muted)}
+
+/* Bottom spacing */
+.sp{height:24px}
+
+/* Hide sections utility */
+.hidden{display:none}
+
+/* Small helper */
+hr.sep{border:0;border-top:1px dashed var(--line);margin:10px 0}
+</style>
+</head>
+<body>
+  <!-- App Bar -->
+  <div class="appbar wrap" style="padding-left:14px;padding-right:14px">
+    <div class="logo">
+      <div class="dot">💈</div>
+      Salon India <span class="badge">PhonePe style</span>
+    </div>
+    <div style="margin-left:auto;font-size:12px;color:var(--muted)">Demo • Local data</div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs wrap" id="tabs">
+    <a class="tab active" data-screen="home">Home</a>
+    <a class="tab" data-screen="list">Salon List</a>
+    <a class="tab" data-screen="register">Owner Register</a>
+  </div>
+
+  <div class="wrap" id="screen-home">
+    <div class="card">
+      <div class="h2">Ek jagah • easy booking</div>
+      <div class="muted">Owners apna salon add karein. Customers list me salon khoj kar WhatsApp se baat kar sakte hain.</div>
+      <div class="kpis" style="grid-template-columns:repeat(3,1fr)">
+        <div class="kpi"><div class="v" id="kTotal">0</div><div class="t">Total Salons</div></div>
+        <div class="kpi"><div class="v" id="kToday">0</div><div class="t">Today Tokens</div></div>
+        <div class="kpi"><div class="v" id="kCity">—</div><div class="t">Top City</div></div>
+      </div>
+      <div style="margin-top:12px" class="row">
+        <a class="btn primary" data-screen="register">+ Add your Salon</a>
+        <a class="btn" data-screen="list">Browse salons</a>
+      </div>
+    </div>
+
+    <div class="sp"></div>
+
+    <div class="card">
+      <div class="h2">How it works?</div>
+      <ol class="muted" style="margin:0;padding-left:18px;line-height:1.6">
+        <li>Owner form bhare → Create Account.</li>
+        <li>Salon list me aapka card aa jayega.</li>
+        <li>Customer search/filter kare → WhatsApp pe baat kare.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- Salon List -->
+  <div class="wrap hidden" id="screen-list">
+    <div class="h2">🔎 Salon List</div>
+    <div class="card">
+      <div class="row">
+        <input id="qCity" class="input" placeholder="City / Area" />
+        <select id="qService">
+          <option value="">Any service</option>
+          <option value="haircut">Haircut</option>
+          <option value="shave">Shave</option>
+          <option value="beard">Beard</option>
+          <option value="facial">Facial</option>
+        </select>
+        <input id="qText" class="input" placeholder="Search name" />
+        <button class="btn" id="btnSearch">Search</button>
+      </div>
+    </div>
+    <div class="list" id="list"></div>
+  </div>
+
+  <!-- Register -->
+  <div class="wrap hidden" id="screen-register">
+    <div class="h2">📝 Owner Register</div>
+    <div class="card">
+      <div class="row">
+        <input id="owner" class="input" placeholder="Owner Name" />
+        <input id="mobile" class="input" placeholder="Mobile (10-digit)" inputmode="numeric" maxlength="10" />
+        <input id="salon" class="input" placeholder="Salon Name" />
+        <input id="city"  class="input" placeholder="City / Area" />
+        <input id="slug"  class="input" placeholder="Short Link (slug) — e.g., kamlesh-salon" />
+      </div>
+      <hr class="sep" />
+      <div class="row">
+        <div style="flex:1">
+          <div class="muted" style="font-size:12px;margin-bottom:6px">Services & Prices (₹)</div>
+          <div class="row">
+            <input id="pHaircut" class="input" type="number" placeholder="Haircut (₹)" value="120" />
+            <input id="pShave"   class="input" type="number" placeholder="Shave (₹)"   value="60" />
+            <input id="pBeard"   class="input" type="number" placeholder="Beard (₹)"   value="80" />
+            <input id="pFacial"  class="input" type="number" placeholder="Facial (₹)"  value="300" />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <input id="wa" class="input" placeholder="WhatsApp Number (e.g., 91XXXXXXXXXX)" />
+      </div>
+      <div class="row">
+        <button class="btn primary full" id="btnCreate">Create Account</button>
+      </div>
+      <div id="msg" class="muted" style="margin-top:8px"></div>
+    </div>
+  </div>
+
+<script>
+/* ======= MIN JS (no libraries) ======= */
+const $ = sel => document.querySelector(sel);
+const $$ = sel => Array.from(document.querySelector
 <!DOCTYPE html><html lang="hi">
 <head>
   <meta charset="UTF-8" />

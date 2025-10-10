@@ -66,7 +66,37 @@
     .hide{display:none}
   </style>
 </head>
-<body>
+<body><!-- Salon India Premium Logo Animation -->
+<style>
+  @keyframes logoFadeZoom {
+    0% { opacity: 0; transform: scale(0.8) rotate(-5deg); filter: brightness(0.6); }
+    100% { opacity: 1; transform: scale(1) rotate(0deg); filter: brightness(1); }
+  }
+
+  .logo-container {
+    text-align: center;
+    margin-top: 20px;
+    animation: logoFadeZoom 1.8s ease-out;
+  }
+
+  .logo-container img {
+    width: 140px;
+    height: auto;
+    border-radius: 25px;
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    border: 2px solid rgba(255, 215, 0, 0.6);
+  }
+
+  .logo-container img:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.7);
+  }
+</style>
+
+<div class="logo-container">
+  <img src="Salon_India_Logo.png" alt="Salon India Logo">
+</div>
 
   <!-- Header -->
   <header>

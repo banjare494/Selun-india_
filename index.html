@@ -134,7 +134,18 @@
       <div class="row">
         <input id="owner"  placeholder="Owner Name">
         <input id="mobile" placeholder="Mobile (10-digit)" inputmode="numeric" maxlength="10">
-        <input id="salon"  placeholder="Salon Name">
+       <!-- Salon Name -->
+<input id="salonName" type="text" placeholder="Salon Name" required>
+
+<!-- Short Link (slug) -->
+<input id="slug" type="text" placeholder="Short Link (slug) — e.g., kamlesh-salon"
+       inputmode="latin" pattern="[a-z0-9\-]{3,}" title="sirf a-z, 0-9 aur hyphen (-)"
+       required>
+
+<!-- (optional) help text -->
+<small id="slugHelp" style="display:block;margin-top:6px;color:#6b7280;font-size:12px;">
+  Short link auto ban raha hai. Aap chahe to edit kar sakte hain. Sirf a-z, 0-9, “-”.
+</small> 
         <input id="city"   placeholder="City / Area">
         <input id="slug"   placeholder="Short Link (slug) — e.g., kamlesh-salon">
       </div>
@@ -274,5 +285,60 @@
   window.addEventListener("hashchange", goHash);
   window.addEventListener("load", goHash);
 </script>
-</body>
+</body><script>
+  function makeSlug(str) {
+    return str
+      .toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .replace(/-{2,}/g, '-')
+      .slice(0, 50);
+  }
+
+  const salonName = document.querySelector('#salonName');
+  const slugInput = document.querySelector('#slug');
+  const slugHelp  = document.querySelector('#slugHelp');
+  let slugManuallyEdited = false;
+
+  if (salonName && slugInput) {
+    salonName.addEventListener('input', () => {
+      if (!slugManuallyEdited) {
+        slugInput.value = makeSlug(salonName.value);
+        validateSlug();
+      }
+    });
+    slugInput.addEventListener('input', () => {
+      slugManuallyEdited = true;
+      slugInput.value = makeSlug(slugInput.value);
+      validateSlug();
+    });
+  }
+
+  function slugExists(s) {
+    try {
+      const salons = JSON.parse(localStorage.getItem('salons') || '[]');
+      return salons.some(x => (x.slug || '').toLowerCase() === s.toLowerCase());
+    } catch (e) { return false; }
+  }
+
+  function validateSlug() {
+    const s = slugInput.value;
+    const bad = !/^[a-z0-9-]{3,}$/.test(s);
+    const taken = slugExists(s);
+    if (bad) {
+      slugInput.style.borderColor = '#ef4444';
+      slugHelp.textContent = 'Slug me sirf a-z, 0-9 aur “-” (min 3 chars).';
+      slugHelp.style.color = '#ef4444';
+    } else if (taken) {
+      slugInput.style.borderColor = '#f59e0b';
+      slugHelp.textContent = 'Ye short link already use me hai. Koi aur try karein.';
+      slugHelp.style.color = '#b45309';
+    } else {
+      slugInput.style.borderColor = '#10b981';
+      slugHelp.textContent = 'Perfect! Ye short link available hai.';
+      slugHelp.style.color = '#059669';
+    }
+  }
+</script>
 </html>

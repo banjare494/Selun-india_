@@ -1,162 +1,218 @@
-     <!DOCTYPE html>
-<html lang="hi">
+<!DOCTYPE html><html lang="hi" data-theme="light">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <!-- 🌐 SEO Meta Tags for Google Search -->
-  <meta name="title" content="Selun India - Register • List • Book Salon">
-  <meta name="description" content="Selun India ek platform hai jahan Bharat ke salon owners apna page register kar sakte hain, rate list bana sakte hain, aur customers token/book kar sakte hain. Free hosting on GitHub Pages.">
-  <meta name="keywords" content="Selun India, Salon Booking, Barber Shop, Beauty Parlour, Salon Register, Salon List, Haircut Booking, India Salon">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />  <!-- 🔍 SEO -->  <title>Salon India • Register • List • Book</title>
+  <meta name="title" content="Salon India - Register • List • Book Salon">
+  <meta name="description" content="Salon India ek smart platform hai jahan Bharat ke salon owners apna page register kar sakte hain, rate list bana sakte hain, aur customers WhatsApp se booking kar sakte hain. Free hosting on GitHub Pages.">
+  <meta name="keywords" content="Salon India, Salon Booking, Barber Shop, Beauty Parlour, Salon Register, Salon List, Haircut Booking, India Salon">
   <meta name="author" content="Kamlesh Banjare">
-
-  <!-- 🧭 Social Media Preview -->
-  <meta property="og:title" content="Selun India – Free Salon Register & Booking Platform">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://banjare494.github.io/Selun-india_/">  <!-- 🧭 Social Media Preview -->  <meta property="og:title" content="Salon India – Free Salon Register & Booking Platform">
   <meta property="og:description" content="Apna salon register karo, list banao aur booking lo – Free aur easy system.">
   <meta property="og:image" content="https://banjare494.github.io/Selun-india_/images/banner.jpg">
   <meta property="og:url" content="https://banjare494.github.io/Selun-india_/">
-  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:card" content="summary_large_image">  <!-- 🌗 Theme color for PWA/nav bar -->  <meta name="theme-color" content="#0054ff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b1020" media="(prefers-color-scheme: dark)">  <style>
+    /* ============= CSS VARIABLES / THEME ============= */
+    :root{
+      --bg: #0f172a;           /* dark base */
+      --bg-soft:#111827;
+      --card:#0b1020;
+      --text:#e5e7eb;
+      --muted:#9ca3af;
+      --brand:#3b82f6;         /* blue */
+      --brand-2:#8b5cf6;       /* violet */
+      --ok:#22c55e;            /* green */
+      --warn:#f59e0b;          /* amber */
+      --err:#ef4444;           /* red */
+      --ring: 0 0 0 6px rgba(59,130,246,.15);
+      --shadow: 0 12px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+      --radius-lg: 28px;
+    }
+    [data-theme="light"]{
+      --bg:#f6f9fc;
+      --bg-soft:#eef2f7;
+      --card:#ffffff;
+      --text:#111827;
+      --muted:#667085;
+      --shadow: 0 14px 36px rgba(2, 10, 40, .10);
+    }
 
-  <!-- 🔍 Help Google Index Your Site -->
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://banjare494.github.io/Selun-india_/">
-  <title>Salon India • Register • List • Book</title>
-
-  <style>
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:#f6f9fc;color:#111}
+    html,body{height:100%}
+    body{font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);}
     a{color:inherit;text-decoration:none}
-    .wrap{max-width:980px;margin:0 auto;padding:16px}
+    img{display:block;max-width:100%}
+    .wrap{max-width:1080px;margin:0 auto;padding:18px}
 
-    /* Header */
-    header{position:sticky;top:0;z-index:10;background:#0078ff;color:#fff;
-      display:flex;align-items:center;justify-content:space-between;
-      padding:12px 16px;border-radius:0 0 14px 14px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
-    header h1{font-size:20px;display:flex;gap:8px;align-items:center}
-    nav a{margin-left:12px;font-weight:600}
-    nav a.btn{background:#fff;color:#0078ff;padding:8px 12px;border-radius:999px}
+    /* ============= HEADER ============= */
+    header{position:sticky;top:0;z-index:50;backdrop-filter:saturate(1.3) blur(10px);
+      background:linear-gradient(180deg, rgba(15,23,42,.75), rgba(15,23,42,.55));
+      border-bottom:1px solid rgba(255,255,255,.06)}
+    [data-theme="light"] header{background:rgba(255,255,255,.78);border-bottom:1px solid #e5e7eb}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 18px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px}
+    .brand .logo{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,var(--brand),var(--brand-2));box-shadow:0 8px 20px rgba(59,130,246,.35);display:grid;place-items:center;color:#fff}
+    .brand span{font-size:20px}
+    .navlinks{display:flex;gap:12px;align-items:center}
+    .chip{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);font-weight:700}
+    [data-theme="light"] .chip{border:1px solid #e5e7eb;background:#ffffff}
+    .btn{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;border:0;border-radius:14px;padding:12px 16px;font-weight:800;cursor:pointer;box-shadow:var(--shadow);transition:transform .06s ease}
+    .btn:active{transform:translateY(1px)}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,.14)}
+    [data-theme="light"] .btn.ghost{border-color:#e5e7eb}
 
-    /* Hero */
-    .hero{position:relative}
-    .hero img{width:100%;height:240px;object-fit:cover;border-radius:0 0 16px 16px;display:block}
-    .hero h2{position:absolute;left:0;right:0;bottom:36px;text-align:center;color:#fff;
-      font-size:24px;text-shadow:0 2px 8px rgba(0,0,0,.5)}
+    /* ============= HERO ============= */
+    .hero{position:relative;isolation:isolate}
+    .hero .bg{
+      height:320px;border-radius:0 0 var(--radius-lg) var(--radius-lg);
+      background: radial-gradient(80% 60% at 10% 10%, rgba(59,130,246,.45), transparent 60%),
+                  radial-gradient(60% 50% at 90% 20%, rgba(139,92,246,.40), transparent 60%),
+                  linear-gradient(180deg, #020617, #0b1020);
+      overflow:hidden;
+    }
+    [data-theme="light"] .hero .bg{background: linear-gradient(180deg, #ffffff, #eef2ff)}
+    .hero img.banner{width:100%;height:100%;object-fit:cover;opacity:.18;mix-blend:overlay}
+    .hero .headline{position:absolute;inset:0;display:grid;place-items:center;padding:0 16px;text-align:center}
+    .hero h1{font-size:clamp(26px, 4vw, 44px);line-height:1.1}
+    .hero p{color:var(--muted);margin-top:10px}
 
-    /* Sections / cards */
-    .section{padding:16px}
-    .card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:16px;
-      box-shadow:0 6px 18px rgba(0,0,0,.06)}
-    .h2{font-size:18px;font-weight:800;margin-bottom:10px}
+    /* ============= CARDS / LAYOUT ============= */
+    .grid{display:grid;gap:16px}
+    @media(min-width:860px){.grid{grid-template-columns:1.1fr .9fr}}
+    .card{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+    [data-theme="light"] .card{border:1px solid #e5e7eb}
+    .h2{font-size:18px;font-weight:900;margin-bottom:10px}
+    .muted{color:var(--muted)}
 
-    /* Inputs & buttons */
-    .row{display:flex;gap:10px;flex-wrap:wrap}
-    input,select,textarea{width:100%;padding:12px 14px;border:1px solid #e5e7eb;border-radius:12px;background:#fff;outline:none}
-    input:focus,select:focus,textarea:focus{border-color:#b9d3ff;box-shadow:0 0 0 4px #eaf3ff}
-    .btn{background:#0078ff;color:#fff;border:0;border-radius:12px;padding:12px 16px;font-weight:700;cursor:pointer}
-    .btn.gray{background:#eef2f7;color:#111;border:1px solid #e5e7eb}
+    /* ============= FORMS ============= */
+    .row{display:flex;gap:12px;flex-wrap:wrap}
+    input,select,textarea{width:100%;padding:12px 14px;border:1px solid rgba(255,255,255,.14);border-radius:12px;background:rgba(255,255,255,.03);color:inherit;outline:none}
+    input::placeholder,textarea::placeholder{color:var(--muted)}
+    input:focus,select:focus,textarea:focus{box-shadow:var(--ring);border-color:transparent}
+    [data-theme="light"] input,[data-theme="light"] select,[data-theme="light"] textarea{background:#fff;border:1px solid #e5e7eb}
+
     .full{width:100%}
 
-    /* List cards */
+    /* ============= LIST ============= */
     .list{display:grid;gap:12px}
     @media(min-width:720px){.list{grid-template-columns:repeat(2,minmax(0,1fr))}}
-    .item{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:16px;display:grid;gap:6px}
+    .item{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:16px;display:grid;gap:10px;box-shadow:var(--shadow)}
+    [data-theme="light"] .item{border:1px solid #e5e7eb}
     .badges{display:flex;gap:6px;flex-wrap:wrap}
-    .tag{font-size:12px;background:#edf2ff;color:#1f3bb3;border:1px solid #dbe5ff;border-radius:999px;padding:4px 8px}
+    .tag{font-size:12px;background:rgba(59,130,246,.12);color:#dbeafe;border:1px solid rgba(59,130,246,.25);border-radius:999px;padding:4px 8px}
+    [data-theme="light"] .tag{color:#1f3bb3;background:#edf2ff;border:1px solid #dbe5ff}
 
-    .muted{color:#667085}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
     .sp{height:16px}
-    footer{text-align:center;padding:18px;background:#fff;border-top:1px solid #eee;margin-top:18px}
-    .hide{display:none}
 
-    /* Premium logo animation */
-    @keyframes logoFadeZoom {0%{opacity:0;transform:scale(.8) rotate(-5deg);filter:brightness(.6)}
-      100%{opacity:1;transform:scale(1) rotate(0);filter:brightness(1)}}
-    .logo-container{text-align:center;margin-top:20px;animation:logoFadeZoom 1.8s ease-out}
-    .logo-container img{width:140px;height:auto;border-radius:25px;box-shadow:0 0 25px rgba(255,215,0,.4);
-      transition:transform .4s ease,box-shadow .4s ease;border:2px solid rgba(255,215,0,.6)}
-    .logo-container img:hover{transform:scale(1.08);box-shadow:0 0 40px rgba(255,215,0,.7)}
-  </style>
-</head>
+    footer{text-align:center;padding:22px;background:var(--card);border-top:1px solid rgba(255,255,255,.08);margin-top:18px}
+    [data-theme="light"] footer{border-top:1px solid #e5e7eb}
+
+    /* ============= TOAST ============= */
+    .toast{position:fixed;right:16px;bottom:16px;z-index:100;background:var(--card);border:1px solid rgba(255,255,255,.12);padding:12px 14px;border-radius:14px;box-shadow:var(--shadow);min-width:240px}
+
+    /* ============= MODAL (dialog) ============= */
+    dialog{border:0;border-radius:18px;width:min(560px,95vw);background:var(--card);color:inherit;box-shadow:var(--shadow)}
+    dialog::backdrop{background:rgba(2,6,23,.55)}
+    [data-theme="light"] dialog::backdrop{background:rgba(0,0,0,.45)}
+    .modal-head{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
+    .modal-body{padding:16px}
+    .x{background:transparent;border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:6px 10px;color:inherit;cursor:pointer}
+    [data-theme="light"] .x{border-color:#e5e7eb}
+
+    /* ============= FLOATING ACTIONS ============= */
+    .fab{position:fixed;right:16px;bottom:82px;z-index:60}
+
+    /* Accessibility helpers */
+    .sr{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+  </style></head>
 <body>
-
-  <div class="logo-container">
-    <img src="Salon_India_Logo.png" alt="Salon India Logo">
-  </div>
-
-  <!-- Header -->
+  <!-- ============= HEADER ============= -->
   <header>
-    <h1>💈 Salon India</h1>
-    <nav>
-      <a href="#home">Home</a>
-      <a href="#register">Register</a>
-      <a href="#list" class="btn">Salon List</a>
-    </nav>
-  </header>
-
-  <!-- Hero -->
-  <section id="home" class="hero">
-    <img src="https://images.unsplash.com/photo-1512690459411-b9245aed614b?q=80&w=1600&auto=format&fit=crop" alt="Salon banner">
-    <h2>Register • List • Book Easily</h2>
-  </section>
-
-  <!-- About / CTA -->
-  <section class="wrap section">
-    <div class="card">
-      <div class="h2">Bharat ke salon owners ke liye smart platform</div>
-      <p class="muted">Owners apna page register karein, rate list set karein, aur customers WhatsApp se booking karein — sab kuch ek jagah.</p>
-      <div class="sp"></div>
-      <div class="row">
-        <a class="btn" href="#register">+ Register your Salon</a>
-        <a class="btn gray" href="#list">Browse salons</a>
+    <div class="nav wrap">
+      <a class="brand" href="#home" aria-label="Salon India Home">
+        <div class="logo">💈</div>
+        <span>Salon India</span>
+      </a>
+      <nav class="navlinks">
+        <a class="chip" href="#list">Salon List</a>
+        <a class="chip" href="#register">Register</a>
+        <button id="themeBtn" class="btn ghost" title="Toggle dark / light">🌗</button>
+      </nav>
+    </div>
+  </header>  <!-- ============= HERO ============= -->  <section id="home" class="hero">
+    <div class="bg">
+      <img class="banner" src="https://images.unsplash.com/photo-1512690459411-b9245aed614b?q=80&w=1600&auto=format&fit=crop" alt="Salon tools banner">
+    </div>
+    <div class="headline wrap">
+      <div>
+        <h1>Register • List • Book — Premium, fast & free</h1>
+        <p>Owners apna page register karein, prices set karein, aur customers WhatsApp se instant booking karein.</p>
+        <div class="sp"></div>
+        <div class="toolbar">
+          <a class="btn" href="#register">+ Register your Salon</a>
+          <a class="btn ghost" href="#list">Browse salons</a>
+        </div>
       </div>
     </div>
-  </section>
-
-  <!-- Register -->
-  <section id="register" class="wrap section">
+  </section>  <!-- ============= ABOUT & QUICK TIPS ============= -->  <section class="wrap" style="margin-top:18px">
+    <div class="grid">
+      <div class="card">
+        <div class="h2">Bharat ke salon owners ke liye smart platform</div>
+        <p class="muted">Koi complicated app nahi. Sirf form bhariye aur turant listing ready. Booking WhatsApp par chali jaayegi — aapke number par.</p>
+        <div class="sp"></div>
+        <ul class="muted" style="display:grid;gap:6px;list-style: none;">
+          <li>✅ Apni <b>short link</b> banayein (slug)</li>
+          <li>✅ <b>Prices</b> set karein (Haircut, Shave, Beard, Facial)</li>
+          <li>✅ <b>City/Area</b> ke hisaab se search</li>
+          <li>✅ Instant <b>WhatsApp booking</b> message</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="h2">Quick Actions</div>
+        <div class="row">
+          <button class="btn full" id="exportBtn">⬇️ Export Data (JSON)</button>
+          <label class="btn full" for="importFile" style="display:inline-grid;place-items:center;cursor:pointer">⬆️ Import Data (JSON)</label>
+          <input id="importFile" type="file" accept="application/json" class="sr">
+        </div>
+        <div class="sp"></div>
+        <div class="row">
+          <button id="clearBtn" class="btn ghost full">🗑️ Clear All (local)</button>
+        </div>
+      </div>
+    </div>
+  </section>  <!-- ============= REGISTER ============= -->  <section id="register" class="wrap" style="margin-top:18px">
     <div class="h2">📝 Owner Register</div>
     <div class="card">
       <div class="row">
-        <input id="owner"  placeholder="Owner Name">
-        <input id="mobile" placeholder="Mobile (10-digit)" inputmode="numeric" maxlength="10">
-
-        <!-- Salon Name + Short Link -->
+        <input id="owner"  placeholder="Owner Name" autocomplete="name">
+        <input id="mobile" placeholder="Mobile (10-digit)" inputmode="numeric" maxlength="10" autocomplete="tel">
         <input id="salonName" type="text" placeholder="Salon Name" required>
+        <input id="slug" type="text" placeholder="Short Link (slug) — e.g., kamlesh-salon" inputmode="latin" pattern="[a-z0-9\-]{3,}" title="sirf a-z, 0-9 aur hyphen (-)" required>
+        <small id="slugHelp" style="display:block;margin-top:6px;color:var(--muted);font-size:12px;">Short link auto ban raha hai. Aap chahe to edit kar sakte hain. Sirf a-z, 0-9, “-”.</small>
+        <input id="city" placeholder="City / Area" autocomplete="address-level2">
+      </div><div class="sp"></div>
+  <div class="muted" style="margin-bottom:8px">Services & Prices (₹)</div>
+  <div class="row">
+    <input id="pHaircut" type="number" placeholder="Haircut (₹)" value="120" min="0">
+    <input id="pShave"   type="number" placeholder="Shave (₹)"   value="60" min="0">
+    <input id="pBeard"   type="number" placeholder="Beard (₹)"   value="80" min="0">
+    <input id="pFacial"  type="number" placeholder="Facial (₹)"  value="300" min="0">
+  </div>
 
-        <input id="slug" type="text"
-               placeholder="Short Link (slug) — e.g., kamlesh-salon"
-               inputmode="latin" pattern="[a-z0-9\-]{3,}"
-               title="sirf a-z, 0-9 aur hyphen (-)" required>
+  <div class="sp"></div>
+  <input id="wa" placeholder="WhatsApp Number (e.g., 91XXXXXXXXXX)">
+  <div class="sp"></div>
+  <button id="btnCreate" class="btn full">Create Account</button>
+  <div id="msg" class="muted" style="margin-top:10px"></div>
+</div>
 
-        <small id="slugHelp" style="display:block;margin-top:6px;color:#6b7280;font-size:12px;">
-          Short link auto ban raha hai. Aap chahe to edit kar sakte hain. Sirf a-z, 0-9, “-”.
-        </small>
-
-        <input id="city" placeholder="City / Area">
-        <!-- ⚠️ Duplicate slug input HATA DIYA -->
-      </div>
-
-      <div class="sp"></div>
-      <div class="muted" style="margin-bottom:8px">Services & Prices (₹)</div>
-      <div class="row">
-        <input id="pHaircut" type="number" placeholder="Haircut (₹)" value="120">
-        <input id="pShave"   type="number" placeholder="Shave (₹)"   value="60">
-        <input id="pBeard"   type="number" placeholder="Beard (₹)"   value="80">
-        <input id="pFacial"  type="number" placeholder="Facial (₹)"  value="300">
-      </div>
-
-      <div class="sp"></div>
-      <input id="wa" placeholder="WhatsApp Number (e.g., 91XXXXXXXXXX)">
-      <div class="sp"></div>
-      <button id="btnCreate" class="btn full">Create Account</button>
-      <div id="msg" class="muted" style="margin-top:10px"></div>
-    </div>
-  </section>
-
-  <!-- List -->
-  <section id="list" class="wrap section">
+  </section>  <!-- ============= LIST ============= -->  <section id="list" class="wrap" style="margin-top:18px">
     <div class="h2">🔎 Salon List</div>
     <div class="card">
-      <div class="row">
+      <div class="toolbar">
         <input id="qCity" placeholder="City / Area">
         <select id="qService">
           <option value="">Any service</option>
@@ -165,27 +221,49 @@
           <option value="beard">Beard</option>
           <option value="facial">Facial</option>
         </select>
-        <input id="qText" placeholder="Search name">
+        <select id="qSort">
+          <option value="name">Sort: Name</option>
+          <option value="priceAsc">Price (low→high)</option>
+          <option value="priceDesc">Price (high→low)</option>
+          <option value="new">Newest</option>
+        </select>
+        <input id="qText" placeholder="Search name/owner">
         <button id="btnSearch" class="btn">Search</button>
       </div>
     </div>
     <div class="sp"></div>
     <div id="listOut" class="list"></div>
-  </section>
-
-  <footer>Made with ❤️ by Kamlesh Banjare • Free hosting on GitHub Pages</footer>
-
-  <script>
-    // ---- Data store (localStorage) ----
-    const LS = "salon-india:v1";
+  </section>  <footer>Made with ❤️ by Kamlesh Banjare • Free hosting on GitHub Pages</footer>  <!-- ============= DETAIL / BOOKING MODAL ============= -->  <dialog id="detailDialog" aria-labelledby="detailTitle">
+    <div class="modal-head">
+      <div id="detailTitle" style="font-weight:900">Salon Detail</div>
+      <button class="x" id="closeDetail">✖</button>
+    </div>
+    <div class="modal-body">
+      <div id="detailContent"></div>
+    </div>
+  </dialog>  <!-- Floating add shortcut -->  <div class="fab"><a class="btn" href="#register">+ Add Salon</a></div>  <!-- ============= SCRIPTS ============= -->  <script>
+    /* ---------- Data store ---------- */
+    const LS = "salon-india:v2";
     const load = () => JSON.parse(localStorage.getItem(LS) || "[]");
     const save = (a) => localStorage.setItem(LS, JSON.stringify(a));
 
-    // Helpers
+    /* ---------- Helpers ---------- */
     const $  = s => document.querySelector(s);
     const $$ = s => Array.from(document.querySelectorAll(s));
 
-    // ---- Slug helpers ----
+    /* ---------- Theme toggle ---------- */
+    (function initTheme(){
+      const pref = localStorage.getItem('theme');
+      if(pref) document.documentElement.setAttribute('data-theme', pref);
+      $('#themeBtn').addEventListener('click', ()=>{
+        const cur = document.documentElement.getAttribute('data-theme');
+        const next = cur === 'light' ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+    })();
+
+    /* ---------- Slug helpers ---------- */
     function makeSlug(str){
       return (str||"")
         .toLowerCase()
@@ -196,11 +274,10 @@
         .slice(0,50);
     }
     function slugExists(s){
-      try{
-        const salons = load();
-        return salons.some(x => (x.slug||"").toLowerCase() === (s||"").toLowerCase());
-      }catch(e){ return false; }
+      try{ return load().some(x => (x.slug||"").toLowerCase() === (s||"").toLowerCase()); }
+      catch(e){ return false; }
     }
+
     const salonName = $('#salonName');
     const slugInput = $('#slug');
     const slugHelp  = $('#slugHelp');
@@ -224,70 +301,95 @@
       const bad   = !/^[a-z0-9-]{3,}$/.test(s);
       const taken = slugExists(s);
       if(bad){
-        slugInput.style.borderColor = '#ef4444';
+        slugInput.style.borderColor = 'var(--err)';
         slugHelp.textContent = 'Slug me sirf a-z, 0-9 aur “-” (min 3 chars).';
-        slugHelp.style.color = '#ef4444';
+        slugHelp.style.color = 'var(--err)';
       }else if(taken){
-        slugInput.style.borderColor = '#f59e0b';
+        slugInput.style.borderColor = 'var(--warn)';
         slugHelp.textContent = 'Ye short link already use me hai. Koi aur try karein.';
-        slugHelp.style.color = '#b45309';
+        slugHelp.style.color = 'var(--warn)';
       }else{
-        slugInput.style.borderColor = '#10b981';
+        slugInput.style.borderColor = 'var(--ok)';
         slugHelp.textContent = 'Perfect! Ye short link available hai.';
-        slugHelp.style.color = '#059669';
+        slugHelp.style.color = 'var(--ok)';
       }
     }
 
-    // ---- Register handler ----
-    $("#btnCreate").addEventListener("click", ()=>{
+    /* ---------- Toast ---------- */
+    function toast(msg){
+      const t = document.createElement('div');
+      t.className = 'toast';
+      t.textContent = msg;
+      document.body.appendChild(t);
+      setTimeout(()=>{ t.remove(); }, 3200);
+    }
+
+    /* ---------- Register handler ---------- */
+    $('#btnCreate').addEventListener('click', ()=>{
       const salon = {
         id: Date.now(),
-        owner:  $("#owner").value.trim(),
-        mobile: $("#mobile").value.trim(),
-        name:   $("#salonName").value.trim(),  // FIX: naya field
-        city:   ($("#city").value.trim()||"").toLowerCase(),
-        slug:   ($("#slug").value.trim()||"").toLowerCase(),
+        owner:  $('#owner').value.trim(),
+        mobile: $('#mobile').value.trim(),
+        name:   $('#salonName').value.trim(),
+        city:   ($('#city').value.trim()||"").toLowerCase(),
+        slug:   ($('#slug').value.trim()||"").toLowerCase(),
         price: {
-          haircut: +($("#pHaircut").value||0),
-          shave:   +($("#pShave").value||0),
-          beard:   +($("#pBeard").value||0),
-          facial:  +($("#pFacial").value||0)
+          haircut: +($('#pHaircut').value||0),
+          shave:   +($('#pShave').value||0),
+          beard:   +($('#pBeard').value||0),
+          facial:  +($('#pFacial').value||0)
         },
-        wa: $("#wa").value.trim()
+        wa: $('#wa').value.trim()
       };
 
       if(!salon.owner || !/^\d{10}$/.test(salon.mobile) || !salon.name || !salon.city){
-        showMsg("⚠️ Owner, 10-digit mobile, Salon name aur City zaroori hain.", "warn"); return;
+        showMsg('⚠️ Owner, 10-digit mobile, Salon name aur City zaroori hain.', 'warn'); return;
       }
       if(salon.slug && slugExists(salon.slug)){
-        showMsg("⚠️ Ye short link (slug) pehle se use me hai. Alag try karein.", "warn"); return;
+        showMsg('⚠️ Ye short link (slug) pehle se use me hai. Alag try karein.', 'warn'); return;
       }
 
       const all = load();
       all.push(salon); save(all);
 
-      showMsg("✅ Salon add ho gaya! (Salon List me dekh sakte ho)", "ok");
-      ["owner","mobile","salonName","city","slug","wa","pHaircut","pShave","pBeard","pFacial"]
-        .forEach(id => { const el = $("#"+id); if(el) el.value=""; });
+      showMsg('✅ Salon add ho gaya! (Salon List me dekh sakte ho)', 'ok');
+      ['owner','mobile','salonName','city','slug','wa','pHaircut','pShave','pBeard','pFacial']
+        .forEach(id => { const el = document.getElementById(id); if(el) el.value=''; });
       slugManuallyEdited = false;
     });
 
     function showMsg(t, type){
-      const el=$("#msg"); el.textContent=t; el.style.color= type==="ok"?"#16a34a":"#b45309";
+      const el=$('#msg'); el.textContent=t; el.style.color= type==='ok'? 'var(--ok)':'var(--warn)';
+      toast(t);
     }
 
-    // ---- Render list + search ----
+    /* ---------- List + search + sort ---------- */
     function renderList(){
-      const qCity = $("#qCity").value.trim().toLowerCase();
-      const qService = $("#qService").value;
-      const qText = $("#qText").value.trim().toLowerCase();
+      const qCity = $('#qCity').value.trim().toLowerCase();
+      const qService = $('#qService').value;
+      const qText = $('#qText').value.trim().toLowerCase();
+      const qSort = $('#qSort').value;
 
-      const out = $("#listOut"); out.innerHTML = "";
+      const out = $('#listOut'); out.innerHTML = '';
       let rows = load().filter(s=>{
         const byCity = qCity ? s.city.includes(qCity) : true;
-        const byText = qText ? (s.name.toLowerCase().includes(qText) || s.owner.toLowerCase().includes(qText)) : true;
+        const text = (s.name + ' ' + s.owner).toLowerCase();
+        const byText = qText ? text.includes(qText) : true;
         const bySrv  = qService ? (s.price[qService] > 0) : true;
         return byCity && byText && bySrv;
+      });
+
+      // sort
+      rows.sort((a,b)=>{
+        if(qSort==='name') return a.name.localeCompare(b.name);
+        if(qSort==='new') return b.id - a.id;
+        if(qSort==='priceAsc'){
+          const sa = minPrice(a), sb = minPrice(b); return sa - sb;
+        }
+        if(qSort==='priceDesc'){
+          const sa = minPrice(a), sb = minPrice(b); return sb - sa;
+        }
+        return 0;
       });
 
       if(!rows.length){
@@ -295,38 +397,173 @@
         return;
       }
 
-      rows.forEach(s=>{
-        const wa = s.wa ? `https://wa.me/${s.wa}?text=Namaste%20${encodeURIComponent(s.name)}%20ke%20baare%20me` : "";
-        const el = document.createElement("div");
-        el.className="item";
-        el.innerHTML = `
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
-            <div>
-              <div style="font-weight:800;font-size:16px">💈 ${s.name}</div>
-              <div class="muted">Owner: ${s.owner} • City: ${s.city}</div>
-            </div>
-            ${wa?`<a class="btn" target="_blank" href="${wa}">WhatsApp</a>`:""}
-          </div>
-          <div class="badges">
-            <span class="tag">✂️ Haircut ₹${s.price.haircut||"-"}</span>
-            <span class="tag">🪒 Shave ₹${s.price.shave||"-"}</span>
-            <span class="tag">🧔 Beard ₹${s.price.beard||"-"}</span>
-            <span class="tag">💆 Facial ₹${s.price.facial||"-"}</span>
-          </div>`;
-        out.appendChild(el);
-      });
+      rows.forEach(s=> out.appendChild(renderItem(s)) );
     }
-    $("#btnSearch").addEventListener("click", renderList);
 
-    // ---- Smooth scroll + initial render ----
-    function goHash(){
-      const id = location.hash||"#home";
-      const el = document.querySelector(id);
-      if(el){ el.scrollIntoView({behavior:"smooth",block:"start"}); }
-      if(id==="#list") renderList();
+    function minPrice(s){
+      const vals = Object.values(s.price||{}).filter(n=> typeof n==='number' && n>0);
+      return vals.length? Math.min(...vals): 0;
     }
-    window.addEventListener("hashchange", goHash);
-    window.addEventListener("load", goHash);
-  </script>
-</body>
+
+    function renderItem(s){
+      const el = document.createElement('div');
+      el.className='item';
+      const shareUrl = `${location.origin}${location.pathname}#s/${encodeURIComponent(s.slug||s.id)}`;
+      const waBase = s.wa ? `https://wa.me/${s.wa}` : '';
+      el.innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+          <div>
+            <div style="font-weight:900;font-size:18px">💈 ${s.name}</div>
+            <div class="muted">Owner: ${s.owner} • City: ${s.city}</div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            ${waBase?`<a class="btn" target="_blank" href="${waBase}?text=${encodeURIComponent('Namaste '+s.name+' me booking karna hai.')}" title="WhatsApp">WhatsApp</a>`:''}
+            <button class="btn ghost" data-share="${shareUrl}" title="Copy short link">🔗</button>
+            <button class="btn" data-detail="${s.slug||s.id}">Book</button>
+          </div>
+        </div>
+        <div class="badges">
+          <span class="tag">✂️ Haircut ₹${s.price.haircut||'-'}</span>
+          <span class="tag">🪒 Shave ₹${s.price.shave||'-'}</span>
+          <span class="tag">🧔 Beard ₹${s.price.beard||'-'}</span>
+          <span class="tag">💆 Facial ₹${s.price.facial||'-'}</span>
+        </div>`;
+
+      // share
+      el.querySelector('[data-share]')?.addEventListener('click', (e)=>{
+        const url = e.currentTarget.getAttribute('data-share');
+        navigator.clipboard.writeText(url).then(()=> toast('Link copied!')).catch(()=> toast(url));
+      });
+
+      // detail
+      el.querySelector('[data-detail]')?.addEventListener('click', (e)=>{
+        const key = e.currentTarget.getAttribute('data-detail');
+        openDetail(key);
+      });
+
+      // clicking title opens detail
+      el.querySelector('div > div > div').addEventListener('click', ()=> openDetail(s.slug||s.id));
+
+      return el;
+    }
+
+    $('#btnSearch').addEventListener('click', renderList);
+
+    /* ---------- Detail modal / booking ---------- */
+    const dlg = document.getElementById('detailDialog');
+    document.getElementById('closeDetail').addEventListener('click', ()=> dlg.close());
+
+    function openDetail(key){
+      const s = load().find(x => (x.slug||x.id.toString()) === key);
+      if(!s){ toast('Salon nahi mila'); return; }
+
+      const waBase = s.wa ? `https://wa.me/${s.wa}` : '';
+      const services = Object.entries(s.price||{}).filter(([k,v])=> v>0);
+
+      const html = `
+        <div style="display:grid;gap:12px">
+          <div>
+            <div style="font-weight:900;font-size:20px">${s.name}</div>
+            <div class="muted">Owner: ${s.owner} • ${s.city} • 📞 ${s.mobile}</div>
+          </div>
+          <div>
+            <label class="muted">Service</label>
+            <select id="bkService">${services.map(([k,v])=>`<option value="${k}">${label(k)} — ₹${v}</option>`).join('')}</select>
+          </div>
+          <div class="row">
+            <div class="full">
+              <label class="muted">Date</label>
+              <input id="bkDate" type="date">
+            </div>
+            <div class="full">
+              <label class="muted">Time</label>
+              <input id="bkTime" type="time">
+            </div>
+          </div>
+          <input id="bkName" placeholder="Your Name">
+          <input id="bkNotes" placeholder="Notes (optional)">
+          <div class="row">
+            <button class="btn full" id="bkBtn" ${waBase?'':'disabled'}>${waBase? 'Send WhatsApp Booking' : 'WhatsApp not set'}</button>
+            <button class="btn ghost full" id="copyBtn">Copy Booking Text</button>
+          </div>
+        </div>`;
+
+      $('#detailContent').innerHTML = html;
+      dlg.showModal();
+
+      // set default date/time (next 1 hour)
+      const d = new Date(Date.now()+60*60*1000);
+      $('#bkDate').value = d.toISOString().slice(0,10);
+      $('#bkTime').value = d.toTimeString().slice(0,5);
+
+      function buildText(){
+        const svc = label($('#bkService').value);
+        const date = $('#bkDate').value; const time = $('#bkTime').value;
+        const name = ($('#bkName').value||'').trim() || 'Customer';
+        const notes= ($('#bkNotes').value||'').trim();
+        return `Namaste ${s.name}!\nMain ${name} ${svc} ke liye ${date} ${time} par booking karna chahta/chahti hu. ${notes?('Notes: '+notes):''}\n\n– via Salon India`;
+      }
+
+      $('#bkBtn')?.addEventListener('click', ()=>{
+        const text = buildText();
+        const url = `${waBase}?text=${encodeURIComponent(text)}`;
+        window.open(url, '_blank');
+      });
+      $('#copyBtn')?.addEventListener('click', ()=>{
+        const text = buildText();
+        navigator.clipboard.writeText(text).then(()=> toast('Booking text copied')).catch(()=> toast(text));
+      });
+
+      // update hash route
+      location.hash = `#s/${encodeURIComponent(s.slug||s.id)}`;
+    }
+
+    function label(k){
+      return ({haircut:'Haircut', shave:'Shave', beard:'Beard', facial:'Facial'})[k] || k;
+    }
+
+    /* ---------- Hash routing ---------- */
+    function goHash(){
+      const hash = decodeURIComponent(location.hash||'#home');
+      if(hash.startsWith('#s/')){
+        const key = hash.split('/')[1];
+        openDetail(key);
+        return;
+      }
+      const el = document.querySelector(hash);
+      if(el){ el.scrollIntoView({behavior:'smooth',block:'start'}); }
+      if(hash==='#list') renderList();
+    }
+    window.addEventListener('hashchange', goHash);
+    window.addEventListener('load', goHash);
+
+    /* ---------- Export / Import / Clear ---------- */
+    $('#exportBtn').addEventListener('click', ()=>{
+      const data = JSON.stringify(load(), null, 2);
+      const blob = new Blob([data], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'salon-india-data.json'; a.click();
+      URL.revokeObjectURL(url);
+      toast('Data exported');
+    });
+
+    $('#importFile').addEventListener('change', (e)=>{
+      const file = e.target.files?.[0];
+      if(!file) return;
+      const reader = new FileReader();
+      reader.onload = ()=>{
+        try{
+          const arr = JSON.parse(reader.result);
+          if(!Array.isArray(arr)) throw new Error('Invalid JSON');
+          save(arr); toast('Data imported'); renderList();
+        }catch(err){ toast('Import error: '+ err.message); }
+      };
+      reader.readAsText(file);
+    });
+
+    $('#clearBtn').addEventListener('click', ()=>{
+      if(confirm('Pakka? Ye action local data mita dega.')){ save([]); renderList(); toast('Cleared'); }
+    });
+  </script></body>
 </html>

@@ -251,6 +251,33 @@
     const $  = s => document.querySelector(s);
     const $$ = s => Array.from(document.querySelectorAll(s));
 
+// === 🔗 Google Sheet (opensheet) – read-only API ===
+// 1) Make your Sheet public (Viewer) and note its ID
+// 2) Replace SHEET_ID below and keep Sheet name as Sheet1 (or change the path)
+// Format: https://opensheet.elk.sh/<SHEET_ID>/<SHEET_NAME>
+const SHEET_URL = "https://opensheet.elk.sh/1-G_8N50aMzse1IW-UXHTKll-a5z9lNZ0bJFSAV63PpU/salon";
+async function loadSalonsFromSheet(){
+  try{
+    const res = await fetch(SHEET_URL, { cache: 'no-store' });
+    const arr = await res.json();
+    return (arr||[]).map(r=>({
+      id: r.id || Date.now()+Math.random(),
+      owner: r.owner || r.Owner || "",
+      mobile: r.mobile || r.Mobile || "",
+      name: r.name || r.Name || "",
+      city: (r.city || r.City || "").toLowerCase(),
+      slug: (r.slug || r.Slug || (r.name? r.name.toLowerCase().replace(/[^a-z0-9]+/g,'-') : "")),
+      price: {
+        haircut: +(r.haircut||r.Haircut||0) || 0,
+        shave:   +(r.shave  ||r.Shave  ||0) || 0,
+        beard:   +(r.beard  ||r.Beard  ||0) || 0,
+        facial:  +(r.facial ||r.Facial ||0) || 0,
+      },
+      wa: r.wa || r.WA || r.whatsapp || ""
+    }));
+  }catch(e){ return null; }
+}
+
     /* ---------- Theme toggle ---------- */
     (function initTheme(){
       const pref = localStorage.getItem('theme');

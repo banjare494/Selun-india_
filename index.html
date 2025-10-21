@@ -140,8 +140,9 @@
       <nav class="navlinks">
         <a class="chip" href="#list">Salon List</a>
         <a class="chip" href="#register">Register</a>
-        <button id="settingsBtn" class="btn ghost" title="Settings">⚙️ Settings</button>
-        <button id="themeBtn" class="btn ghost" title="Toggle dark / light">🌗</button>
+        <button id="settingsBtn" class="btn ghost" title="Settings">⚙️</button>
+        <button id="themeBtn" class="btn ghost" title="Dark / Light">🌗</button>
+        <button id="colorBtn" class="btn ghost" title="Colors">🎨</button>
       </nav>
     </div>
   </header>  <!-- ============= HERO ============= -->  <section id="home" class="hero">
@@ -171,18 +172,15 @@
           <li>✅ <b>City/Area</b> ke hisaab se search</li>
           <li>✅ Instant <b>WhatsApp booking</b> message</li>
         </ul>
-      </div>
-      <div class="card">
-        <div class="h2">Quick Actions</div>
-        <div class="row">
-          <button class="btn full" id="exportBtn">⬇️ Export Data (JSON)</button>
-          <label class="btn full" for="importFile" style="display:inline-grid;place-items:center;cursor:pointer">⬆️ Import Data (JSON)</label>
-          <input id="importFile" type="file" accept="application/json" class="sr">
-        </div>
         <div class="sp"></div>
         <div class="row">
-          <button id="clearBtn" class="btn ghost full">🗑️ Clear All (local)</button>
+          <a class="btn" href="#register">+ Register</a>
+          <button id="openSettingsCta" class="btn ghost">⚙️ Open Settings</button>
         </div>
+      </div>
+      <div class="card">
+        <div class="h2">Tip</div>
+        <p class="muted">Export/Import aur Clear controls ab <b>Settings</b> me shift ho gaye hain. Upar right me ⚙️ dabayein.</p>
       </div>
     </div>
   </section>  <!-- ============= REGISTER ============= -->  <section id="register" class="wrap" style="margin-top:18px">
@@ -248,36 +246,51 @@
       <div id="settingsTitle" style="font-weight:900">Settings</div>
       <button class="x" id="closeSettings">✖</button>
     </div>
-    <div class="modal-body">
-      <div class="h2" style="margin-bottom:6px">Owner / Salon Profile</div>
-      <div class="row">
-        <input id="setOwner"  placeholder="Owner Name">
-        <input id="setMobile" placeholder="Mobile (10-digit)" inputmode="numeric" maxlength="10">
-        <input id="setName"   placeholder="Salon Name">
-        <input id="setCity"   placeholder="City / Area">
-        <input id="setSlug"   placeholder="Short Link (slug)">
-        <input id="setWA"     placeholder="WhatsApp Number (e.g., 91XXXXXXXXXX)">
-      </div>
-      <div class="sp"></div>
-      <div class="row">
-        <input id="setHaircut" type="number" placeholder="Haircut (₹)" min="0">
-        <input id="setShave"   type="number" placeholder="Shave (₹)"   min="0">
-        <input id="setBeard"   type="number" placeholder="Beard (₹)"   min="0">
-        <input id="setFacial"  type="number" placeholder="Facial (₹)"  min="0">
-      </div>
-      <div class="sp"></div>
-      <div class="row">
-        <button id="saveSettings" class="btn">💾 Save Changes</button>
-      </div>
-      <div class="sp"></div>
-      <div class="h2" style="margin-bottom:6px">Data Controls</div>
-      <div class="row">
-        <button class="btn" id="exportBtn_settings">⬇️ Export Data (JSON)</button>
-        <label class="btn" for="importFile_settings" style="display:inline-grid;place-items:center;cursor:pointer">⬆️ Import Data (JSON)</label>
-        <input id="importFile_settings" type="file" accept="application/json" class="sr">
-        <button class="btn ghost" id="clearBtn_settings">🗑️ Clear All (local)</button>
-      </div>
+    <div class="modal-body" style="display:grid;gap:16px">
+      <!-- Brand / Colors -->
+      <section id="brandSection">
+        <div class="h2" style="margin-bottom:6px">Brand Colors</div>
+        <div class="row" id="brandPalette">
+          <button class="btn ghost" data-brand="#3b82f6,#8b5cf6">Blue → Violet</button>
+          <button class="btn ghost" data-brand="#06b6d4,#22c55e">Cyan → Green</button>
+          <button class="btn ghost" data-brand="#f59e0b,#ef4444">Amber → Red</button>
+          <button class="btn ghost" data-brand="#a855f7,#6366f1">Purple → Indigo</button>
+          <button class="btn ghost" data-brand="#f97316,#ec4899">Orange → Pink</button>
+        </div>
+      </section><!-- Owner / Profile -->
+  <section>
+    <div class="h2" style="margin-bottom:6px">Owner / Salon Profile</div>
+    <div class="row">
+      <input id="setOwner"  placeholder="Owner Name">
+      <input id="setMobile" placeholder="Mobile (10-digit)" inputmode="numeric" maxlength="10">
+      <input id="setName"   placeholder="Salon Name">
+      <input id="setCity"   placeholder="City / Area">
+      <input id="setSlug"   placeholder="Short Link (slug)">
+      <input id="setWA"     placeholder="WhatsApp Number (e.g., 91XXXXXXXXXX)">
     </div>
+    <div class="sp"></div>
+    <div class="row">
+      <input id="setHaircut" type="number" placeholder="Haircut (₹)" min="0">
+      <input id="setShave"   type="number" placeholder="Shave (₹)"   min="0">
+      <input id="setBeard"   type="number" placeholder="Beard (₹)"   min="0">
+      <input id="setFacial"  type="number" placeholder="Facial (₹)"  min="0">
+    </div>
+    <div class="sp"></div>
+    <div class="row"><button id="saveSettings" class="btn">💾 Save Changes</button></div>
+  </section>
+
+  <!-- Data Controls -->
+  <section>
+    <div class="h2" style="margin-bottom:6px">Data Controls</div>
+    <div class="row">
+      <button class="btn" id="exportBtn_settings">⬇️ Export Data (JSON)</button>
+      <label class="btn" for="importFile_settings" style="display:inline-grid;place-items:center;cursor:pointer">⬆️ Import Data (JSON)</label>
+      <input id="importFile_settings" type="file" accept="application/json" class="sr">
+      <button class="btn ghost" id="clearBtn_settings">🗑️ Clear All (local)</button>
+    </div>
+  </section>
+</div>
+
   </dialog>  <!-- Floating add shortcut -->  <div class="fab"><a class="btn" href="#register">+ Add Salon</a></div>  <!-- ============= SCRIPTS ============= -->  <script>
     /* ---------- Data store ---------- */
     const LS = "salon-india:v2";
@@ -293,7 +306,6 @@
 // 2) Replace SHEET_ID below and keep Sheet name as Sheet1 (or change the path)
 // Format: https://opensheet.elk.sh/<SHEET_ID>/<SHEET_NAME>
 const SHEET_URL = "https://opensheet.elk.sh/1-G_8N50aMzse1IW-UXHTKll-a5z9lNZ0bJFSAV63PpU/salon";
-let SHEET_CACHE = null;
 let SHEET_CACHE = null;
 async function loadSalonsFromSheet(){
   try{
@@ -327,6 +339,9 @@ async function loadSalonsFromSheet(){
         document.documentElement.setAttribute('data-theme', next);
         localStorage.setItem('theme', next);
       });
+      // open settings brand picker via header
+      $('#colorBtn').addEventListener('click', ()=>{ openSettings('brand'); });
+      $('#openSettingsCta')?.addEventListener('click', ()=> openSettings());
     })();
 
     /* ---------- Slug helpers ---------- */
@@ -816,7 +831,7 @@ Main ${name} ${svc} ke liye ${date} ${time} par booking karna chahta/chahti hu. 
     function getFirstSalon(){ const a=load(); return a && a.length? a[0] : null; }
     function toggleOwnerUI(){ const has = !!getFirstSalon(); if(has){ document.getElementById('register').classList.add('hide'); document.getElementById('fabAdd')?.classList.add('hide'); }}
 
-    function openSettings(){
+    function openSettings(section){
       const s=getFirstSalon();
       if(s){
         $('#setOwner').value = s.owner||'';
@@ -831,6 +846,7 @@ Main ${name} ${svc} ke liye ${date} ${time} par booking karna chahta/chahti hu. 
         $('#setFacial').value  = s.price?.facial||0;
       }
       settingsDlg.showModal();
+      if(section==='brand'){ document.getElementById('brandSection')?.scrollIntoView({behavior:'smooth'}); }
     }
 
     document.getElementById('saveSettings').addEventListener('click', ()=>{
@@ -859,5 +875,20 @@ Main ${name} ${svc} ke liye ${date} ${time} par booking karna chahta/chahti hu. 
       reader.readAsText(file);
     });
     document.getElementById('clearBtn_settings').addEventListener('click', ()=>{ if(confirm('Pakka? Ye action local data mita dega.')){ save([]); toast('Cleared'); toggleOwnerUI(); renderList(); settingsDlg.close(); }});
+
+    // Brand color palette handlers
+    function applyBrand(c1,c2){
+      const root=document.documentElement; root.style.setProperty('--brand', c1); root.style.setProperty('--brand-2', c2);
+      localStorage.setItem('brand', JSON.stringify({c1,c2}));
+    }
+    (function initBrand(){
+      try{ const b=JSON.parse(localStorage.getItem('brand')||''); if(b?.c1&&b?.c2) applyBrand(b.c1,b.c2);}catch(e){}
+      $('#brandPalette')?.querySelectorAll('[data-brand]')?.forEach(btn=>{
+        const [c1,c2]=(btn.getAttribute('data-brand')||'').split(',');
+        btn.style.background=`linear-gradient(135deg, ${c1}, ${c2})`;
+        btn.style.color='#fff';
+        btn.addEventListener('click', ()=> applyBrand(c1,c2));
+      });
+    })(); toast('Cleared'); toggleOwnerUI(); renderList(); settingsDlg.close(); }});
   </script></body>
 </html>

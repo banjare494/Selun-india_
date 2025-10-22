@@ -138,8 +138,6 @@
         <span>Salon India</span>
       </a>
       <nav class="navlinks">
-        <a class="chip" href="#list">Salon List</a>
-        <a class="chip" href="#register">Register</a>
         <button id="settingsBtn" class="btn ghost" title="Settings">⚙️</button>
         <button id="themeBtn" class="btn ghost" title="Dark / Light">🌗</button>
         <button id="colorBtn" class="btn ghost" title="Colors">🎨</button>
@@ -155,8 +153,7 @@
         <p>Owners apna page register karein, prices set karein, aur customers WhatsApp se instant booking karein.</p>
         <div class="sp"></div>
         <div class="toolbar">
-          <a class="btn" href="#register">+ Register your Salon</a>
-          <a class="btn ghost" href="#list">Browse salons</a>
+          <button id="openSettingsCta" class="btn">⚙️ Open Settings</button>
         </div>
       </div>
     </div>
@@ -178,12 +175,8 @@
           <button id="openSettingsCta" class="btn ghost">⚙️ Open Settings</button>
         </div>
       </div>
-      <div class="card">
-        <div class="h2">Tip</div>
-        <p class="muted">Export/Import aur Clear controls ab <b>Settings</b> me shift ho gaye hain. Upar right me ⚙️ dabayein.</p>
-      </div>
-    </div>
-  </section>  <!-- ============= REGISTER ============= -->  <section id="register" class="wrap" style="margin-top:18px">
+      <!-- Tip card removed -->
+  </section>  <!-- ============= REGISTER ============= -->  <section id="register" class="wrap hide$1" style="margin-top:18px">
     <div class="h2">📝 Owner Register</div>
     <div class="card">
       <div class="row">
@@ -209,7 +202,7 @@
   <div id="msg" class="muted" style="margin-top:10px"></div>
 </div>
 
-  </section>  <!-- ============= LIST ============= -->  <section id="list" class="wrap" style="margin-top:18px">
+  </section>  <!-- ============= LIST ============= -->  <section id="list" class="wrap hide$1" style="margin-top:18px">
     <div class="h2">🔎 Salon List</div>
     <div class="card">
       <div class="toolbar">
@@ -291,7 +284,7 @@
   </section>
 </div>
 
-  </dialog>  <!-- Floating add shortcut -->  <div class="fab"><a class="btn" href="#register">+ Add Salon</a></div>  <!-- ============= SCRIPTS ============= -->  <script>
+  </dialog>  <!-- Floating add shortcut -->  <!-- fab removed -->  <!-- ============= SCRIPTS ============= -->  <script>
     /* ---------- Data store ---------- */
     const LS = "salon-india:v2";
     const load = () => JSON.parse(localStorage.getItem(LS) || "[]");
@@ -364,9 +357,7 @@ async function loadSalonsFromSheet(){
     const slugHelp  = $('#slugHelp');
     let slugManuallyEdited = false;
       // Open Settings and hide Register after first save
-      try{ toggleOwnerUI(); openSettings(); }catch(e){}
-
-    if(salonName && slugInput){
+if(salonName && slugInput){
       salonName.addEventListener('input', ()=>{
         if(!slugManuallyEdited){
           slugInput.value = makeSlug(salonName.value);
@@ -425,9 +416,13 @@ async function loadSalonsFromSheet(){
         wa: $('#wa').value.trim()
       };
 
-      if(!salon.owner || !/^\d{10}$/.test(salon.mobile) || !salon.name || !salon.city){
-        showMsg('⚠️ Owner, 10-digit mobile, Salon name aur City zaroori hain.', 'warn'); return;
+      const is10 = /^\d{10}$/.test(salon.mobile);
+      const is91 = /^91\d{10}$/.test(salon.mobile);
+      if(!salon.owner || !(is10 || is91) || !salon.name || !salon.city){
+        showMsg('⚠️ Owner, 10-digit mobile (ya 91+10), Salon name aur City zaroori hain.', 'warn'); return;
       }
+      salon.mobile = salon.mobile.slice(-10);
+      salon.city   = (salon.city||'').replace(/\s*,\s*/g, ', ').trim().toLowerCase();
       if(salon.slug && slugExists(salon.slug)){
         showMsg('⚠️ Ye short link (slug) pehle se use me hai. Alag try karein.', 'warn'); return;
       }
@@ -446,44 +441,9 @@ async function loadSalonsFromSheet(){
       toast(t);
     }
 
-    /* ---------- List + search + sort ---------- */
-    function renderList(){
-      const qCity = $('#qCity').value.trim().toLowerCase();
-      const qService = $('#qService').value;
-      const qText = $('#qText').value.trim().toLowerCase();
-      const qSort = $('#qSort').value;
+    /* ---------- List + search + sort (old local-only) removed to avoid duplicate; sheet-powered version is below ---------- */
 
-      const out = $('#listOut'); out.innerHTML = '';
-      let rows = load().filter(s=>{
-        const byCity = qCity ? s.city.includes(qCity) : true;
-        const text = (s.name + ' ' + s.owner).toLowerCase();
-        const byText = qText ? text.includes(qText) : true;
-        const bySrv  = qService ? (s.price[qService] > 0) : true;
-        return byCity && byText && bySrv;
-      });
-
-      // sort
-      rows.sort((a,b)=>{
-        if(qSort==='name') return a.name.localeCompare(b.name);
-        if(qSort==='new') return b.id - a.id;
-        if(qSort==='priceAsc'){
-          const sa = minPrice(a), sb = minPrice(b); return sa - sb;
-        }
-        if(qSort==='priceDesc'){
-          const sa = minPrice(a), sb = minPrice(b); return sb - sa;
-        }
-        return 0;
-      });
-
-      if(!rows.length){
-        out.innerHTML = `<div class="card muted">Koi salon nahi mila. Filters change karein ya Register karein.</div>`;
-        return;
-      }
-
-      rows.forEach(s=> out.appendChild(renderItem(s)) );
-    }
-
-    function minPrice(s){
+function minPrice(s)(s){
       const vals = Object.values(s.price||{}).filter(n=> typeof n==='number' && n>0);
       return vals.length? Math.min(...vals): 0;
     }
@@ -606,224 +566,10 @@ async function loadSalonsFromSheet(){
     }
 
     /* ---------- Hash routing ---------- */
-    function goHash(){
-      const hash = decodeURIComponent(location.hash||'#home');
-      if(hash.startsWith('#s/')){
-        const key = hash.split('/')[1];
-        openDetail(key);
-        return;
-      }
-      const el = document.querySelector(hash);
-      if(el){ el.scrollIntoView({behavior:'smooth',block:'start'}); }
-      if(hash==='#list') renderList();
-    }
-    window.addEventListener('hashchange', goHash);
-    window.addEventListener('load', ()=>{ toggleOwnerUI(); goHash(); });
+    /* hash routing (old) removed; sheet-powered routing is below */ goHash(); });
 
-    /* ---------- Export / Import / Clear ---------- */
-    $('#exportBtn').addEventListener('click', ()=>{
-      const data = JSON.stringify(load(), null, 2);
-      const blob = new Blob([data], {type:'application/json'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = 'salon-india-data.json'; a.click();
-      URL.revokeObjectURL(url);
-      toast('Data exported');
-    });
-
-    $('#importFile').addEventListener('change', (e)=>{
-      const file = e.target.files?.[0];
-      if(!file) return;
-      const reader = new FileReader();
-      reader.onload = ()=>{
-        try{
-          const arr = JSON.parse(reader.result);
-          if(!Array.isArray(arr)) throw new Error('Invalid JSON');
-          save(arr); toast('Data imported'); renderList();
-        }catch(err){ toast('Import error: '+ err.message); }
-      };
-      reader.readAsText(file);
-    });
-
-    $('#clearBtn').addEventListener('click', ()=>{
-      if(confirm('Pakka? Ye action local data mita dega.')){ save([]); renderList(); toast('Cleared'); }
-    });
-  // === Sheet-powered overrides (final) ===
-async function renderList(){
-  const qCity = $('#qCity').value.trim().toLowerCase();
-  const qService = $('#qService').value;
-  const qText = $('#qText').value.trim().toLowerCase();
-  const qSort = $('#qSort').value;
-  const out = $('#listOut'); out.innerHTML = '';
-  let rows = await loadSalonsFromSheet();
-  if(Array.isArray(rows)){ SHEET_CACHE = rows.slice(); } else { rows = load(); }
-  rows = rows.filter(s=>{
-    const byCity = qCity ? (s.city||'').includes(qCity) : true;
-    const text = ((s.name||'')+' '+(s.owner||'')).toLowerCase();
-    const byText = qText ? text.includes(qText) : true;
-    const bySrv  = qService ? ((s.price||{})[qService] > 0) : true;
-    return byCity && byText && bySrv;
-  });
-  rows.sort((a,b)=>{
-    if(qSort==='name') return (a.name||'').localeCompare(b.name||'');
-    if(qSort==='new') return (b.id||0) - (a.id||0);
-    if(qSort==='priceAsc') return (minPrice(a) - minPrice(b));
-    if(qSort==='priceDesc') return (minPrice(b) - minPrice(a));
-    return 0;
-  });
-  if(!rows.length){ out.innerHTML = `<div class=\"card muted\">Koi salon nahi mila. Filters change karein ya Register karein.</div>`; return; }
-  rows.forEach(s=> out.appendChild(renderItem(s)) );
-}
-
-async function openDetail(key){
-  let s = SHEET_CACHE? SHEET_CACHE.find(x => (x.slug||x.id+'')===key) : null;
-  if(!s){ const rows = await loadSalonsFromSheet(); if(Array.isArray(rows)){ SHEET_CACHE = rows.slice(); s = rows.find(x => (x.slug||x.id+'')===key); } }
-  if(!s){ s = load().find(x => (x.slug||x.id+'')===key); }
-  if(!s){ toast('Salon nahi mila'); return; }
-  const waBase = s.wa ? `https://wa.me/${s.wa}` : '';
-  const services = Object.entries(s.price||{}).filter(([k,v])=> +v>0);
-  const html = `
-    <div style=\"display:grid;gap:12px\">
-      <div>
-        <div style=\"font-weight:900;font-size:20px\">${s.name}</div>
-        <div class=\"muted\">Owner: ${s.owner||'-'} • ${s.city||'-'} ${s.mobile?('• 📞 '+s.mobile):''}</div>
-      </div>
-      <div>
-        <label class=\"muted\">Service</label>
-        <select id=\"bkService\">${services.map(([k,v])=>`<option value=\"${k}\">${label(k)} — ₹${v}</option>`).join('')}</select>
-      </div>
-      <div class=\"row\">
-        <div class=\"full\">
-          <label class=\"muted\">Date</label>
-          <input id=\"bkDate\" type=\"date\">
-        </div>
-        <div class=\"full\">
-          <label class=\"muted\">Time</label>
-          <input id=\"bkTime\" type=\"time\">
-        </div>
-      </div>
-      <input id=\"bkName\" placeholder=\"Your Name\">
-      <input id=\"bkNotes\" placeholder=\"Notes (optional)\">
-      <div class=\"row\">
-        <button class=\"btn full\" id=\"bkBtn\" ${waBase?'':'disabled'}>${waBase? 'Send WhatsApp Booking' : 'WhatsApp not set'}</button>
-        <button class=\"btn ghost full\" id=\"copyBtn\">Copy Booking Text</button>
-      </div>
-    </div>`;
-  $('#detailContent').innerHTML = html;
-  document.getElementById('detailDialog').showModal();
-  const d = new Date(Date.now()+60*60*1000);
-  $('#bkDate').value = d.toISOString().slice(0,10);
-  $('#bkTime').value = d.toTimeString().slice(0,5);
-  function buildText(){
-    const svc = label($('#bkService').value);
-    const date = $('#bkDate').value; const time = $('#bkTime').value;
-    const name = ($('#bkName').value||'').trim() || 'Customer';
-    const notes= ($('#bkNotes').value||'').trim();
-    return `Namaste ${s.name}!
-Main ${name} ${svc} ke liye ${date} ${time} par booking karna chahta/chahti hu. ${notes?('Notes: '+notes):''}
-
-– via Salon India`;
-  }
-  $('#bkBtn')?.addEventListener('click', ()=>{ const text = buildText(); const url = `${waBase}?text=${encodeURIComponent(text)}`; window.open(url, '_blank'); });
-  $('#copyBtn')?.addEventListener('click', ()=>{ const text = buildText(); navigator.clipboard.writeText(text).then(()=> toast('Booking text copied')).catch(()=> toast(text)); });
-  location.hash = `#s/${encodeURIComponent(s.slug||s.id)}`;
-}
-
-async function goHash(){
-  const hash = decodeURIComponent(location.hash||'#home');
-  if(hash.startsWith('#s/')){ const key = hash.split('/')[1]; openDetail(key); return; }
-  const el = document.querySelector(hash); if(el){ el.scrollIntoView({behavior:'smooth',block:'start'}); }
-  if(hash==='#list') renderList();
-}
-// === Sheet-powered overrides (final) ===
-    async function renderList(){
-      const qCity = $('#qCity').value.trim().toLowerCase();
-      const qService = $('#qService').value;
-      const qText = $('#qText').value.trim().toLowerCase();
-      const qSort = $('#qSort').value;
-      const out = $('#listOut'); out.innerHTML = '';
-      let rows = await loadSalonsFromSheet();
-      if(Array.isArray(rows)){ SHEET_CACHE = rows.slice(); } else { rows = load(); }
-      rows = rows.filter(s=>{
-        const byCity = qCity ? (s.city||'').includes(qCity) : true;
-        const text = ((s.name||'')+' '+(s.owner||'')).toLowerCase();
-        const byText = qText ? text.includes(qText) : true;
-        const bySrv  = qService ? ((s.price||{})[qService] > 0) : true;
-        return byCity && byText && bySrv;
-      });
-      rows.sort((a,b)=>{
-        if(qSort==='name') return (a.name||'').localeCompare(b.name||'');
-        if(qSort==='new') return (b.id||0) - (a.id||0);
-        if(qSort==='priceAsc') return (minPrice(a) - minPrice(b));
-        if(qSort==='priceDesc') return (minPrice(b) - minPrice(a));
-        return 0;
-      });
-      if(!rows.length){ out.innerHTML = `<div class="card muted">Koi salon nahi mila. Filters change karein ya Register karein.</div>`; return; }
-      rows.forEach(s=> out.appendChild(renderItem(s)) );
-    }
-
-    async function openDetail(key){
-      let s = SHEET_CACHE? SHEET_CACHE.find(x => (x.slug||x.id+'')===key) : null;
-      if(!s){ const rows = await loadSalonsFromSheet(); if(Array.isArray(rows)){ SHEET_CACHE = rows.slice(); s = rows.find(x => (x.slug||x.id+'')===key); } }
-      if(!s){ s = load().find(x => (x.slug||x.id+'')===key); }
-      if(!s){ toast('Salon nahi mila'); return; }
-      const waBase = s.wa ? `https://wa.me/${s.wa}` : '';
-      const services = Object.entries(s.price||{}).filter(([k,v])=> +v>0);
-      const html = `
-        <div style="display:grid;gap:12px">
-          <div>
-            <div style="font-weight:900;font-size:20px">${s.name}</div>
-            <div class="muted">Owner: ${s.owner||'-'} • ${s.city||'-'} ${s.mobile?('• 📞 '+s.mobile):''}</div>
-          </div>
-          <div>
-            <label class="muted">Service</label>
-            <select id="bkService">${services.map(([k,v])=>`<option value="${k}">${label(k)} — ₹${v}</option>`).join('')}</select>
-          </div>
-          <div class="row">
-            <div class="full">
-              <label class="muted">Date</label>
-              <input id="bkDate" type="date">
-            </div>
-            <div class="full">
-              <label class="muted">Time</label>
-              <input id="bkTime" type="time">
-            </div>
-          </div>
-          <input id="bkName" placeholder="Your Name">
-          <input id="bkNotes" placeholder="Notes (optional)">
-          <div class="row">
-            <button class="btn full" id="bkBtn" ${waBase?'':'disabled'}>${waBase? 'Send WhatsApp Booking' : 'WhatsApp not set'}</button>
-            <button class="btn ghost full" id="copyBtn">Copy Booking Text</button>
-          </div>
-        </div>`;
-      $('#detailContent').innerHTML = html;
-      document.getElementById('detailDialog').showModal();
-      const d = new Date(Date.now()+60*60*1000);
-      $('#bkDate').value = d.toISOString().slice(0,10);
-      $('#bkTime').value = d.toTimeString().slice(0,5);
-      function buildText(){
-        const svc = label($('#bkService').value);
-        const date = $('#bkDate').value; const time = $('#bkTime').value;
-        const name = ($('#bkName').value||'').trim() || 'Customer';
-        const notes= ($('#bkNotes').value||'').trim();
-        return `Namaste ${s.name}!
-Main ${name} ${svc} ke liye ${date} ${time} par booking karna chahta/chahti hu. ${notes?('Notes: '+notes):''}
-
-– via Salon India`;
-      }
-      $('#bkBtn')?.addEventListener('click', ()=>{ const text = buildText(); const url = `${waBase}?text=${encodeURIComponent(text)}`; window.open(url, '_blank'); });
-      $('#copyBtn')?.addEventListener('click', ()=>{ const text = buildText(); navigator.clipboard.writeText(text).then(()=> toast('Booking text copied')).catch(()=> toast(text)); });
-      location.hash = `#s/${encodeURIComponent(s.slug||s.id)}`;
-    }
-
-    async function goHash(){
-      const hash = decodeURIComponent(location.hash||'#home');
-      if(hash.startsWith('#s/')){ const key = hash.split('/')[1]; openDetail(key); return; }
-      const el = document.querySelector(hash); if(el){ el.scrollIntoView({behavior:'smooth',block:'start'}); }
-      if(hash==='#list') renderList();
-    }
-
-    // ========= SETTINGS LOGIC =========
+    // (legacy Export/Import/Clear handlers removed — use Settings modal controls)
+// ========= SETTINGS LOGIC =========
     const settingsDlg = document.getElementById('settingsDialog');
     document.getElementById('settingsBtn').addEventListener('click', openSettings);
     document.getElementById('closeSettings').addEventListener('click', ()=> settingsDlg.close());
@@ -889,6 +635,6 @@ Main ${name} ${svc} ke liye ${date} ${time} par booking karna chahta/chahti hu. 
         btn.style.color='#fff';
         btn.addEventListener('click', ()=> applyBrand(c1,c2));
       });
-    })(); toast('Cleared'); toggleOwnerUI(); renderList(); settingsDlg.close(); }});
+    })();
   </script></body>
 </html>

@@ -11,12 +11,14 @@
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://banjare494.github.io/Selun-india_/">
   <meta property="og:title" content="Salon India – Free Salon Register & Booking Platform">
-  <meta property="og:description" content="Apna salon register karo, list banao, booking lo – maps, ratings & dashboard ke saath!">
+  <meta property="og:description" content="Apna salon register karo, list banao, booking lo – maps & dashboard ke saath!">
   <meta property="og:image" content="https://banjare494.github.io/Selun-india_/images/banner.jpg">
   <meta property="og:url" content="https://banjare494.github.io/Selun-india_/">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="theme-color" content="#0054ff" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0b1020" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#0078ff">
+
+  <!-- PWA manifest -->
+  <link rel="manifest" href="manifest.json">
 
   <style>
     :root{
@@ -84,6 +86,7 @@
     .toast{position:fixed;right:16px;bottom:16px;z-index:100;background:var(--card);border:1px solid rgba(255,255,255,.12);padding:12px 14px;border-radius:14px;box-shadow:var(--shadow);min-width:240px}
     .hide{display:none !important}
     .sr{position:absolute;left:-9999px}
+    .star{font-size:22px;cursor:pointer}
 
     /* Booking calendar */
     .slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
@@ -109,7 +112,6 @@
     th,td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.12);text-align:left}
     [data-theme="light"] th,[data-theme="light"] td{border-color:#e5e7eb}
     th{font-weight:800}
-    .star{font-size:18px;cursor:pointer}
   </style>
 </head>
 <body>
@@ -147,10 +149,11 @@
         <p class="muted">Koi complicated app nahi. Sirf form bhariye aur turant listing ready.</p>
         <div class="sp"></div>
         <ul class="muted" style="display:grid;gap:6px;list-style:none">
-          <li>✅ Short link, prices, <b>ratings</b>, photo, WhatsApp</li>
+          <li>✅ Short link, prices, ratings, photo, WhatsApp</li>
           <li>✅ Live City/Area filter, Owner login</li>
           <li>✅ Detail Page + Booking Calendar + 📍 Maps</li>
-          <li>🆕 📊 <b>Admin Dashboard</b></li>
+          <li>✅ Offline PWA + Install App</li>
+          <li>🆕 📊 Admin Dashboard</li>
         </ul>
         <div class="sp"></div>
         <div class="row">
@@ -303,7 +306,7 @@
 
   <script>
     /* ===== Storage ===== */
-    const LS="salon-india:v5";            // bump version to avoid old schema conflicts
+    const LS="salon-india:v5";
     const SESS="salon-india:session";
     const LSB="salon-india:bookings";
     const load = ()=>JSON.parse(localStorage.getItem(LS)||"[]");
@@ -315,20 +318,19 @@
 
     /* ===== Helpers ===== */
     const $ = s => document.querySelector(s);
-    const $$ = s => Array.from(document.querySelectorAll(s));
     const toast=(msg)=>{const t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),3000);};
     const show = el => el.classList.remove('hide');
     const hide = el => el.classList.add('hide');
     const numOrNull = v => { const n=parseFloat(v); return Number.isFinite(n)?n:null; };
 
-    // theme toggle + restore
+    // theme: set ASAP (1 place only)
+    (function(){const pref=localStorage.getItem('theme'); if(pref) document.documentElement.setAttribute('data-theme',pref);})();
     $('#themeBtn')?.addEventListener('click',()=>{
       const cur=document.documentElement.getAttribute('data-theme');
       const next=cur==='light'?'dark':'light';
       document.documentElement.setAttribute('data-theme',next);
       localStorage.setItem('theme',next);
     });
-    (function(){const pref=localStorage.getItem('theme'); if(pref) document.documentElement.setAttribute('data-theme',pref);})();
 
     // slug helpers
     function makeSlug(str){ return (str||"").toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').replace(/-{2,}/g,'-').slice(0,50); }
@@ -366,7 +368,7 @@
     });
 
     /* ===== Register ===== */
-    function showMsg(t,type){ const el=$("#msg"); el.textContent=t; el.style.color= type==="ok"?"var(--ok)":"var(--warn)"; toast(t); }
+    const showMsg=(t,type)=>{ const el=$("#msg"); el.textContent=t; el.style.color= type==="ok"?"var(--ok)":"var(--warn)"; toast(t); };
 
     $('#btnCreate').addEventListener('click', ()=>{
       const salon={
@@ -412,20 +414,10 @@
       slugManuallyEdited=false; renderList();
     });
 
-    /* ===== Ratings ===== */
-    function addRating(salonId, rating){
-      const a=load(); const i=a.findIndex(x=>x.id===salonId); if(i<0) return;
-      a[i].rSum += rating; a[i].rCount += 1; save(a);
-    }
-    function avgRating(s){ return s.rCount ? (s.rSum / s.rCount) : 0; }
-    function renderStars(avg){
-      const full=Math.floor(avg), half=(avg-full)>=0.5?1:0, empty=5-full-half;
-      return '★'.repeat(full)+(half?'½':'')+'☆'.repeat(empty);
-    }
-
     /* ===== List / Search / Sort ===== */
     const outEl = $('#listOut');
-    function minPrice(s){ const v=Object.values(s.price||{}).filter(n=>typeof n==='number'&&n>0); return v.length?Math.min(...v):0; }
+    const minPrice = s => { const v=Object.values(s.price||{}).filter(n=>typeof n==='number'&&n>0); return v.length?Math.min(...v):0; };
+    const avgRating = s => s.rCount? (s.rSum/s.rCount) : 0;
 
     function renderItem(s){
       const el=document.createElement('div'); el.className='item';
@@ -488,15 +480,12 @@
       if(!rows.length){ outEl.innerHTML=`<div class="card muted">Koi salon nahi mila. Filters change karein ya pehle Register karein.</div>`; return; }
       rows.forEach(s=>outEl.appendChild(renderItem(s)));
     }
-    $('#btnSearch')?.addEventListener('click',renderList);
-    $('#qCity')?.addEventListener('input',renderList);
+    document.getElementById('btnSearch')?.addEventListener('click',renderList);
+    document.getElementById('qCity')?.addEventListener('input',renderList);
 
     /* ===== Booking calendar utils ===== */
     const workStart=9, workEnd=19, stepMin=30;
-    function bookedSetFor(salonId, dateStr){
-      const all=loadBk()[salonId]?.[dateStr]||[];
-      return new Set(all.map(x=>x.time));
-    }
+    const bookedSetFor = (salonId, dateStr) => new Set((loadBk()[salonId]?.[dateStr]||[]).map(x=>x.time));
     function addBookingRecord(salonId, dateStr, rec){
       const all=loadBk();
       if(!all[salonId]) all[salonId]={};
@@ -506,7 +495,7 @@
     }
     function buildSlotGrid(dateStr, bookedSet){
       const wrap=document.createElement('div'); wrap.className='slots';
-      const mk=(n)=>n.toString().padStart(2,'0');
+      const mk=n=>n.toString().padStart(2,'0');
       let t=new Date(dateStr+'T'+mk(workStart)+':00:00');
       const end=new Date(dateStr+'T'+mk(workEnd)+':00:00');
       while(t<end){
@@ -521,15 +510,16 @@
       return wrap;
     }
 
-    /* ===== Detail PAGE Renderer ===== */
+    /* ===== Detail PAGE Renderer (with Ratings) ===== */
     const detailWrap = $('#detailPage');
     const detailCard = $('#detailCard');
 
-    function label(k){ return ({haircut:'Haircut',shave:'Shave',beard:'Beard',facial:'Facial'})[k]||k; }
-    function mapIframe(lat,lng,zoom=15){
+    const label = k => ({haircut:'Haircut',shave:'Shave',beard:'Beard',facial:'Facial'})[k]||k;
+    const avg = s => s.rCount? (s.rSum/s.rCount) : 0;
+    const mapIframe = (lat,lng,zoom=15) => {
       const src=`https://www.google.com/maps?q=${lat},${lng}&z=${zoom}&output=embed`;
       return `<div class="mapBox"><iframe width="100%" height="260" style="border:0" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="${src}"></iframe></div>`;
-    }
+    };
 
     function renderDetailPage(slugOrId){
       const a=load();
@@ -549,7 +539,7 @@
           ${s.photo?`<img class="thumb" src="${s.photo}" alt="${s.name}">`:''}
           <div>
             <div class="h2" style="font-size:22px">${s.name}</div>
-            <div class="muted">Owner: ${s.owner} • ${s.city} • ⭐ ${avgRating(s).toFixed(1)} (${s.rCount})</div>
+            <div class="muted">Owner: ${s.owner} • ${s.city} • ⭐ ${avg(s).toFixed(1)} (${s.rCount})</div>
             ${s.loc?.address?`<div class="muted">📍 ${s.loc.address}</div>`:''}
             <div class="row" style="margin-top:8px">
               ${waBase?`<a class="btn" target="_blank" href="${waBase}?text=${encodeURIComponent('Namaste '+s.name+' me booking karna hai.')}" title="WhatsApp">WhatsApp</a>`:''}
@@ -593,10 +583,10 @@
         <div id="rateRow">${[1,2,3,4,5].map(n=>`<span class="star" data-rate="${n}">☆</span>`).join('')}</div>
       `;
 
-      $('#copyLink').addEventListener('click',()=>navigator.clipboard.writeText(shareUrl).then(()=>toast('Link copied')));
+      document.getElementById('copyLink').addEventListener('click',()=>navigator.clipboard.writeText(shareUrl).then(()=>toast('Link copied')));
 
       // init date + slots
-      const dateEl=$('#dateSel'); const slotsArea=$('#slotsArea');
+      const dateEl=document.getElementById('dateSel'); const slotsArea=document.getElementById('slotsArea');
       const d=new Date(); const min=d.toISOString().slice(0,10);
       dateEl.min=min; dateEl.value=min;
       let selectedTime="";
@@ -617,45 +607,46 @@
       drawSlots();
       dateEl.addEventListener('change',drawSlots);
 
-      function bookingText(){
-        const svc=label($('#svcSel').value);
-        const nm=($('#bkName').value||'').trim()||'Customer';
-        const notes=($('#bkNotes').value||'').trim();
+      const bookingText=()=> {
+        const svc=label(document.getElementById('svcSel').value);
+        const nm=(document.getElementById('bkName').value||'').trim()||'Customer';
+        const notes=(document.getElementById('bkNotes').value||'').trim();
         return `Namaste ${s.name}!\nMain ${nm} ${svc} ke liye ${dateEl.value} ${selectedTime} par booking karna chahta/chahti hu. ${notes?('Notes: '+notes):''}\n\n– via Salon India`;
-      }
+      };
 
-      $('#confirmBk').addEventListener('click',()=>{
+      document.getElementById('confirmBk').addEventListener('click',()=>{
         if(!selectedTime){ toast('Time slot select karein'); return; }
-        const rec={ time:selectedTime, date:dateEl.value, service:$('#svcSel').value, name:($('#bkName').value||'').trim()||'Customer', notes:($('#bkNotes').value||'').trim(), createdAt:Date.now() };
+        const rec={ time:selectedTime, date:dateEl.value, service:document.getElementById('svcSel').value, name:(document.getElementById('bkName').value||'').trim()||'Customer', notes:(document.getElementById('bkNotes').value||'').trim(), createdAt:Date.now() };
         addBookingRecord(s.id, dateEl.value, rec);
         toast('Booking saved ✅');
         if(s.wa) window.open(`https://wa.me/${s.wa}?text=${encodeURIComponent(bookingText())}`,'_blank');
         drawSlots();
       });
-      $('#copyBk').addEventListener('click',()=>{
+      document.getElementById('copyBk').addEventListener('click',()=>{
         if(!selectedTime){ toast('Time slot select karein'); return; }
         navigator.clipboard.writeText(bookingText()).then(()=>toast('Booking text copied')).catch(()=>toast('Copied text'));
       });
 
-      // rating events
-      $$('#rateRow .star').forEach(st=>{
+      // ratings (re-render detail to reflect)
+      [...document.querySelectorAll('#rateRow .star')].forEach(st=>{
         st.addEventListener('click',()=>{
           const r=parseInt(st.getAttribute('data-rate'));
-          addRating(s.id, r);
-          toast(`Thanks! Rated ${r}★`);
-          renderDetailPage(slugOrId); // re-render to update stars/avg
+          const arr=load(); const i=arr.findIndex(x=>x.id===s.id);
+          if(i>-1){ arr[i].rSum += r; arr[i].rCount += 1; save(arr); toast(`Thanks! Rated ${r}★`); renderDetailPage(slugOrId); }
         });
       });
     }
 
     // Back button
-    $('#backBtn').addEventListener('click',()=>{
+    document.getElementById('backBtn').addEventListener('click',()=>{
       location.hash="#list";
+      hide(detailWrap); hide(document.getElementById('adminPage')); show(document.getElementById('home')); show(document.getElementById('about')); show(document.getElementById('register')); show(document.getElementById('list'));
+      renderList();
     });
 
     /* ===== ADMIN DASHBOARD ===== */
-    const adminWrap=$('#adminPage');
-    const kpiRow = $('#kpiRow');
+    const adminWrap=document.getElementById('adminPage');
+    const kpiRow = document.getElementById('kpiRow');
 
     function flattenBookings(){
       const map=loadBk(); const salons=load();
@@ -704,7 +695,7 @@
     }
 
     function renderAdmin(){
-      hide($('#home')); hide($('#about')); hide($('#register')); hide($('#list')); hide($('#detailPage')); show(adminWrap);
+      hide(document.getElementById('home')); hide(document.getElementById('about')); hide(document.getElementById('register')); hide(document.getElementById('list')); hide(document.getElementById('detailPage')); show(adminWrap);
 
       const salons=load();
       const bookings=flattenBookings();
@@ -714,29 +705,28 @@
 
       const now=new Date();
       const todayStr=now.toISOString().slice(0,10);
-      const startOfWeek=new Date(now); startOfWeek.setDate(now.getDate()-now.getDay()); // Sunday
+      const startOfWeek=new Date(now); startOfWeek.setDate(now.getDate()-now.getDay());
       const weekStr=startOfWeek.toISOString().slice(0,10);
 
       const todayCount=bookings.filter(b=>b.date===todayStr).length;
       const weekCount=bookings.filter(b=>b.date>=weekStr).length;
 
       kpiRow.innerHTML='';
-      const kpis=[
+      [
         {label:'Total Salons', val:salons.length},
         {label:'With WhatsApp', val:withWA},
         {label:'Avg Rating', val:avgAll.toFixed(2)},
         {label:'Total Bookings', val:bookings.length},
         {label:'Today', val:todayCount},
         {label:'This Week', val:weekCount},
-      ];
-      kpis.forEach(k=>{
+      ].forEach(k=>{
         const d=document.createElement('div'); d.className='kpi';
         d.innerHTML=`<div class="muted">${k.label}</div><div class="val">${k.val}</div>`;
         kpiRow.appendChild(d);
       });
 
       // Recent bookings
-      fillTable($('#bkTable tbody'), bookings.slice(0,20), [
+      fillTable(document.querySelector('#bkTable tbody'), bookings.slice(0,20), [
         'date','time','salon','service', r=>r.name, r=>r.notes
       ]);
 
@@ -744,28 +734,28 @@
       const cityMap={};
       salons.forEach(s=>{ if(!s.city) return; cityMap[s.city]=(cityMap[s.city]||0)+1; });
       const cityRows=Object.entries(cityMap).sort((a,b)=>b[1]-a[1]).map(([city,count])=>({city,count}));
-      fillTable($('#cityTable tbody'), cityRows, ['city','count']);
+      fillTable(document.querySelector('#cityTable tbody'), cityRows, ['city','count']);
 
       // Top rated
       const rated=salons.filter(s=>s.rCount>0).map(s=>({salon:s.name, avg:(s.rSum/s.rCount), count:s.rCount}));
       rated.sort((a,b)=>b.avg-a.avg);
-      fillTable($('#topRated tbody'), rated.slice(0,10), [r=>r.salon, r=>r.avg.toFixed(2), 'count']);
+      fillTable(document.querySelector('#topRated tbody'), rated.slice(0,10), [r=>r.salon, r=>r.avg.toFixed(2), 'count']);
 
       // Most booked
       const bkCountBySalon={};
       bookings.forEach(b=>{ bkCountBySalon[b.salon]=(bkCountBySalon[b.salon]||0)+1; });
       const topBooked=Object.entries(bkCountBySalon).map(([salon,count])=>({salon,count})).sort((a,b)=>b.count-a.count);
-      fillTable($('#topBooked tbody'), topBooked.slice(0,10), ['salon','count']);
+      fillTable(document.querySelector('#topBooked tbody'), topBooked.slice(0,10), ['salon','count']);
 
       // Buttons
-      $('#exportCsv').onclick=()=>{
+      document.getElementById('exportCsv').onclick=()=>{
         const csv=toCSV(bookings);
         const blob=new Blob([csv],{type:'text/csv'});
         const url=URL.createObjectURL(blob);
         const a=document.createElement('a');
         a.href=url; a.download='salon-bookings.csv'; a.click(); URL.revokeObjectURL(url);
       };
-      $('#clearBookings').onclick=()=>{
+      document.getElementById('clearBookings').onclick=()=>{
         if(confirm('Pakka? Sirf local bookings data clear hoga.')){
           localStorage.setItem(LSB, JSON.stringify({}));
           toast('Bookings cleared'); renderAdmin();
@@ -775,33 +765,67 @@
 
     /* ===== Router: #s/<slug> & #admin ===== */
     function router(){
-      const h=(location.hash||'');
+      const h=(location.hash||'').replace(/^#!?/,'');
       const m=h.match(/^#s\/([^/]+)$/);
       if(m){ renderDetailPage(decodeURIComponent(m[1])); window.scrollTo({top:0,behavior:'smooth'}); return; }
       if(h==='#admin'){ renderAdmin(); window.scrollTo({top:0,behavior:'smooth'}); return; }
-      // default home/list
-      hide($('#detailPage')); hide($('#adminPage')); show($('#home')); show($('#about')); show($('#register')); show($('#list'));
-      renderList();
+      hide(document.getElementById('detailPage')); hide(document.getElementById('adminPage')); show(document.getElementById('home')); show(document.getElementById('about')); show(document.getElementById('register')); show(document.getElementById('list'));
     }
     window.addEventListener('hashchange',router);
+    window.addEventListener('load',router);
 
     /* ===== Login (owner) ===== */
-    const loginDlg=$('#loginDialog');
-    $('#loginBtn').addEventListener('click',()=>loginDlg.showModal());
-    $('#closeLogin').addEventListener('click',()=>loginDlg.close());
-    $('#doLogin').addEventListener('click',()=>{
-      const m=($('#loginMobile').value||'').trim().slice(-10);
-      const p=($('#loginPin').value||'').trim();
+    const loginDlg=document.getElementById('loginDialog');
+    document.getElementById('loginBtn').addEventListener('click',()=>loginDlg.showModal());
+    document.getElementById('closeLogin').addEventListener('click',()=>loginDlg.close());
+    document.getElementById('doLogin').addEventListener('click',()=>{
+      const m=(document.getElementById('loginMobile').value||'').trim().slice(-10);
+      const p=(document.getElementById('loginPin').value||'').trim();
       const a=load(); const s=a.find(x=>x.mobile===m && x.pin===p);
-      if(s){ setSession({id:s.id, at:Date.now()}); $('#loginMsg').textContent='Logged in ✅'; loginDlg.close(); toast('Owner mode ON'); renderList();}
-      else { $('#loginMsg').textContent='❌ Not found. Mobile/PIN check karein.'; }
+      if(s){ setSession({id:s.id, at:Date.now()}); document.getElementById('loginMsg').textContent='Logged in ✅'; loginDlg.close(); toast('Owner mode ON'); renderList();}
+      else { document.getElementById('loginMsg').textContent='❌ Not found. Mobile/PIN check karein.'; }
     });
 
-    /* ===== Init once ===== */
-    window.addEventListener('load',()=>{
-      const pref=localStorage.getItem('theme'); if(pref) document.documentElement.setAttribute('data-theme',pref);
-      router(); // single entry point
+    /* ===== Basic Analytics (local only) ===== */
+    (function(){
+      try{
+        const KEY='si:analytics:v1';
+        const data = JSON.parse(localStorage.getItem(KEY)||'{"visits":0,"last":""}');
+        data.visits++; data.last=new Date().toISOString();
+        localStorage.setItem(KEY, JSON.stringify(data));
+        console.log(`👁️ Visits: ${data.visits}, Last visit: ${data.last}`);
+      }catch(e){}
+    })();
+
+    /* ===== PWA: Service Worker + Install Prompt ===== */
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e)=>{
+      e.preventDefault();
+      deferredPrompt = e;
+      const btn=document.createElement('button');
+      btn.textContent='📲 Install Salon India App';
+      btn.className='btn';
+      btn.style.position='fixed';
+      btn.style.bottom='20px';
+      btn.style.right='20px';
+      btn.style.zIndex='9999';
+      document.body.appendChild(btn);
+
+      btn.addEventListener('click', async()=>{
+        btn.style.display='none';
+        deferredPrompt.prompt();
+        await deferredPrompt.userChoice;
+        deferredPrompt = null;
+      });
     });
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then(reg => console.log('✅ Service Worker registered:', reg.scope))
+          .catch(err => console.warn('SW registration failed:', err));
+      });
+    }
   </script>
 </body>
 </html>

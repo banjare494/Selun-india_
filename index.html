@@ -5,19 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Salon India • Register • List • Book</title>
 
-  <!-- SEO basic -->
+  <!-- SEO -->
   <meta name="title" content="Salon India - Register • List • Book Salon">
-  <meta name="description" content="Salon India: register salon, price list set karein, WhatsApp se booking lein. Free, fast & simple.">
+  <meta name="description" content="Salon India: register salon, price list set karein, WhatsApp/UPI se booking lein. Free, fast & simple.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://banjare494.github.io/Selun-india_/">
   <meta property="og:title" content="Salon India – Free Salon Register & Booking Platform">
-  <meta property="og:description" content="Apna salon register karo, list banao, booking lo – maps & dashboard ke saath!">
+  <meta property="og:description" content="Apna salon register karo, list banao, booking lo – maps, UPI & dashboard ke saath!">
   <meta property="og:image" content="https://banjare494.github.io/Selun-india_/images/banner.jpg">
   <meta property="og:url" content="https://banjare494.github.io/Selun-india_/">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#0078ff">
 
-  <!-- PWA manifest -->
+  <!-- PWA -->
   <link rel="manifest" href="manifest.json">
 
   <style>
@@ -38,16 +38,16 @@
       background:linear-gradient(180deg, rgba(15,23,42,.75), rgba(15,23,42,.55));
       border-bottom:1px solid rgba(255,255,255,.06)}
     [data-theme="light"] header{background:rgba(255,255,255,.78);border-bottom:1px solid #e5e7eb}
-    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 18px}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 18px}
     .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px}
     .brand .logo{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,var(--brand),var(--brand-2));box-shadow:0 8px 20px rgba(59,130,246,.35);display:grid;place-items:center;color:#fff}
     .brand span{font-size:20px}
-    .navlinks{display:flex;gap:12px;align-items:center}
-    .btn{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;border:0;border-radius:14px;padding:12px 16px;font-weight:800;cursor:pointer;box-shadow:var(--shadow);transition:transform .06s ease}
+    .navlinks{display:flex;gap:8px;align-items:center}
+    .btn{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;border:0;border-radius:14px;padding:10px 14px;font-weight:800;cursor:pointer;box-shadow:var(--shadow);transition:transform .06s ease}
     .btn:active{transform:translateY(1px)}
     .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,.14)}
     [data-theme="light"] .btn.ghost{border-color:#e5e7eb}
-    .btn.small{padding:8px 10px;font-weight:700;border-radius:10px}
+    .btn.small{padding:7px 9px;font-weight:700;border-radius:10px}
 
     .hero{position:relative;isolation:isolate}
     .hero .bg{height:300px;border-radius:0 0 var(--radius-lg) var(--radius-lg);
@@ -95,10 +95,7 @@
     .slot.dis{opacity:.45;pointer-events:none}
     [data-theme="light"] .slot{border-color:#e5e7eb}
 
-    /* Detail page */
-    #detailPage .header{display:flex;gap:14px;align-items:center}
-    #detailPage .prices{display:flex;gap:8px;flex-wrap:wrap}
-    #detailPage .back{margin-bottom:10px}
+    /* Map embed (fix) */
     .mapBox{border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.12)}
     [data-theme="light"] .mapBox{border-color:#e5e7eb}
 
@@ -118,10 +115,12 @@
   <header>
     <div class="nav wrap">
       <a class="brand" href="#home" aria-label="Salon India Home">
-        <div class="logo">💈</div><span>Salon India</span>
+        <div class="logo">💈</div><span data-i18n="brand">Salon India</span>
       </a>
       <nav class="navlinks">
+        <a href="#profile" class="btn ghost" title="Profile">👤</a>
         <a href="#admin" class="btn ghost" title="Dashboard">📊</a>
+        <button id="langBtn" class="btn ghost" title="Language">EN/HI</button>
         <button id="loginBtn" class="btn ghost" title="Owner Login">🔐</button>
         <button id="themeBtn" class="btn ghost" title="Dark / Light">🌗</button>
       </nav>
@@ -135,8 +134,8 @@
     </div>
     <div class="headline wrap">
       <div>
-        <h1>Register • List • Book — Premium, fast & free</h1>
-        <p>Owners apna page register karein, prices set karein, aur customers WhatsApp se instant booking karein.</p>
+        <h1 data-i18n="heroTitle">Register • List • Book — Premium, fast & free</h1>
+        <p data-i18n="heroSub">Owners apna page register karein, prices set karein, aur customers WhatsApp/UPI se booking karein.</p>
       </div>
     </div>
   </section>
@@ -145,20 +144,22 @@
   <section id="about" class="wrap" style="margin-top:18px">
     <div class="grid">
       <div class="card">
-        <div class="h2">Bharat ke salon owners ke liye smart platform</div>
-        <p class="muted">Koi complicated app nahi. Sirf form bhariye aur turant listing ready.</p>
+        <div class="h2" data-i18n="aboutTitle">Bharat ke salon owners ke liye smart platform</div>
+        <p class="muted" data-i18n="aboutSub">Koi complicated app nahi. Sirf form bhariye aur turant listing ready.</p>
         <div class="sp"></div>
         <ul class="muted" style="display:grid;gap:6px;list-style:none">
-          <li>✅ Short link, prices, ratings, photo, WhatsApp</li>
-          <li>✅ Live City/Area filter, Owner login</li>
-          <li>✅ Detail Page + Booking Calendar + 📍 Maps</li>
-          <li>✅ Offline PWA + Install App</li>
-          <li>🆕 📊 Admin Dashboard</li>
+          <li>✅ <span data-i18n="feat1">Short link, prices, ratings, photo, WhatsApp</span></li>
+          <li>✅ <span data-i18n="feat2">Live City filter & Owner login</span></li>
+          <li>✅ <span data-i18n="feat3">Detail Page + Calendar + 📍 Maps</span></li>
+          <li>✅ <span data-i18n="feat4">PWA Install (Android App)</span></li>
+          <li>✅ <span data-i18n="feat5">UPI Advance Payment</span></li>
+          <li>🆕 <span data-i18n="feat6">Customer Profile & Booking history</span></li>
+          <li>🆕 <span data-i18n="feat7">SEO Dashboard</span></li>
         </ul>
         <div class="sp"></div>
         <div class="row">
-          <a class="btn" href="#register">+ Register</a>
-          <a class="btn ghost" href="#list">🔎 Browse</a>
+          <a class="btn" href="#register" data-i18n="ctaRegister">+ Register</a>
+          <a class="btn ghost" href="#list" data-i18n="ctaBrowse">🔎 Browse</a>
         </div>
       </div>
     </div>
@@ -166,7 +167,7 @@
 
   <!-- REGISTER -->
   <section id="register" class="wrap" style="margin-top:18px">
-    <div class="h2">📝 Owner Register</div>
+    <div class="h2" data-i18n="ownerRegister">📝 Owner Register</div>
     <div class="card">
       <div class="row">
         <input id="owner"  placeholder="Owner Name" autocomplete="name">
@@ -174,12 +175,12 @@
         <input id="salonName" type="text" placeholder="Salon Name" required>
 
         <input id="slug" type="text" placeholder="Short Link (slug) — e.g., kamlesh-salon" inputmode="latin" pattern="[a-z0-9\-]{3,}" title="sirf a-z, 0-9 aur hyphen (-)" required>
-        <small id="slugHelp" style="display:block;margin-top:6px;color:var(--muted);font-size:12px;">Short link auto ban raha hai. Aap chahe to edit kar sakte hain. Sirf a-z, 0-9, “-”.</small>
+        <small id="slugHelp" style="display:block;margin-top:6px;color:var(--muted);font-size:12px;">Short link auto ban raha hai. Sirf a-z, 0-9, “-”.</small>
 
         <input id="city" placeholder="City / Area" autocomplete="address-level2">
 
-        <!-- PHOTO UPLOAD -->
-        <label class="btn ghost" for="photo" style="display:inline-grid;place-items:center;cursor:pointer">📷 Upload salon photo</label>
+        <!-- PHOTO -->
+        <label class="btn ghost" for="photo" style="display:inline-grid;place-items:center;cursor:pointer">📷 Upload photo</label>
         <input id="photo" class="sr" type="file" accept="image/*">
         <img id="photoPrev" class="thumb hide" alt="Preview">
 
@@ -190,6 +191,10 @@
           <input id="lng" placeholder="Longitude (e.g., 81.6296)" inputmode="decimal">
           <button id="gpsBtn" type="button" class="btn ghost">📍 Use GPS</button>
         </div>
+
+        <!-- PAYMENTS -->
+        <input id="upi" placeholder="Salon UPI ID (e.g., name@upi)">
+        <input id="advAmt" type="number" min="0" value="50" placeholder="Min Advance ₹">
 
         <!-- OWNER PIN -->
         <input id="pin" placeholder="Set Owner PIN (4–6 digits)" inputmode="numeric" maxlength="6">
@@ -206,14 +211,14 @@
       <div class="sp"></div>
       <input id="wa" placeholder="WhatsApp Number (e.g., 91XXXXXXXXXX)">
       <div class="sp"></div>
-      <button id="btnCreate" class="btn full">Create Account</button>
+      <button id="btnCreate" class="btn">Create Account</button>
       <div id="msg" class="muted" style="margin-top:10px"></div>
     </div>
   </section>
 
   <!-- LIST -->
   <section id="list" class="wrap" style="margin-top:18px">
-    <div class="h2">🔎 Salon List</div>
+    <div class="h2" data-i18n="salonList">🔎 Salon List</div>
     <div class="card">
       <div class="toolbar">
         <input id="qCity" placeholder="City / Area (live filter)">
@@ -241,8 +246,25 @@
 
   <!-- DETAIL PAGE -->
   <section id="detailPage" class="wrap hide" style="margin-top:18px">
-    <button class="btn ghost back" id="backBtn">← Back</button>
+    <button class="btn ghost back" id="backBtn">← <span data-i18n="back">Back</span></button>
     <div class="card" id="detailCard"></div>
+  </section>
+
+  <!-- PROFILE PAGE -->
+  <section id="profilePage" class="wrap hide" style="margin-top:18px">
+    <div class="h2">👤 <span data-i18n="profile">Customer Profile</span></div>
+    <div class="card">
+      <div class="row">
+        <input id="meName" placeholder="Your Name">
+        <input id="meMobile" placeholder="Mobile (10-digit)">
+        <button id="saveMe" class="btn">Save</button>
+      </div>
+      <div class="sp"></div>
+      <div class="h2">🗂️ <span data-i18n="myBookings">My Bookings</span></div>
+      <div style="overflow:auto">
+        <table id="myBkTable"><thead><tr><th>Date</th><th>Time</th><th>Salon</th><th>Service</th><th>Notes</th></tr></thead><tbody></tbody></table>
+      </div>
+    </div>
   </section>
 
   <!-- ADMIN DASHBOARD -->
@@ -285,6 +307,26 @@
         <div class="h2">🔥 Most Booked Salons</div>
         <table id="topBooked"><thead><tr><th>Salon</th><th>Bookings</th></tr></thead><tbody></tbody></table>
       </div>
+
+      <div class="card">
+        <div class="h2">📈 SEO Dashboard</div>
+        <div class="row" style="justify-content:space-between">
+          <div class="muted">Search queries & most viewed salons</div>
+          <button id="seoClear" class="btn ghost small">🧹 Clear SEO logs</button>
+        </div>
+        <div class="sp"></div>
+        <div style="display:grid;gap:10px">
+          <div>
+            <div class="h2">🔍 Top Queries</div>
+            <table id="seoQuery"><thead><tr><th>Query</th><th>Count</th></tr></thead><tbody></tbody></table>
+          </div>
+          <div>
+            <div class="h2">👁️ Most Viewed Salons</div>
+            <table id="seoViews"><thead><tr><th>Salon</th><th>Views</th></tr></thead><tbody></tbody></table>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -305,25 +347,37 @@
   </dialog>
 
   <script>
-    /* ===== Storage ===== */
-    const LS="salon-india:v5";
-    const SESS="salon-india:session";
-    const LSB="salon-india:bookings";
-    const load = ()=>JSON.parse(localStorage.getItem(LS)||"[]");
-    const save = (a)=>localStorage.setItem(LS, JSON.stringify(a));
-    const setSession = (obj)=>localStorage.setItem(SESS, JSON.stringify(obj||{}));
-    const getSession = ()=>JSON.parse(localStorage.getItem(SESS)||"{}");
-    const loadBk = ()=>JSON.parse(localStorage.getItem(LSB)||"{}");
-    const saveBk = (o)=>localStorage.setItem(LSB, JSON.stringify(o));
+    /* ========= Storage Keys ========= */
+    const LS="salon-india:v6";           // salons
+    const LSB="salon-india:bookings";    // bookings by salon/date
+    const SESS="salon-india:session";    // owner session
+    const ME="si:me";                    // customer profile (local)
+    const LANGK="si:lang";               // language pref
+    const SEOQ="si:seo:queries";         // [{q,count}]
+    const SEOV="si:seo:views";           // {slug:count}
 
-    /* ===== Helpers ===== */
+    const load = k => JSON.parse(localStorage.getItem(k)||"null");
+    const save = (k,v)=>localStorage.setItem(k, JSON.stringify(v));
+
+    const loadSalons = ()=>load(LS)??[];
+    const saveSalons = v=>save(LS,v);
+    const loadBk = ()=>load(LSB)??{};
+    const saveBk = v=>save(LSB,v);
+    const setSession = v=>save(SESS,v||{});
+    const getSession = ()=>load(SESS)??{};
+    const getMe = ()=>load(ME)??{name:"",mobile:"",bookings:[]};
+    const setMe = v=>save(ME,v);
+    const getLang = ()=>localStorage.getItem(LANGK)||"hi";
+    const setLang = v=>localStorage.setItem(LANGK,v);
+
+    /* ========= Helpers ========= */
     const $ = s => document.querySelector(s);
-    const toast=(msg)=>{const t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),3000);};
+    const toast=(msg)=>{const t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2400);};
     const show = el => el.classList.remove('hide');
     const hide = el => el.classList.add('hide');
     const numOrNull = v => { const n=parseFloat(v); return Number.isFinite(n)?n:null; };
 
-    // theme: set ASAP (1 place only)
+    // Theme ASAP
     (function(){const pref=localStorage.getItem('theme'); if(pref) document.documentElement.setAttribute('data-theme',pref);})();
     $('#themeBtn')?.addEventListener('click',()=>{
       const cur=document.documentElement.getAttribute('data-theme');
@@ -332,9 +386,23 @@
       localStorage.setItem('theme',next);
     });
 
-    // slug helpers
+    /* ========= i18n (EN/HI) ========= */
+    const I18N={
+      hi:{brand:'Salon India',heroTitle:'Register • List • Book — Premium, fast & free',heroSub:'Owners apna page register karein, prices set karein, aur customers WhatsApp/UPI se booking karein.',aboutTitle:'Bharat ke salon owners ke liye smart platform',aboutSub:'Koi complicated app nahi. Sirf form bhariye aur turant listing ready.',feat1:'Short link, prices, ratings, photo, WhatsApp',feat2:'Live City filter & Owner login',feat3:'Detail Page + Calendar + 📍 Maps',feat4:'PWA Install (Android App)',feat5:'UPI Advance Payment',feat6:'Customer Profile & Booking history',feat7:'SEO Dashboard',ctaRegister:'+ Register',ctaBrowse:'🔎 Browse',ownerRegister:'📝 Owner Register',salonList:'🔎 Salon List',back:'Back',profile:'Customer Profile',myBookings:'My Bookings',},
+      en:{brand:'Salon India',heroTitle:'Register • List • Book — Premium, fast & free',heroSub:'Owners register your page, set prices, customers book via WhatsApp/UPI.',aboutTitle:'Smart platform for salon owners in India',aboutSub:'No complicated app. Just a form & your listing is ready.',feat1:'Short link, prices, ratings, photo, WhatsApp',feat2:'Live City filter & Owner login',feat3:'Detail Page + Calendar + 📍 Maps',feat4:'PWA Install (Android App)',feat5:'UPI Advance Payment',feat6:'Customer Profile & Booking history',feat7:'SEO Dashboard',ctaRegister:'+ Register',ctaBrowse:'🔎 Browse',ownerRegister:'📝 Owner Register',salonList:'🔎 Salon List',back:'Back',profile:'Customer Profile',myBookings:'My Bookings',}
+    };
+    function applyLang(){
+      const dict=I18N[getLang()]||I18N.hi;
+      document.querySelectorAll('[data-i18n]').forEach(n=>{
+        const key=n.getAttribute('data-i18n'); if(dict[key]) n.textContent=dict[key];
+      });
+      document.documentElement.lang=getLang();
+    }
+    $('#langBtn').addEventListener('click', ()=>{ setLang(getLang()==='hi'?'en':'hi'); applyLang(); });
+
+    /* ========= Slugs ========= */
     function makeSlug(str){ return (str||"").toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').replace(/-{2,}/g,'-').slice(0,50); }
-    function slugExists(s){ try{ return load().some(x => (x.slug||"").toLowerCase()===(s||"").toLowerCase()); }catch(e){ return false; } }
+    function slugExists(s){ try{ return loadSalons().some(x => (x.slug||"").toLowerCase()===(s||"").toLowerCase()); }catch(e){ return false; } }
     const salonName=$('#salonName'), slugInput=$('#slug'), slugHelp=$('#slugHelp'); let slugManuallyEdited=false;
     if(salonName&&slugInput){
       salonName.addEventListener('input',()=>{ if(!slugManuallyEdited){ slugInput.value=makeSlug(salonName.value); validateSlug(); }});
@@ -347,9 +415,8 @@
       else { slugInput.style.borderColor='var(--ok)'; slugHelp.textContent='Perfect! Ye short link available hai.'; slugHelp.style.color='var(--ok)'; }
     }
 
-    /* ===== Photo preview ===== */
-    const fileEl = $('#photo'), prevEl = $('#photoPrev');
-    let photoDataURL = "";
+    /* ========= Photo preview ========= */
+    const fileEl = $('#photo'), prevEl = $('#photoPrev'); let photoDataURL = "";
     fileEl?.addEventListener('change', (e)=>{
       const f=e.target.files?.[0]; if(!f) return;
       const r=new FileReader();
@@ -357,7 +424,7 @@
       r.readAsDataURL(f);
     });
 
-    /* ===== GPS button ===== */
+    /* ========= GPS ========= */
     $('#gpsBtn')?.addEventListener('click', ()=>{
       if(!navigator.geolocation){ toast('GPS supported nahi hai'); return; }
       navigator.geolocation.getCurrentPosition(
@@ -367,9 +434,8 @@
       );
     });
 
-    /* ===== Register ===== */
-    const showMsg=(t,type)=>{ const el=$("#msg"); el.textContent=t; el.style.color= type==="ok"?"var(--ok)":"var(--warn)"; toast(t); };
-
+    /* ========= Register ========= */
+    function showMsg(t,type){ const el=$("#msg"); el.textContent=t; el.style.color= type==="ok"?"var(--ok)":"var(--warn)"; toast(t); }
     $('#btnCreate').addEventListener('click', ()=>{
       const salon={
         id:Date.now(),
@@ -392,7 +458,9 @@
           address: ($('#addr').value||'').trim(),
           lat: numOrNull($('#lat').value),
           lng: numOrNull($('#lng').value)
-        }
+        },
+        upi: ($('#upi').value||'').trim(),
+        advance: Math.max(0, +($('#advAmt').value||0))
       };
 
       const is10=/^\d{10}$/.test(salon.mobile);
@@ -407,14 +475,14 @@
       if(!/^[a-z0-9-]{3,}$/.test(salon.slug)){ showMsg("⚠️ Slug galat hai.","warn"); return; }
       if(slugExists(salon.slug)){ showMsg("⚠️ Ye short link (slug) pehle se use me hai.","warn"); return; }
 
-      const all=load(); all.push(salon); save(all);
+      const all=loadSalons(); all.push(salon); saveSalons(all);
       showMsg("✅ Salon add ho gaya! (Salon List me dekh sakte ho)","ok");
-      ['owner','mobile','salonName','city','slug','wa','pin','pHaircut','pShave','pBeard','pFacial','addr','lat','lng'].forEach(id=>{const el=document.getElementById(id); if(el) el.value='';});
+      ['owner','mobile','salonName','city','slug','wa','pin','pHaircut','pShave','pBeard','pFacial','addr','lat','lng','upi','advAmt'].forEach(id=>{const el=document.getElementById(id); if(el) el.value='';});
       photoDataURL=""; prevEl.classList.add('hide'); prevEl.src="";
       slugManuallyEdited=false; renderList();
     });
 
-    /* ===== List / Search / Sort ===== */
+    /* ========= List / Search / Sort ========= */
     const outEl = $('#listOut');
     const minPrice = s => { const v=Object.values(s.price||{}).filter(n=>typeof n==='number'&&n>0); return v.length?Math.min(...v):0; };
     const avgRating = s => s.rCount? (s.rSum/s.rCount) : 0;
@@ -446,7 +514,8 @@
           <span class="tag">🧔 Beard ₹${s.price?.beard||'-'}</span>
           <span class="tag">💆 Facial ₹${s.price?.facial||'-'}</span>
           ${s.loc?.lat&&s.loc?.lng?`<span class="tag">📍 On Map</span>`:''}
-          ${isOwner?`<span class="tag">🛠️ Owner Mode</span>`:''}
+          ${s.upi?`<span class="tag">💳 UPI</span>`:''}
+          ${isOwner?`<span class="tag">🛠️ Owner</span>`:''}
         </div>
       `;
       el.querySelector('[data-open]')?.addEventListener('click',e=>{
@@ -461,7 +530,7 @@
       const qText=(($('#qText')?.value)||'').trim().toLowerCase();
       const qSort=(($('#qSort')?.value)||'name');
 
-      let rows=load().filter(s=>{
+      let rows=loadSalons().filter(s=>{
         const byCity=qCity ? (s.city||'').includes(qCity) : true;
         const byText=qText ? ((s.name||'').toLowerCase().includes(qText) || (s.owner||'').toLowerCase().includes(qText)) : true;
         const bySrv=qSrv ? ((s.price||{})[qSrv]>0) : true;
@@ -480,10 +549,10 @@
       if(!rows.length){ outEl.innerHTML=`<div class="card muted">Koi salon nahi mila. Filters change karein ya pehle Register karein.</div>`; return; }
       rows.forEach(s=>outEl.appendChild(renderItem(s)));
     }
-    document.getElementById('btnSearch')?.addEventListener('click',renderList);
-    document.getElementById('qCity')?.addEventListener('input',renderList);
+    $('#btnSearch')?.addEventListener('click',()=>{ renderList(); logQuery(); });
+    $('#qCity')?.addEventListener('input',renderList);
 
-    /* ===== Booking calendar utils ===== */
+    /* ========= Booking calendar ========= */
     const workStart=9, workEnd=19, stepMin=30;
     const bookedSetFor = (salonId, dateStr) => new Set((loadBk()[salonId]?.[dateStr]||[]).map(x=>x.time));
     function addBookingRecord(salonId, dateStr, rec){
@@ -493,6 +562,7 @@
       all[salonId][dateStr].push(rec);
       saveBk(all);
     }
+
     function buildSlotGrid(dateStr, bookedSet){
       const wrap=document.createElement('div'); wrap.className='slots';
       const mk=n=>n.toString().padStart(2,'0');
@@ -510,7 +580,7 @@
       return wrap;
     }
 
-    /* ===== Detail PAGE Renderer (with Ratings) ===== */
+    /* ========= Detail PAGE ========= */
     const detailWrap = $('#detailPage');
     const detailCard = $('#detailCard');
 
@@ -521,12 +591,20 @@
       return `<div class="mapBox"><iframe width="100%" height="260" style="border:0" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="${src}"></iframe></div>`;
     };
 
+    function upiLink(upi, pn, amt, note){
+      const qp = new URLSearchParams({pa:upi,pn,am:String(amt||0),cu:'INR',tn:note});
+      return `upi://pay?${qp.toString()}`;
+    }
+
     function renderDetailPage(slugOrId){
-      const a=load();
+      const a=loadSalons();
       const s=a.find(x=>(x.slug||x.id.toString())===slugOrId);
       if(!s){ detailCard.innerHTML='<div class="card">Salon nahi mila.</div>'; return; }
 
-      hide($('#home')); hide($('#about')); hide($('#register')); hide($('#list')); hide($('#adminPage')); show(detailWrap);
+      // SEO view log
+      const views = load(SEOV)??{}; const key=s.slug||String(s.id); views[key]=(views[key]||0)+1; save(SEOV,views);
+
+      hide($('#home')); hide($('#about')); hide($('#register')); hide($('#list')); hide($('#adminPage')); hide($('#profilePage')); show(detailWrap);
 
       const waBase=s.wa?`https://wa.me/${s.wa}`:'';
       const shareUrl=`${location.origin}${location.pathname}#s/${encodeURIComponent(s.slug||s.id)}`;
@@ -562,7 +640,7 @@
         <div class="sp"></div>
         <div class="h2">📅 Book a time</div>
         <div class="row">
-          <select id="svcSel">${Object.entries(s.price).filter(([k,v])=>v>0).map(([k,v])=>`<option value="${k}">${label(k)} — ₹${v}</option>`).join('')}</select>
+          <select id="svcSel">${Object.entries(s.price).filter(([k,v])=>v>0).map(([k,v])=>`<option value="${k}" data-price="${v}">${label(k)} — ₹${v}</option>`).join('')}</select>
           <input id="dateSel" type="date">
         </div>
         <div class="sp"></div>
@@ -576,6 +654,7 @@
         <div class="row">
           <button class="btn" id="confirmBk"${waBase?'':' disabled'}>${waBase?'Send WhatsApp Booking':'WhatsApp not set'}</button>
           <button class="btn ghost" id="copyBk">Copy Booking Text</button>
+          ${s.upi?`<button class="btn" id="payAdv">💳 Pay Advance</button>`:''}
         </div>
 
         <div class="sp"></div>
@@ -583,10 +662,24 @@
         <div id="rateRow">${[1,2,3,4,5].map(n=>`<span class="star" data-rate="${n}">☆</span>`).join('')}</div>
       `;
 
-      document.getElementById('copyLink').addEventListener('click',()=>navigator.clipboard.writeText(shareUrl).then(()=>toast('Link copied')));
+      // -------- GUARD: no service options -> disable actions & exit (fix) --------
+      const svcSelEl = document.getElementById('svcSel');
+      if (!svcSelEl || !svcSelEl.options.length) {
+        const slotsArea = document.getElementById('slotsArea');
+        slotsArea.innerHTML = '<div class="muted">Is salon ne abhi services ke prices set nahi kiye.</div>';
+        ['confirmBk','copyBk','payAdv'].forEach(id=>{ const b=document.getElementById(id); if(b) b.disabled=true; });
+        document.getElementById('dateSel').disabled = true;
+        return;
+      }
+      // -------------------------------------------------------------------------
+
+      // Prefill from profile
+      const me=getMe(); if(me.name) $('#bkName').value=me.name;
+
+      $('#copyLink').addEventListener('click',()=>navigator.clipboard.writeText(shareUrl).then(()=>toast('Link copied')));
 
       // init date + slots
-      const dateEl=document.getElementById('dateSel'); const slotsArea=document.getElementById('slotsArea');
+      const dateEl=$('#dateSel'); const slotsArea=$('#slotsArea');
       const d=new Date(); const min=d.toISOString().slice(0,10);
       dateEl.min=min; dateEl.value=min;
       let selectedTime="";
@@ -607,49 +700,99 @@
       drawSlots();
       dateEl.addEventListener('change',drawSlots);
 
-      const bookingText=()=> {
-        const svc=label(document.getElementById('svcSel').value);
-        const nm=(document.getElementById('bkName').value||'').trim()||'Customer';
-        const notes=(document.getElementById('bkNotes').value||'').trim();
-        return `Namaste ${s.name}!\nMain ${nm} ${svc} ke liye ${dateEl.value} ${selectedTime} par booking karna chahta/chahti hu. ${notes?('Notes: '+notes):''}\n\n– via Salon India`;
-      };
+      // ---- safer price reader (fix) ----
+      function currSvcPrice(){
+        const sel = document.getElementById('svcSel');
+        const opt = sel && sel.selectedOptions && sel.selectedOptions[0];
+        const p = +(opt?.dataset?.price || 0);
+        return Number.isFinite(p) ? p : 0;
+      }
+      // ----------------------------------
 
-      document.getElementById('confirmBk').addEventListener('click',()=>{
+      function bookingText(){
+        const svc=label($('#svcSel').value);
+        const nm=($('#bkName').value||'').trim()||'Customer';
+        const notes=($('#bkNotes').value||'').trim();
+        return `Namaste ${s.name}!\nMain ${nm} ${svc} ke liye ${dateEl.value} ${selectedTime} par booking karna chahta/chahti hu. ${notes?('Notes: '+notes):''}\n\n– via Salon India`;
+      }
+
+      function saveToMyHistory(rec){
+        const me=getMe();
+        me.bookings.unshift(rec);
+        me.bookings=me.bookings.slice(0,100);
+        if(!me.name) me.name=rec.name||'';
+        setMe(me);
+      }
+
+      $('#confirmBk').addEventListener('click',()=>{
         if(!selectedTime){ toast('Time slot select karein'); return; }
-        const rec={ time:selectedTime, date:dateEl.value, service:document.getElementById('svcSel').value, name:(document.getElementById('bkName').value||'').trim()||'Customer', notes:(document.getElementById('bkNotes').value||'').trim(), createdAt:Date.now() };
+        const rec={ time:selectedTime, date:dateEl.value, service:$('#svcSel').value, price:currSvcPrice(), name:($('#bkName').value||'').trim()||'Customer', notes:($('#bkNotes').value||'').trim(), createdAt:Date.now(), salon:s.name };
         addBookingRecord(s.id, dateEl.value, rec);
+        saveToMyHistory({...rec, salonId:s.id});
         toast('Booking saved ✅');
         if(s.wa) window.open(`https://wa.me/${s.wa}?text=${encodeURIComponent(bookingText())}`,'_blank');
         drawSlots();
       });
-      document.getElementById('copyBk').addEventListener('click',()=>{
+      $('#copyBk').addEventListener('click',()=>{
         if(!selectedTime){ toast('Time slot select karein'); return; }
         navigator.clipboard.writeText(bookingText()).then(()=>toast('Booking text copied')).catch(()=>toast('Copied text'));
       });
 
-      // ratings (re-render detail to reflect)
+      // Advance Payment (UPI)
+      if($('#payAdv')){
+        $('#payAdv').addEventListener('click',()=>{
+          if(!selectedTime){ toast('Time slot select karein'); return; }
+          const svc=label($('#svcSel').value);
+          const price=currSvcPrice();
+          const adv= s.advance>0 ? s.advance : Math.max(10, Math.round(price*0.2)); // at least ₹10
+          const note=`Advance for ${svc} on ${dateEl.value} ${selectedTime}`;
+          const link=upiLink(s.upi, s.name, adv, note);
+          location.href=link; // open UPI intent
+        });
+      }
+
+      // ratings
       [...document.querySelectorAll('#rateRow .star')].forEach(st=>{
         st.addEventListener('click',()=>{
           const r=parseInt(st.getAttribute('data-rate'));
-          const arr=load(); const i=arr.findIndex(x=>x.id===s.id);
-          if(i>-1){ arr[i].rSum += r; arr[i].rCount += 1; save(arr); toast(`Thanks! Rated ${r}★`); renderDetailPage(slugOrId); }
+          const arr=loadSalons(); const i=arr.findIndex(x=>x.id===s.id);
+          if(i>-1){ arr[i].rSum += r; arr[i].rCount += 1; saveSalons(arr); toast(`Thanks! Rated ${r}★`); renderDetailPage(slugOrId); }
         });
       });
     }
 
-    // Back button
-    document.getElementById('backBtn').addEventListener('click',()=>{
+    // Back
+    $('#backBtn').addEventListener('click',()=>{
       location.hash="#list";
-      hide(detailWrap); hide(document.getElementById('adminPage')); show(document.getElementById('home')); show(document.getElementById('about')); show(document.getElementById('register')); show(document.getElementById('list'));
+      hide($('#detailPage')); hide($('#adminPage')); hide($('#profilePage')); show($('#home')); show($('#about')); show($('#register')); show($('#list'));
       renderList();
     });
 
-    /* ===== ADMIN DASHBOARD ===== */
-    const adminWrap=document.getElementById('adminPage');
-    const kpiRow = document.getElementById('kpiRow');
+    /* ========= PROFILE ========= */
+    function renderProfile(){
+      hide($('#home')); hide($('#about')); hide($('#register')); hide($('#list')); hide($('#detailPage')); hide($('#adminPage')); show($('#profilePage'));
+      const me=getMe();
+      $('#meName').value=me.name||'';
+      $('#meMobile').value=me.mobile||'';
+      const tbody=$('#myBkTable tbody'); tbody.innerHTML='';
+      me.bookings.forEach(b=>{
+        const tr=document.createElement('tr');
+        tr.innerHTML=`<td>${b.date}</td><td>${b.time}</td><td>${b.salon||''}</td><td>${label(b.service)}</td><td>${b.notes||''}</td>`;
+        tbody.appendChild(tr);
+      });
+    }
+    $('#saveMe').addEventListener('click',()=>{
+      const me=getMe();
+      me.name=($('#meName').value||'').trim();
+      const m=($('#meMobile').value||'').trim();
+      if(m && !/^\d{10}$/.test(m)){ toast('Mobile 10-digit daaliye'); return; }
+      me.mobile=m; setMe(me); toast('Saved ✅');
+    });
 
+    /* ========= ADMIN ========= */
+    const kpiRow = $('#kpiRow');
     function flattenBookings(){
-      const map=loadBk(); const salons=load();
+      const map=loadBk(); const salons=loadSalons();
       const out=[];
       Object.entries(map).forEach(([sid,dates])=>{
         const salon=salons.find(s=>s.id===+sid);
@@ -695,9 +838,9 @@
     }
 
     function renderAdmin(){
-      hide(document.getElementById('home')); hide(document.getElementById('about')); hide(document.getElementById('register')); hide(document.getElementById('list')); hide(document.getElementById('detailPage')); show(adminWrap);
+      hide($('#home')); hide($('#about')); hide($('#register')); hide($('#list')); hide($('#detailPage')); hide($('#profilePage')); show($('#adminPage'));
 
-      const salons=load();
+      const salons=loadSalons();
       const bookings=flattenBookings();
 
       const withWA=salons.filter(s=>s.wa).length;
@@ -726,78 +869,92 @@
       });
 
       // Recent bookings
-      fillTable(document.querySelector('#bkTable tbody'), bookings.slice(0,20), [
+      fillTable($('#bkTable tbody'), bookings.slice(0,20), [
         'date','time','salon','service', r=>r.name, r=>r.notes
       ]);
 
       // Top cities
-      const cityMap={};
-      salons.forEach(s=>{ if(!s.city) return; cityMap[s.city]=(cityMap[s.city]||0)+1; });
+      const cityMap={}; salons.forEach(s=>{ if(!s.city) return; cityMap[s.city]=(cityMap[s.city]||0)+1; });
       const cityRows=Object.entries(cityMap).sort((a,b)=>b[1]-a[1]).map(([city,count])=>({city,count}));
-      fillTable(document.querySelector('#cityTable tbody'), cityRows, ['city','count']);
+      fillTable($('#cityTable tbody'), cityRows, ['city','count']);
 
       // Top rated
       const rated=salons.filter(s=>s.rCount>0).map(s=>({salon:s.name, avg:(s.rSum/s.rCount), count:s.rCount}));
       rated.sort((a,b)=>b.avg-a.avg);
-      fillTable(document.querySelector('#topRated tbody'), rated.slice(0,10), [r=>r.salon, r=>r.avg.toFixed(2), 'count']);
+      fillTable($('#topRated tbody'), rated.slice(0,10), [r=>r.salon, r=>r.avg.toFixed(2), 'count']);
 
       // Most booked
-      const bkCountBySalon={};
-      bookings.forEach(b=>{ bkCountBySalon[b.salon]=(bkCountBySalon[b.salon]||0)+1; });
+      const bkCountBySalon={}; bookings.forEach(b=>{ bkCountBySalon[b.salon]=(bkCountBySalon[b.salon]||0)+1; });
       const topBooked=Object.entries(bkCountBySalon).map(([salon,count])=>({salon,count})).sort((a,b)=>b.count-a.count);
-      fillTable(document.querySelector('#topBooked tbody'), topBooked.slice(0,10), ['salon','count']);
+      fillTable($('#topBooked tbody'), topBooked.slice(0,10), ['salon','count']);
+
+      // SEO Dashboard
+      const qmap = load(SEOQ)??{};
+      const qrows = Object.entries(qmap).map(([q,c])=>({q,count:c})).sort((a,b)=>b.count-a.count).slice(0,20);
+      fillTable($('#seoQuery tbody'), qrows, [r=>r.q, r=>r.count]);
+
+      const vmap = load(SEOV)??{};
+      const salonsBySlug={}; loadSalons().forEach(s=>salonsBySlug[s.slug||s.id]=s.name);
+      const vrows = Object.entries(vmap).map(([k,c])=>({name:salonsBySlug[k]||k,count:c})).sort((a,b)=>b.count-a.count).slice(0,20);
+      fillTable($('#seoViews tbody'), vrows, [r=>r.name, r=>r.count]);
 
       // Buttons
-      document.getElementById('exportCsv').onclick=()=>{
+      $('#exportCsv').onclick=()=>{
         const csv=toCSV(bookings);
-        const blob=new Blob([csv],{type:'text/csv'});
-        const url=URL.createObjectURL(blob);
-        const a=document.createElement('a');
-        a.href=url; a.download='salon-bookings.csv'; a.click(); URL.revokeObjectURL(url);
+        const blob=new Blob([csv],{type:'text/csv'}); const url=URL.createObjectURL(blob);
+        const a=document.createElement('a'); a.href=url; a.download='salon-bookings.csv'; a.click(); URL.revokeObjectURL(url);
       };
-      document.getElementById('clearBookings').onclick=()=>{
-        if(confirm('Pakka? Sirf local bookings data clear hoga.')){
-          localStorage.setItem(LSB, JSON.stringify({}));
-          toast('Bookings cleared'); renderAdmin();
-        }
+      $('#clearBookings').onclick=()=>{
+        if(confirm('Pakka? Sirf local bookings data clear hoga.')){ saveBk({}); toast('Bookings cleared'); renderAdmin(); }
+      };
+      $('#seoClear').onclick=()=>{
+        if(confirm('SEO logs clear karein?')){ save(SEOQ,{}); save(SEOV,{}); toast('Cleared'); renderAdmin(); }
       };
     }
 
-    /* ===== Router: #s/<slug> & #admin ===== */
+    /* ========= SEO Query Logger ========= */
+    function logQuery(){
+      const city=($('#qCity').value||'').trim().toLowerCase();
+      const text=($('#qText').value||'').trim().toLowerCase();
+      const key=[city,text].filter(Boolean).join(' | ');
+      if(!key) return;
+      const map=load(SEOQ)??{}; map[key]=(map[key]||0)+1; save(SEOQ,map);
+    }
+
+    /* ========= Router ========= */
     function router(){
       const h=(location.hash||'').replace(/^#!?/,'');
       const m=h.match(/^#s\/([^/]+)$/);
       if(m){ renderDetailPage(decodeURIComponent(m[1])); window.scrollTo({top:0,behavior:'smooth'}); return; }
       if(h==='#admin'){ renderAdmin(); window.scrollTo({top:0,behavior:'smooth'}); return; }
-      hide(document.getElementById('detailPage')); hide(document.getElementById('adminPage')); show(document.getElementById('home')); show(document.getElementById('about')); show(document.getElementById('register')); show(document.getElementById('list'));
+      if(h==='#profile'){ renderProfile(); window.scrollTo({top:0,behavior:'smooth'}); return; }
+      hide($('#detailPage')); hide($('#adminPage')); hide($('#profilePage')); show($('#home')); show($('#about')); show($('#register')); show($('#list'));
     }
     window.addEventListener('hashchange',router);
-    window.addEventListener('load',router);
 
-    /* ===== Login (owner) ===== */
-    const loginDlg=document.getElementById('loginDialog');
-    document.getElementById('loginBtn').addEventListener('click',()=>loginDlg.showModal());
-    document.getElementById('closeLogin').addEventListener('click',()=>loginDlg.close());
-    document.getElementById('doLogin').addEventListener('click',()=>{
-      const m=(document.getElementById('loginMobile').value||'').trim().slice(-10);
-      const p=(document.getElementById('loginPin').value||'').trim();
-      const a=load(); const s=a.find(x=>x.mobile===m && x.pin===p);
-      if(s){ setSession({id:s.id, at:Date.now()}); document.getElementById('loginMsg').textContent='Logged in ✅'; loginDlg.close(); toast('Owner mode ON'); renderList();}
-      else { document.getElementById('loginMsg').textContent='❌ Not found. Mobile/PIN check karein.'; }
+    /* ========= Login (owner) ========= */
+    const loginDlg=$('#loginDialog');
+    $('#loginBtn').addEventListener('click',()=>loginDlg.showModal());
+    $('#closeLogin').addEventListener('click',()=>loginDlg.close());
+    $('#doLogin').addEventListener('click',()=>{
+      const m=($('#loginMobile').value||'').trim().slice(-10);
+      const p=($('#loginPin').value||'').trim();
+      const a=loadSalons(); const s=a.find(x=>x.mobile===m && x.pin===p);
+      if(s){ setSession({id:s.id, at:Date.now()}); $('#loginMsg').textContent='Logged in ✅'; loginDlg.close(); toast('Owner mode ON'); renderList();}
+      else { $('#loginMsg').textContent='❌ Not found. Mobile/PIN check karein.'; }
     });
 
-    /* ===== Basic Analytics (local only) ===== */
+    /* ========= Analytics (local only) ========= */
     (function(){
       try{
         const KEY='si:analytics:v1';
         const data = JSON.parse(localStorage.getItem(KEY)||'{"visits":0,"last":""}');
         data.visits++; data.last=new Date().toISOString();
         localStorage.setItem(KEY, JSON.stringify(data));
-        console.log(`👁️ Visits: ${data.visits}, Last visit: ${data.last}`);
       }catch(e){}
     })();
 
-    /* ===== PWA: Service Worker + Install Prompt ===== */
+    /* ========= PWA Install ========= */
     let deferredPrompt;
     window.addEventListener('beforeinstallprompt', (e)=>{
       e.preventDefault();
@@ -805,27 +962,31 @@
       const btn=document.createElement('button');
       btn.textContent='📲 Install Salon India App';
       btn.className='btn';
-      btn.style.position='fixed';
-      btn.style.bottom='20px';
-      btn.style.right='20px';
-      btn.style.zIndex='9999';
+      btn.style.position='fixed'; btn.style.bottom='20px'; btn.style.right='20px'; btn.style.zIndex='9999';
       document.body.appendChild(btn);
-
       btn.addEventListener('click', async()=>{
         btn.style.display='none';
-        deferredPrompt.prompt();
-        await deferredPrompt.userChoice;
-        deferredPrompt = null;
+        if (!deferredPrompt) return;
+        try {
+          deferredPrompt.prompt();
+          await deferredPrompt.userChoice;
+        } finally {
+          deferredPrompt = null;
+        }
       });
     });
-
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js')
-          .then(reg => console.log('✅ Service Worker registered:', reg.scope))
-          .catch(err => console.warn('SW registration failed:', err));
+        navigator.serviceWorker.register('sw.js').catch(()=>{});
       });
     }
+
+    /* ========= Init ========= */
+    window.addEventListener('load',()=>{
+      applyLang();
+      renderList();
+      router();
+    });
   </script>
 </body>
 </html>

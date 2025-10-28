@@ -4,14 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Salon India • Register • List • Book</title>
+
+  <!-- SEO basic -->
   <meta name="title" content="Salon India - Register • List • Book Salon">
-  <meta name="description" content="Salon India ek smart platform hai jahan Bharat ke salon owners apna page register kar sakte hain, rate list bana sakte hain, aur customers WhatsApp se booking kar sakte hain. Free hosting on GitHub Pages.">
-  <meta name="keywords" content="Salon India, Salon Booking, Barber Shop, Beauty Parlour, Salon Register, Salon List, Haircut Booking, India Salon">
-  <meta name="author" content="Kamlesh Banjare">
+  <meta name="description" content="Salon India: register salon, price list set karein, WhatsApp se booking lein. Free, fast & simple.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://banjare494.github.io/Selun-india_/">
   <meta property="og:title" content="Salon India – Free Salon Register & Booking Platform">
-  <meta property="og:description" content="Apna salon register karo, list banao aur booking lo – Free aur easy system.">
+  <meta property="og:description" content="Apna salon register karo, list banao, booking lo – maps, ratings & dashboard ke saath!">
   <meta property="og:image" content="https://banjare494.github.io/Selun-india_/images/banner.jpg">
   <meta property="og:url" content="https://banjare494.github.io/Selun-india_/">
   <meta name="twitter:card" content="summary_large_image">
@@ -45,9 +45,10 @@
     .btn:active{transform:translateY(1px)}
     .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,.14)}
     [data-theme="light"] .btn.ghost{border-color:#e5e7eb}
+    .btn.small{padding:8px 10px;font-weight:700;border-radius:10px}
 
     .hero{position:relative;isolation:isolate}
-    .hero .bg{height:320px;border-radius:0 0 var(--radius-lg) var(--radius-lg);
+    .hero .bg{height:300px;border-radius:0 0 var(--radius-lg) var(--radius-lg);
       background:radial-gradient(80% 60% at 10% 10%, rgba(59,130,246,.45), transparent 60%),
                  radial-gradient(60% 50% at 90% 20%, rgba(139,92,246,.40), transparent 60%),
                  linear-gradient(180deg,#020617,#0b1020);overflow:hidden}
@@ -63,7 +64,7 @@
     [data-theme="light"] .card{border:1px solid #e5e7eb}
     .h2{font-size:18px;font-weight:900;margin-bottom:10px}
     .muted{color:var(--muted)}
-    .row{display:flex;gap:12px;flex-wrap:wrap}
+    .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
     input,select,textarea{width:100%;padding:12px 14px;border:1px solid rgba(255,255,255,.14);border-radius:12px;background:rgba(255,255,255,.03);color:inherit;outline:none}
     input::placeholder,textarea::placeholder{color:var(--muted)}
     input:focus,select:focus,textarea:focus{box-shadow:var(--ring);border-color:transparent}
@@ -75,19 +76,40 @@
     .badges{display:flex;gap:6px;flex-wrap:wrap}
     .tag{font-size:12px;background:rgba(59,130,246,.12);color:#dbeafe;border:1px solid rgba(59,130,246,.25);border-radius:999px;padding:4px 8px}
     [data-theme="light"] .tag{color:#1f3bb3;background:#edf2ff;border:1px solid #dbe5ff}
+    .thumb{width:86px;height:86px;border-radius:12px;object-fit:cover;border:1px solid rgba(255,255,255,.12)}
     .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
     .sp{height:16px}
     footer{text-align:center;padding:22px;background:var(--card);border-top:1px solid rgba(255,255,255,.08);margin-top:18px}
     [data-theme="light"] footer{border-top:1px solid #e5e7eb}
     .toast{position:fixed;right:16px;bottom:16px;z-index:100;background:var(--card);border:1px solid rgba(255,255,255,.12);padding:12px 14px;border-radius:14px;box-shadow:var(--shadow);min-width:240px}
     .hide{display:none !important}
-    dialog{border:0;border-radius:18px;width:min(560px,95vw);background:var(--card);color:inherit;box-shadow:var(--shadow)}
-    dialog::backdrop{background:rgba(2,6,23,.55)}
-    [data-theme="light"] dialog::backdrop{background:rgba(0,0,0,.45)}
-    .modal-head{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
-    .modal-body{padding:16px}
-    .x{background:transparent;border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:6px 10px;color:inherit;cursor:pointer}
-    [data-theme="light"] .x{border-color:#e5e7eb}
+    .sr{position:absolute;left:-9999px}
+
+    /* Booking calendar */
+    .slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+    .slot{border:1px solid rgba(255,255,255,.18);padding:10px;border-radius:10px;text-align:center;cursor:pointer}
+    .slot.sel{outline:2px solid var(--brand)}
+    .slot.dis{opacity:.45;pointer-events:none}
+    [data-theme="light"] .slot{border-color:#e5e7eb}
+
+    /* Detail page */
+    #detailPage .header{display:flex;gap:14px;align-items:center}
+    #detailPage .prices{display:flex;gap:8px;flex-wrap:wrap}
+    #detailPage .back{margin-bottom:10px}
+    .mapBox{border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.12)}
+    [data-theme="light"] .mapBox{border-color:#e5e7eb}
+
+    /* Admin */
+    .kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    @media(max-width:820px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    .kpi{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px}
+    [data-theme="light"] .kpi{border-color:#e5e7eb}
+    .kpi .val{font-size:22px;font-weight:900}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.12);text-align:left}
+    [data-theme="light"] th,[data-theme="light"] td{border-color:#e5e7eb}
+    th{font-weight:800}
+    .star{font-size:18px;cursor:pointer}
   </style>
 </head>
 <body>
@@ -97,13 +119,14 @@
         <div class="logo">💈</div><span>Salon India</span>
       </a>
       <nav class="navlinks">
-        <button id="settingsBtn" class="btn ghost" title="Settings">⚙️</button>
+        <a href="#admin" class="btn ghost" title="Dashboard">📊</a>
+        <button id="loginBtn" class="btn ghost" title="Owner Login">🔐</button>
         <button id="themeBtn" class="btn ghost" title="Dark / Light">🌗</button>
-        <button id="colorBtn" class="btn ghost" title="Colors">🎨</button>
       </nav>
     </div>
   </header>
 
+  <!-- HERO -->
   <section id="home" class="hero">
     <div class="bg">
       <img class="banner" src="https://images.unsplash.com/photo-1512690459411-b9245aed614b?q=80&w=1600&auto=format&fit=crop" alt="Salon banner">
@@ -112,45 +135,63 @@
       <div>
         <h1>Register • List • Book — Premium, fast & free</h1>
         <p>Owners apna page register karein, prices set karein, aur customers WhatsApp se instant booking karein.</p>
-        <div class="sp"></div>
-        <div class="toolbar"><button id="openSettingsCta" class="btn">⚙️ Open Settings</button></div>
       </div>
     </div>
   </section>
 
-  <section class="wrap" style="margin-top:18px">
+  <!-- ABOUT -->
+  <section id="about" class="wrap" style="margin-top:18px">
     <div class="grid">
       <div class="card">
         <div class="h2">Bharat ke salon owners ke liye smart platform</div>
         <p class="muted">Koi complicated app nahi. Sirf form bhariye aur turant listing ready.</p>
         <div class="sp"></div>
         <ul class="muted" style="display:grid;gap:6px;list-style:none">
-          <li>✅ <b>Short link</b> (slug)</li>
-          <li>✅ <b>Prices</b> set karein (Haircut, Shave, Beard, Facial)</li>
-          <li>✅ <b>City/Area</b> search</li>
-          <li>✅ Instant <b>WhatsApp booking</b></li>
+          <li>✅ Short link, prices, <b>ratings</b>, photo, WhatsApp</li>
+          <li>✅ Live City/Area filter, Owner login</li>
+          <li>✅ Detail Page + Booking Calendar + 📍 Maps</li>
+          <li>🆕 📊 <b>Admin Dashboard</b></li>
         </ul>
         <div class="sp"></div>
         <div class="row">
           <a class="btn" href="#register">+ Register</a>
-          <button id="openSettingsCta2" class="btn ghost">⚙️ Open Settings</button>
+          <a class="btn ghost" href="#list">🔎 Browse</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Register -->
+  <!-- REGISTER -->
   <section id="register" class="wrap" style="margin-top:18px">
     <div class="h2">📝 Owner Register</div>
     <div class="card">
       <div class="row">
         <input id="owner"  placeholder="Owner Name" autocomplete="name">
-        <input id="mobile" placeholder="Mobile (10-digit)" inputmode="numeric" maxlength="12" autocomplete="tel">
+        <input id="mobile" placeholder="Mobile (10-digit ya 91XXXXXXXXXX)" inputmode="numeric" maxlength="12" autocomplete="tel">
         <input id="salonName" type="text" placeholder="Salon Name" required>
+
         <input id="slug" type="text" placeholder="Short Link (slug) — e.g., kamlesh-salon" inputmode="latin" pattern="[a-z0-9\-]{3,}" title="sirf a-z, 0-9 aur hyphen (-)" required>
         <small id="slugHelp" style="display:block;margin-top:6px;color:var(--muted);font-size:12px;">Short link auto ban raha hai. Aap chahe to edit kar sakte hain. Sirf a-z, 0-9, “-”.</small>
+
         <input id="city" placeholder="City / Area" autocomplete="address-level2">
+
+        <!-- PHOTO UPLOAD -->
+        <label class="btn ghost" for="photo" style="display:inline-grid;place-items:center;cursor:pointer">📷 Upload salon photo</label>
+        <input id="photo" class="sr" type="file" accept="image/*">
+        <img id="photoPrev" class="thumb hide" alt="Preview">
+
+        <!-- ADDRESS + MAP -->
+        <input id="addr" placeholder="Address (optional)">
+        <div class="row">
+          <input id="lat" placeholder="Latitude (e.g., 21.2513)" inputmode="decimal">
+          <input id="lng" placeholder="Longitude (e.g., 81.6296)" inputmode="decimal">
+          <button id="gpsBtn" type="button" class="btn ghost">📍 Use GPS</button>
+        </div>
+
+        <!-- OWNER PIN -->
+        <input id="pin" placeholder="Set Owner PIN (4–6 digits)" inputmode="numeric" maxlength="6">
       </div>
+
       <div class="sp"></div>
       <div class="muted" style="margin-bottom:8px">Services & Prices (₹)</div>
       <div class="row">
@@ -167,12 +208,12 @@
     </div>
   </section>
 
-  <!-- List -->
+  <!-- LIST -->
   <section id="list" class="wrap" style="margin-top:18px">
     <div class="h2">🔎 Salon List</div>
     <div class="card">
       <div class="toolbar">
-        <input id="qCity" placeholder="City / Area">
+        <input id="qCity" placeholder="City / Area (live filter)">
         <select id="qService">
           <option value="">Any service</option>
           <option value="haircut">Haircut</option>
@@ -185,6 +226,7 @@
           <option value="priceAsc">Price (low→high)</option>
           <option value="priceDesc">Price (high→low)</option>
           <option value="new">Newest</option>
+          <option value="rating">Top Rated</option>
         </select>
         <input id="qText" placeholder="Search name/owner">
         <button id="btnSearch" class="btn">Search</button>
@@ -194,92 +236,105 @@
     <div id="listOut" class="list"></div>
   </section>
 
+  <!-- DETAIL PAGE -->
+  <section id="detailPage" class="wrap hide" style="margin-top:18px">
+    <button class="btn ghost back" id="backBtn">← Back</button>
+    <div class="card" id="detailCard"></div>
+  </section>
+
+  <!-- ADMIN DASHBOARD -->
+  <section id="adminPage" class="wrap hide" style="margin-top:18px">
+    <div class="h2">📊 Admin Dashboard</div>
+    <div class="kpis" id="kpiRow"></div>
+    <div class="sp"></div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="row" style="justify-content:space-between">
+          <div class="h2">🕘 Recent Bookings</div>
+          <div class="row">
+            <button id="exportCsv" class="btn small">⬇️ Export CSV</button>
+            <button id="clearBookings" class="btn ghost small">🗑️ Clear Bookings</button>
+          </div>
+        </div>
+        <div class="sp"></div>
+        <div style="overflow:auto">
+          <table id="bkTable">
+            <thead>
+              <tr><th>Date</th><th>Time</th><th>Salon</th><th>Service</th><th>Customer</th><th>Notes</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="h2">🏙️ Top Cities</div>
+        <table id="cityTable"><thead><tr><th>City</th><th>Salons</th></tr></thead><tbody></tbody></table>
+      </div>
+
+      <div class="card">
+        <div class="h2">⭐ Top Rated Salons</div>
+        <table id="topRated"><thead><tr><th>Salon</th><th>Avg ★</th><th>Ratings</th></tr></thead><tbody></tbody></table>
+      </div>
+
+      <div class="card">
+        <div class="h2">🔥 Most Booked Salons</div>
+        <table id="topBooked"><thead><tr><th>Salon</th><th>Bookings</th></tr></thead><tbody></tbody></table>
+      </div>
+    </div>
+  </section>
+
   <footer>Made with ❤️ by Kamlesh Banjare • Free hosting on GitHub Pages</footer>
 
-  <!-- Detail -->
-  <dialog id="detailDialog" aria-labelledby="detailTitle">
-    <div class="modal-head"><div id="detailTitle" style="font-weight:900">Salon Detail</div><button class="x" id="closeDetail">✖</button></div>
-    <div class="modal-body"><div id="detailContent"></div></div>
-  </dialog>
-
-  <!-- Settings -->
-  <dialog id="settingsDialog" aria-labelledby="settingsTitle">
-    <div class="modal-head"><div id="settingsTitle" style="font-weight:900">Settings</div><button class="x" id="closeSettings">✖</button></div>
-    <div class="modal-body" style="display:grid;gap:16px">
-      <section id="brandSection">
-        <div class="h2" style="margin-bottom:6px">Brand Colors</div>
-        <div class="row" id="brandPalette">
-          <button class="btn ghost" data-brand="#3b82f6,#8b5cf6">Blue → Violet</button>
-          <button class="btn ghost" data-brand="#06b6d4,#22c55e">Cyan → Green</button>
-          <button class="btn ghost" data-brand="#f59e0b,#ef4444">Amber → Red</button>
-          <button class="btn ghost" data-brand="#a855f7,#6366f1">Purple → Indigo</button>
-          <button class="btn ghost" data-brand="#f97316,#ec4899">Orange → Pink</button>
-        </div>
-      </section>
-      <section>
-        <div class="h2" style="margin-bottom:6px">Owner / Salon Profile</div>
-        <div class="row">
-          <input id="setOwner"  placeholder="Owner Name">
-          <input id="setMobile" placeholder="Mobile (10-digit)" inputmode="numeric" maxlength="10">
-          <input id="setName"   placeholder="Salon Name">
-          <input id="setCity"   placeholder="City / Area">
-          <input id="setSlug"   placeholder="Short Link (slug)">
-          <input id="setWA"     placeholder="WhatsApp Number (e.g., 91XXXXXXXXXX)">
-        </div>
-        <div class="sp"></div>
-        <div class="row">
-          <input id="setHaircut" type="number" placeholder="Haircut (₹)" min="0">
-          <input id="setShave"   type="number" placeholder="Shave (₹)"   min="0">
-          <input id="setBeard"   type="number" placeholder="Beard (₹)"   min="0">
-          <input id="setFacial"  type="number" placeholder="Facial (₹)"  min="0">
-        </div>
-        <div class="sp"></div>
-        <div class="row"><button id="saveSettings" class="btn">💾 Save Changes</button></div>
-      </section>
-      <section>
-        <div class="h2" style="margin-bottom:6px">Data Controls</div>
-        <div class="row">
-          <button class="btn" id="exportBtn_settings">⬇️ Export Data (JSON)</button>
-          <label class="btn" for="importFile_settings" style="display:inline-grid;place-items:center;cursor:pointer">⬆️ Import Data (JSON)</label>
-          <input id="importFile_settings" type="file" accept="application/json" class="sr">
-          <button class="btn ghost" id="clearBtn_settings">🗑️ Clear All (local)</button>
-        </div>
-      </section>
+  <!-- LOGIN -->
+  <dialog id="loginDialog" aria-labelledby="loginTitle">
+    <div class="modal-head">
+      <div id="loginTitle" style="font-weight:900">Owner Login</div>
+      <button class="x" id="closeLogin">✖</button>
+    </div>
+    <div class="modal-body" style="display:grid;gap:12px">
+      <input id="loginMobile" placeholder="Registered Mobile (10 or 91+10)" inputmode="numeric" maxlength="12">
+      <input id="loginPin" placeholder="PIN (4–6 digits)" inputmode="numeric" maxlength="6">
+      <button id="doLogin" class="btn">Login</button>
+      <div id="loginMsg" class="muted"></div>
     </div>
   </dialog>
 
   <script>
-    /* -------- local store -------- */
-    const LS="salon-india:v2";
-    const load=()=>JSON.parse(localStorage.getItem(LS)||"[]");
-    const save=(a)=>localStorage.setItem(LS,JSON.stringify(a));
+    /* ===== Storage ===== */
+    const LS="salon-india:v5";            // bump version to avoid old schema conflicts
+    const SESS="salon-india:session";
+    const LSB="salon-india:bookings";
+    const load = ()=>JSON.parse(localStorage.getItem(LS)||"[]");
+    const save = (a)=>localStorage.setItem(LS, JSON.stringify(a));
+    const setSession = (obj)=>localStorage.setItem(SESS, JSON.stringify(obj||{}));
+    const getSession = ()=>JSON.parse(localStorage.getItem(SESS)||"{}");
+    const loadBk = ()=>JSON.parse(localStorage.getItem(LSB)||"{}");
+    const saveBk = (o)=>localStorage.setItem(LSB, JSON.stringify(o));
 
-    /* -------- helpers -------- */
-    const $=s=>document.querySelector(s);
+    /* ===== Helpers ===== */
+    const $ = s => document.querySelector(s);
+    const $$ = s => Array.from(document.querySelectorAll(s));
+    const toast=(msg)=>{const t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),3000);};
+    const show = el => el.classList.remove('hide');
+    const hide = el => el.classList.add('hide');
+    const numOrNull = v => { const n=parseFloat(v); return Number.isFinite(n)?n:null; };
 
-    /* -------- sheet (optional, read-only) -------- */
-    const SHEET_URL="https://opensheet.elk.sh/1-G_8N50aMzse1IW-UXHTKll-a5z9lNZ0bJFSAV63PpU/salon";
+    // theme toggle + restore
+    $('#themeBtn')?.addEventListener('click',()=>{
+      const cur=document.documentElement.getAttribute('data-theme');
+      const next=cur==='light'?'dark':'light';
+      document.documentElement.setAttribute('data-theme',next);
+      localStorage.setItem('theme',next);
+    });
+    (function(){const pref=localStorage.getItem('theme'); if(pref) document.documentElement.setAttribute('data-theme',pref);})();
 
-    /* -------- header buttons -------- */
-    (function initUI(){
-      const pref=localStorage.getItem('theme'); if(pref) document.documentElement.setAttribute('data-theme',pref);
-      $('#settingsBtn')?.addEventListener('click',()=>openSettings());
-      $('#colorBtn')?.addEventListener('click',()=>openSettings('brand'));
-      $('#themeBtn')?.addEventListener('click',()=>{
-        const cur=document.documentElement.getAttribute('data-theme');
-        const next=cur==='light'?'dark':'light';
-        document.documentElement.setAttribute('data-theme',next);
-        localStorage.setItem('theme',next);
-      });
-      $('#openSettingsCta')?.addEventListener('click',()=>openSettings());
-      $('#openSettingsCta2')?.addEventListener('click',()=>openSettings());
-    })();
-
-    /* -------- slug helpers -------- */
+    // slug helpers
     function makeSlug(str){ return (str||"").toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').replace(/-{2,}/g,'-').slice(0,50); }
     function slugExists(s){ try{ return load().some(x => (x.slug||"").toLowerCase()===(s||"").toLowerCase()); }catch(e){ return false; } }
-    const salonName=$('#salonName'); const slugInput=$('#slug'); const slugHelp=$('#slugHelp'); let slugManuallyEdited=false;
-    if(salonName && slugInput){
+    const salonName=$('#salonName'), slugInput=$('#slug'), slugHelp=$('#slugHelp'); let slugManuallyEdited=false;
+    if(salonName&&slugInput){
       salonName.addEventListener('input',()=>{ if(!slugManuallyEdited){ slugInput.value=makeSlug(salonName.value); validateSlug(); }});
       slugInput.addEventListener('input',()=>{ slugManuallyEdited=true; slugInput.value=makeSlug(slugInput.value); validateSlug(); });
     }
@@ -290,50 +345,107 @@
       else { slugInput.style.borderColor='var(--ok)'; slugHelp.textContent='Perfect! Ye short link available hai.'; slugHelp.style.color='var(--ok)'; }
     }
 
-    /* -------- toast -------- */
-    function toast(msg){ const t=document.createElement('div'); t.className='toast'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3200); }
-    function showMsg(t,type){ const el=$('#msg'); el.textContent=t; el.style.color= type==='ok'?'var(--ok)':'var(--warn)'; toast(t); }
+    /* ===== Photo preview ===== */
+    const fileEl = $('#photo'), prevEl = $('#photoPrev');
+    let photoDataURL = "";
+    fileEl?.addEventListener('change', (e)=>{
+      const f=e.target.files?.[0]; if(!f) return;
+      const r=new FileReader();
+      r.onload=()=>{ photoDataURL=r.result||""; prevEl.src=photoDataURL; prevEl.classList.remove('hide'); };
+      r.readAsDataURL(f);
+    });
 
-    /* -------- Register -------- */
+    /* ===== GPS button ===== */
+    $('#gpsBtn')?.addEventListener('click', ()=>{
+      if(!navigator.geolocation){ toast('GPS supported nahi hai'); return; }
+      navigator.geolocation.getCurrentPosition(
+        pos=>{ $('#lat').value=pos.coords.latitude.toFixed(6); $('#lng').value=pos.coords.longitude.toFixed(6); toast('Location set ✅'); },
+        err=>{ toast('GPS error: '+err.message); },
+        {enableHighAccuracy:true, timeout:12000}
+      );
+    });
+
+    /* ===== Register ===== */
+    function showMsg(t,type){ const el=$("#msg"); el.textContent=t; el.style.color= type==="ok"?"var(--ok)":"var(--warn)"; toast(t); }
+
     $('#btnCreate').addEventListener('click', ()=>{
       const salon={
         id:Date.now(),
-        owner:$('#owner').value.trim(),
-        mobile:$('#mobile').value.trim(),
-        name:$('#salonName').value.trim(),
-        city:($('#city').value.trim()||"").toLowerCase(),
-        slug:($('#slug').value.trim()||"").toLowerCase(),
-        price:{haircut:+($('#pHaircut').value||0), shave:+($('#pShave').value||0), beard:+($('#pBeard').value||0), facial:+($('#pFacial').value||0)},
-        wa:$('#wa').value.trim()
+        owner: $('#owner').value.trim(),
+        mobile: $('#mobile').value.trim(),
+        name: $('#salonName').value.trim(),
+        city: ($('#city').value.trim()||"").toLowerCase(),
+        slug: ($('#slug').value.trim()||"").toLowerCase(),
+        price: {
+          haircut: +($('#pHaircut').value||0),
+          shave:   +($('#pShave').value||0),
+          beard:   +($('#pBeard').value||0),
+          facial:  +($('#pFacial').value||0)
+        },
+        wa: $('#wa').value.trim(),
+        pin: ($('#pin').value||"").trim(),
+        photo: photoDataURL||"",
+        rSum: 0, rCount: 0,
+        loc: {
+          address: ($('#addr').value||'').trim(),
+          lat: numOrNull($('#lat').value),
+          lng: numOrNull($('#lng').value)
+        }
       };
-      const is10=/^\d{10}$/.test(salon.mobile); const is91=/^91\d{10}$/.test(salon.mobile);
-      if(!salon.owner || !(is10||is91) || !salon.name || !salon.city){ showMsg('⚠️ Owner, 10-digit mobile (ya 91+10), Salon name aur City zaroori hain.','warn'); return; }
-      salon.mobile=salon.mobile.slice(-10);
+
+      const is10=/^\d{10}$/.test(salon.mobile);
+      const is91=/^91\d{10}$/.test(salon.mobile);
+      if(!salon.owner || !(is10||is91) || !salon.name || !salon.city){
+        showMsg("⚠️ Owner, 10-digit mobile (ya 91+10), Salon name aur City zaroori hain.","warn"); return;
+      }
+      salon.mobile = salon.mobile.slice(-10);
+      if(!salon.pin || !/^\d{4,6}$/.test(salon.pin)){ showMsg("⚠️ PIN 4–6 digit ka set karein.","warn"); return; }
+
       if(!salon.slug) salon.slug=makeSlug(salon.name);
-      if(!/^[a-z0-9-]{3,}$/.test(salon.slug)){ showMsg('⚠️ Slug galat hai.','warn'); return; }
-      if(slugExists(salon.slug)){ showMsg('⚠️ Ye short link (slug) pehle se use me hai.','warn'); return; }
+      if(!/^[a-z0-9-]{3,}$/.test(salon.slug)){ showMsg("⚠️ Slug galat hai.","warn"); return; }
+      if(slugExists(salon.slug)){ showMsg("⚠️ Ye short link (slug) pehle se use me hai.","warn"); return; }
+
       const all=load(); all.push(salon); save(all);
-      showMsg('✅ Salon add ho gaya! (Salon List me dekh sakte ho)','ok');
-      ['owner','mobile','salonName','city','slug','wa','pHaircut','pShave','pBeard','pFacial'].forEach(id=>{const el=document.getElementById(id); if(el) el.value='';});
+      showMsg("✅ Salon add ho gaya! (Salon List me dekh sakte ho)","ok");
+      ['owner','mobile','salonName','city','slug','wa','pin','pHaircut','pShave','pBeard','pFacial','addr','lat','lng'].forEach(id=>{const el=document.getElementById(id); if(el) el.value='';});
+      photoDataURL=""; prevEl.classList.add('hide'); prevEl.src="";
       slugManuallyEdited=false; renderList();
     });
 
-    /* -------- List / Search / Sort -------- */
-    function minPrice(s){
-      const vals=Object.values(s.price||{}).filter(n=>typeof n==='number' && n>0);
-      return vals.length ? Math.min(...vals) : 0;
+    /* ===== Ratings ===== */
+    function addRating(salonId, rating){
+      const a=load(); const i=a.findIndex(x=>x.id===salonId); if(i<0) return;
+      a[i].rSum += rating; a[i].rCount += 1; save(a);
     }
+    function avgRating(s){ return s.rCount ? (s.rSum / s.rCount) : 0; }
+    function renderStars(avg){
+      const full=Math.floor(avg), half=(avg-full)>=0.5?1:0, empty=5-full-half;
+      return '★'.repeat(full)+(half?'½':'')+'☆'.repeat(empty);
+    }
+
+    /* ===== List / Search / Sort ===== */
+    const outEl = $('#listOut');
+    function minPrice(s){ const v=Object.values(s.price||{}).filter(n=>typeof n==='number'&&n>0); return v.length?Math.min(...v):0; }
+
     function renderItem(s){
       const el=document.createElement('div'); el.className='item';
-      const shareUrl=`${location.origin}${location.pathname}#s/${encodeURIComponent(s.slug||s.id)}`;
       const waBase=s.wa?`https://wa.me/${s.wa}`:'';
-      el.innerHTML=`
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
-          <div><div style="font-weight:900;font-size:18px">💈 ${s.name}</div><div class="muted">Owner: ${s.owner} • City: ${s.city}</div></div>
-          <div style="display:flex;gap:8px;align-items:center">
-            ${waBase?`<a class="btn" target="_blank" href="${waBase}?text=${encodeURIComponent('Namaste '+s.name+' me booking karna hai.')}" title="WhatsApp">WhatsApp</a>`:''}
-            <button class="btn ghost" data-share="${shareUrl}" title="Copy short link">🔗</button>
-            <button class="btn" data-detail="${s.slug||s.id}">Book</button>
+      const isOwner=(getSession().id===s.id);
+
+      el.innerHTML = `
+        <div style="display:flex;gap:12px;align-items:center">
+          ${s.photo?`<img class="thumb" src="${s.photo}" alt="${s.name}">`:''}
+          <div style="flex:1">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+              <div>
+                <div style="font-weight:900;font-size:18px">💈 ${s.name}</div>
+                <div class="muted">Owner: ${s.owner} • City: ${s.city} • ⭐ ${avgRating(s).toFixed(1)} (${s.rCount})</div>
+              </div>
+              <div class="row">
+                <button class="btn" data-open="${s.slug||s.id}">View / Book</button>
+                ${waBase?`<a class="btn ghost" target="_blank" href="${waBase}?text=${encodeURIComponent('Namaste '+s.name+' me booking karna hai.')}" title="WhatsApp">WhatsApp</a>`:''}
+              </div>
+            </div>
           </div>
         </div>
         <div class="badges">
@@ -341,24 +453,26 @@
           <span class="tag">🪒 Shave ₹${s.price?.shave||'-'}</span>
           <span class="tag">🧔 Beard ₹${s.price?.beard||'-'}</span>
           <span class="tag">💆 Facial ₹${s.price?.facial||'-'}</span>
-        </div>`;
-      el.querySelector('[data-share]')?.addEventListener('click',e=>{
-        const url=e.currentTarget.getAttribute('data-share');
-        navigator.clipboard.writeText(url).then(()=>toast('Link copied!')).catch(()=>toast(url));
+          ${s.loc?.lat&&s.loc?.lng?`<span class="tag">📍 On Map</span>`:''}
+          ${isOwner?`<span class="tag">🛠️ Owner Mode</span>`:''}
+        </div>
+      `;
+      el.querySelector('[data-open]')?.addEventListener('click',e=>{
+        const slug=e.currentTarget.getAttribute('data-open'); location.hash=`#s/${encodeURIComponent(slug)}`;
       });
-      el.querySelector('[data-detail]')?.addEventListener('click',e=>openDetail(e.currentTarget.getAttribute('data-detail')));
       return el;
     }
+
     function renderList(){
-      const qCity=($('#qCity')?.value||'').trim().toLowerCase();
-      const qSrv=($('#qService')?.value||'').trim();
-      const qText=($('#qText')?.value||'').trim().toLowerCase();
-      const qSort=($('#qSort')?.value||'name');
+      const qCity=(($('#qCity')?.value)||'').trim().toLowerCase();
+      const qSrv=(($('#qService')?.value)||'').trim();
+      const qText=(($('#qText')?.value)||'').trim().toLowerCase();
+      const qSort=(($('#qSort')?.value)||'name');
 
       let rows=load().filter(s=>{
-        const byCity=qCity ? (s.city||'').includes(qCity):true;
-        const byText=qText ? ((s.name||'').toLowerCase().includes(qText)||(s.owner||'').toLowerCase().includes(qText)) : true;
-        const bySrv=qSrv ? ((s.price||{})[qSrv]>0):true;
+        const byCity=qCity ? (s.city||'').includes(qCity) : true;
+        const byText=qText ? ((s.name||'').toLowerCase().includes(qText) || (s.owner||'').toLowerCase().includes(qText)) : true;
+        const bySrv=qSrv ? ((s.price||{})[qSrv]>0) : true;
         return byCity && byText && bySrv;
       });
 
@@ -366,67 +480,328 @@
         if(qSort==='priceAsc') return minPrice(a)-minPrice(b);
         if(qSort==='priceDesc')return minPrice(b)-minPrice(a);
         if(qSort==='new')     return b.id-a.id;
+        if(qSort==='rating')  return avgRating(b)-avgRating(a);
         return (a.name||'').localeCompare(b.name||'');
       });
 
-      const out=document.getElementById('listOut'); out.innerHTML='';
-      if(!rows.length){ out.innerHTML=`<div class="card muted">Koi salon nahi mila. Filters change karein ya pehle Register karein.</div>`; return; }
-      rows.forEach(s=>out.appendChild(renderItem(s)));
+      outEl.innerHTML='';
+      if(!rows.length){ outEl.innerHTML=`<div class="card muted">Koi salon nahi mila. Filters change karein ya pehle Register karein.</div>`; return; }
+      rows.forEach(s=>outEl.appendChild(renderItem(s)));
     }
-    document.getElementById('btnSearch')?.addEventListener('click',renderList);
-    window.addEventListener('load',renderList);
+    $('#btnSearch')?.addEventListener('click',renderList);
+    $('#qCity')?.addEventListener('input',renderList);
 
-    /* -------- Detail modal -------- */
-    const dlg=document.getElementById('detailDialog');
-    document.getElementById('closeDetail').addEventListener('click',()=>dlg.close());
+    /* ===== Booking calendar utils ===== */
+    const workStart=9, workEnd=19, stepMin=30;
+    function bookedSetFor(salonId, dateStr){
+      const all=loadBk()[salonId]?.[dateStr]||[];
+      return new Set(all.map(x=>x.time));
+    }
+    function addBookingRecord(salonId, dateStr, rec){
+      const all=loadBk();
+      if(!all[salonId]) all[salonId]={};
+      if(!all[salonId][dateStr]) all[salonId][dateStr]=[];
+      all[salonId][dateStr].push(rec);
+      saveBk(all);
+    }
+    function buildSlotGrid(dateStr, bookedSet){
+      const wrap=document.createElement('div'); wrap.className='slots';
+      const mk=(n)=>n.toString().padStart(2,'0');
+      let t=new Date(dateStr+'T'+mk(workStart)+':00:00');
+      const end=new Date(dateStr+'T'+mk(workEnd)+':00:00');
+      while(t<end){
+        const hh=mk(t.getHours()), mm=mk(t.getMinutes());
+        const key=`${hh}:${mm}`;
+        const b=document.createElement('button');
+        b.type='button'; b.className='slot'+(bookedSet.has(key)?' dis':''); b.textContent=key;
+        b.dataset.time=key;
+        wrap.appendChild(b);
+        t=new Date(t.getTime()+stepMin*60000);
+      }
+      return wrap;
+    }
+
+    /* ===== Detail PAGE Renderer ===== */
+    const detailWrap = $('#detailPage');
+    const detailCard = $('#detailCard');
+
     function label(k){ return ({haircut:'Haircut',shave:'Shave',beard:'Beard',facial:'Facial'})[k]||k; }
-    function openDetail(key){
-      const s=load().find(x=>(x.slug||x.id.toString())===key);
-      if(!s){ toast('Salon nahi mila'); return; }
+    function mapIframe(lat,lng,zoom=15){
+      const src=`https://www.google.com/maps?q=${lat},${lng}&z=${zoom}&output=embed`;
+      return `<div class="mapBox"><iframe width="100%" height="260" style="border:0" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="${src}"></iframe></div>`;
+    }
+
+    function renderDetailPage(slugOrId){
+      const a=load();
+      const s=a.find(x=>(x.slug||x.id.toString())===slugOrId);
+      if(!s){ detailCard.innerHTML='<div class="card">Salon nahi mila.</div>'; return; }
+
+      hide($('#home')); hide($('#about')); hide($('#register')); hide($('#list')); hide($('#adminPage')); show(detailWrap);
+
       const waBase=s.wa?`https://wa.me/${s.wa}`:'';
-      const services=Object.entries(s.price||{}).filter(([k,v])=>v>0);
-      const html=`
-        <div style="display:grid;gap:12px">
-          <div><div style="font-weight:900;font-size:20px">${s.name}</div><div class="muted">Owner: ${s.owner} • ${s.city} • 📞 ${s.mobile}</div></div>
-          <div><label class="muted">Service</label><select id="bkService">${services.map(([k,v])=>`<option value="${k}">${label(k)} — ₹${v}</option>`).join('')}</select></div>
-          <div class="row"><div class="full"><label class="muted">Date</label><input id="bkDate" type="date"></div><div class="full"><label class="muted">Time</label><input id="bkTime" type="time"></div></div>
-          <input id="bkName" placeholder="Your Name"><input id="bkNotes" placeholder="Notes (optional)">
-          <div class="row"><button class="btn full" id="bkBtn" ${waBase?'':'disabled'}>${waBase?'Send WhatsApp Booking':'WhatsApp not set'}</button><button class="btn ghost full" id="copyBtn">Copy Booking Text</button></div>
-        </div>`;
-      document.getElementById('detailContent').innerHTML=html; dlg.showModal();
-      const d=new Date(Date.now()+60*60*1000); document.getElementById('bkDate').value=d.toISOString().slice(0,10); document.getElementById('bkTime').value=d.toTimeString().slice(0,5);
-      function buildText(){ const svc=label(document.getElementById('bkService').value); const date=document.getElementById('bkDate').value; const time=document.getElementById('bkTime').value; const name=(document.getElementById('bkName').value||'').trim()||'Customer'; const notes=(document.getElementById('bkNotes').value||'').trim(); return `Namaste ${s.name}!\nMain ${name} ${svc} ke liye ${date} ${time} par booking karna chahta/chahti hu. ${notes?('Notes: '+notes):''}\n\n– via Salon India`; }
-      document.getElementById('bkBtn')?.addEventListener('click',()=>{ const text=buildText(); window.open(`${waBase}?text=${encodeURIComponent(text)}`,'_blank'); });
-      document.getElementById('copyBtn')?.addEventListener('click',()=>{ const text=buildText(); navigator.clipboard.writeText(text).then(()=>toast('Booking text copied')).catch(()=>toast(text)); });
+      const shareUrl=`${location.origin}${location.pathname}#s/${encodeURIComponent(s.slug||s.id)}`;
+      const hasLoc = Number.isFinite(s.loc?.lat) && Number.isFinite(s.loc?.lng);
+      const gLink  = hasLoc ? `https://maps.google.com/?q=${s.loc.lat},${s.loc.lng}` : '';
+      const dirLink= hasLoc ? `https://www.google.com/maps/dir/?api=1&destination=${s.loc.lat},${s.loc.lng}` : '';
+
+      detailCard.innerHTML = `
+        <div class="header">
+          ${s.photo?`<img class="thumb" src="${s.photo}" alt="${s.name}">`:''}
+          <div>
+            <div class="h2" style="font-size:22px">${s.name}</div>
+            <div class="muted">Owner: ${s.owner} • ${s.city} • ⭐ ${avgRating(s).toFixed(1)} (${s.rCount})</div>
+            ${s.loc?.address?`<div class="muted">📍 ${s.loc.address}</div>`:''}
+            <div class="row" style="margin-top:8px">
+              ${waBase?`<a class="btn" target="_blank" href="${waBase}?text=${encodeURIComponent('Namaste '+s.name+' me booking karna hai.')}" title="WhatsApp">WhatsApp</a>`:''}
+              <button class="btn ghost" id="copyLink">🔗 Copy Link</button>
+              ${hasLoc?`<a class="btn ghost" target="_blank" href="${gLink}">🗺️ Open Map</a>`:''}
+            </div>
+          </div>
+        </div>
+
+        <div class="sp"></div>
+        <div class="prices">
+          <span class="tag">✂️ Haircut ₹${s.price?.haircut||'-'}</span>
+          <span class="tag">🪒 Shave ₹${s.price?.shave||'-'}</span>
+          <span class="tag">🧔 Beard ₹${s.price?.beard||'-'}</span>
+          <span class="tag">💆 Facial ₹${s.price?.facial||'-'}</span>
+        </div>
+
+        ${hasLoc?`<div class="sp"></div><div class="h2">📍 Location</div>${mapIframe(s.loc.lat,s.loc.lng)}<div class="row" style="margin-top:8px"><a class="btn" target="_blank" href="${dirLink}">🚗 Get Directions</a></div>`:''}
+
+        <div class="sp"></div>
+        <div class="h2">📅 Book a time</div>
+        <div class="row">
+          <select id="svcSel">${Object.entries(s.price).filter(([k,v])=>v>0).map(([k,v])=>`<option value="${k}">${label(k)} — ₹${v}</option>`).join('')}</select>
+          <input id="dateSel" type="date">
+        </div>
+        <div class="sp"></div>
+        <div id="slotsArea"></div>
+        <div class="sp"></div>
+        <div class="row">
+          <input id="bkName" placeholder="Your Name">
+          <input id="bkNotes" placeholder="Notes (optional)">
+        </div>
+        <div class="sp"></div>
+        <div class="row">
+          <button class="btn" id="confirmBk"${waBase?'':' disabled'}>${waBase?'Send WhatsApp Booking':'WhatsApp not set'}</button>
+          <button class="btn ghost" id="copyBk">Copy Booking Text</button>
+        </div>
+
+        <div class="sp"></div>
+        <div class="h2">⭐ Rate this salon</div>
+        <div id="rateRow">${[1,2,3,4,5].map(n=>`<span class="star" data-rate="${n}">☆</span>`).join('')}</div>
+      `;
+
+      $('#copyLink').addEventListener('click',()=>navigator.clipboard.writeText(shareUrl).then(()=>toast('Link copied')));
+
+      // init date + slots
+      const dateEl=$('#dateSel'); const slotsArea=$('#slotsArea');
+      const d=new Date(); const min=d.toISOString().slice(0,10);
+      dateEl.min=min; dateEl.value=min;
+      let selectedTime="";
+
+      function drawSlots(){
+        selectedTime="";
+        const set=bookedSetFor(s.id, dateEl.value);
+        slotsArea.innerHTML="";
+        const grid=buildSlotGrid(dateEl.value,set);
+        slotsArea.appendChild(grid);
+        grid.querySelectorAll('.slot').forEach(btn=>{
+          btn.addEventListener('click',()=>{
+            grid.querySelectorAll('.slot').forEach(b=>b.classList.remove('sel'));
+            btn.classList.add('sel'); selectedTime=btn.dataset.time;
+          });
+        });
+      }
+      drawSlots();
+      dateEl.addEventListener('change',drawSlots);
+
+      function bookingText(){
+        const svc=label($('#svcSel').value);
+        const nm=($('#bkName').value||'').trim()||'Customer';
+        const notes=($('#bkNotes').value||'').trim();
+        return `Namaste ${s.name}!\nMain ${nm} ${svc} ke liye ${dateEl.value} ${selectedTime} par booking karna chahta/chahti hu. ${notes?('Notes: '+notes):''}\n\n– via Salon India`;
+      }
+
+      $('#confirmBk').addEventListener('click',()=>{
+        if(!selectedTime){ toast('Time slot select karein'); return; }
+        const rec={ time:selectedTime, date:dateEl.value, service:$('#svcSel').value, name:($('#bkName').value||'').trim()||'Customer', notes:($('#bkNotes').value||'').trim(), createdAt:Date.now() };
+        addBookingRecord(s.id, dateEl.value, rec);
+        toast('Booking saved ✅');
+        if(s.wa) window.open(`https://wa.me/${s.wa}?text=${encodeURIComponent(bookingText())}`,'_blank');
+        drawSlots();
+      });
+      $('#copyBk').addEventListener('click',()=>{
+        if(!selectedTime){ toast('Time slot select karein'); return; }
+        navigator.clipboard.writeText(bookingText()).then(()=>toast('Booking text copied')).catch(()=>toast('Copied text'));
+      });
+
+      // rating events
+      $$('#rateRow .star').forEach(st=>{
+        st.addEventListener('click',()=>{
+          const r=parseInt(st.getAttribute('data-rate'));
+          addRating(s.id, r);
+          toast(`Thanks! Rated ${r}★`);
+          renderDetailPage(slugOrId); // re-render to update stars/avg
+        });
+      });
     }
 
-    /* -------- Settings -------- */
-    const settingsDlg=document.getElementById('settingsDialog');
-    document.getElementById('settingsBtn').addEventListener('click',openSettings);
-    document.getElementById('closeSettings').addEventListener('click',()=>settingsDlg.close());
-    function getFirstSalon(){ const a=load(); return a && a.length ? a[0] : null; }
-    function openSettings(section){
-      const s=getFirstSalon();
-      if(s){ $('#setOwner').value=s.owner||''; $('#setMobile').value=s.mobile||''; $('#setName').value=s.name||''; $('#setCity').value=s.city||''; $('#setSlug').value=s.slug||''; $('#setWA').value=s.wa||''; $('#setHaircut').value=s.price?.haircut||0; $('#setShave').value=s.price?.shave||0; $('#setBeard').value=s.price?.beard||0; $('#setFacial').value=s.price?.facial||0; }
-      settingsDlg.showModal(); if(section==='brand'){ document.getElementById('brandSection')?.scrollIntoView({behavior:'smooth'}); }
-    }
-    document.getElementById('saveSettings').addEventListener('click',()=>{
-      const a=load(); if(!a.length){ toast('No profile found. Pehle Register karein.'); return; }
-      const s=a[0]; s.owner=$('#setOwner').value.trim(); s.mobile=$('#setMobile').value.trim(); s.name=$('#setName').value.trim(); s.city=($('#setCity').value.trim()||'').toLowerCase(); s.slug=($('#setSlug').value.trim()||'').toLowerCase(); s.wa=$('#setWA').value.trim(); s.price={haircut:+($('#setHaircut').value||0), shave:+($('#setShave').value||0), beard:+($('#setBeard').value||0), facial:+($('#setFacial').value||0)}; save(a); toast('Saved ✅'); settingsDlg.close(); renderList();
+    // Back button
+    $('#backBtn').addEventListener('click',()=>{
+      location.hash="#list";
     });
-    document.getElementById('exportBtn_settings').addEventListener('click',()=>{
-      const data=JSON.stringify(load(),null,2); const blob=new Blob([data],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='salon-india-data.json'; a.click(); URL.revokeObjectURL(url); toast('Data exported');
-    });
-    document.getElementById('importFile_settings').addEventListener('change',(e)=>{
-      const file=e.target.files?.[0]; if(!file) return; const reader=new FileReader();
-      reader.onload=()=>{ try{ const arr=JSON.parse(reader.result); if(!Array.isArray(arr)) throw new Error('Invalid JSON'); save(arr); toast('Imported ✅'); renderList(); settingsDlg.close(); }catch(err){ toast('Import error: '+err.message); } };
-      reader.readAsText(file);
-    });
-    document.getElementById('clearBtn_settings').addEventListener('click',()=>{ if(confirm('Pakka? Ye action local data mita dega.')){ save([]); toast('Cleared'); renderList(); settingsDlg.close(); }});
 
-    /* -------- brand palette -------- */
-    function applyBrand(c1,c2){ const root=document.documentElement; root.style.setProperty('--brand',c1); root.style.setProperty('--brand-2',c2); localStorage.setItem('brand',JSON.stringify({c1,c2})); }
-    (function initBrand(){ try{ const b=JSON.parse(localStorage.getItem('brand')||''); if(b?.c1&&b?.c2) applyBrand(b.c1,b.c2);}catch(e){}; document.getElementById('brandPalette')?.querySelectorAll('[data-brand]')?.forEach(btn=>{ const [c1,c2]=(btn.getAttribute('data-brand')||'').split(','); btn.style.background=`linear-gradient(135deg, ${c1}, ${c2})`; btn.style.color='#fff'; btn.addEventListener('click',()=>applyBrand(c1,c2)); }); })();
+    /* ===== ADMIN DASHBOARD ===== */
+    const adminWrap=$('#adminPage');
+    const kpiRow = $('#kpiRow');
+
+    function flattenBookings(){
+      const map=loadBk(); const salons=load();
+      const out=[];
+      Object.entries(map).forEach(([sid,dates])=>{
+        const salon=salons.find(s=>s.id===+sid);
+        Object.entries(dates).forEach(([date,arr])=>{
+          arr.forEach(rec=>{
+            out.push({
+              salonId:+sid,
+              salon: salon?.name||'Unknown',
+              city: salon?.city||'',
+              service: rec.service,
+              date: rec.date||date,
+              time: rec.time,
+              name: rec.name||'',
+              notes: rec.notes||'',
+              createdAt: rec.createdAt||Date.now()
+            });
+          });
+        });
+      });
+      out.sort((a,b)=>b.createdAt-a.createdAt);
+      return out;
+    }
+
+    function fillTable(tbody, rows, cols){
+      tbody.innerHTML='';
+      rows.forEach(r=>{
+        const tr=document.createElement('tr');
+        cols.forEach(c=>{
+          const td=document.createElement('td'); td.textContent=(typeof c==='function'?c(r):r[c])??''; tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      });
+    }
+
+    function toCSV(rows){
+      const headers=['date','time','salon','city','service','customer','notes'];
+      const lines=[headers.join(',')];
+      rows.forEach(r=>{
+        const vals=[r.date,r.time,r.salon,r.city,r.service,(r.name||''),(r.notes||'')].map(v=>`"${String(v).replace(/"/g,'""')}"`);
+        lines.push(vals.join(','));
+      });
+      return lines.join('\n');
+    }
+
+    function renderAdmin(){
+      hide($('#home')); hide($('#about')); hide($('#register')); hide($('#list')); hide($('#detailPage')); show(adminWrap);
+
+      const salons=load();
+      const bookings=flattenBookings();
+
+      const withWA=salons.filter(s=>s.wa).length;
+      const avgAll = salons.length ? (salons.reduce((a,s)=>a+(s.rCount? s.rSum/s.rCount : 0),0)/salons.length) : 0;
+
+      const now=new Date();
+      const todayStr=now.toISOString().slice(0,10);
+      const startOfWeek=new Date(now); startOfWeek.setDate(now.getDate()-now.getDay()); // Sunday
+      const weekStr=startOfWeek.toISOString().slice(0,10);
+
+      const todayCount=bookings.filter(b=>b.date===todayStr).length;
+      const weekCount=bookings.filter(b=>b.date>=weekStr).length;
+
+      kpiRow.innerHTML='';
+      const kpis=[
+        {label:'Total Salons', val:salons.length},
+        {label:'With WhatsApp', val:withWA},
+        {label:'Avg Rating', val:avgAll.toFixed(2)},
+        {label:'Total Bookings', val:bookings.length},
+        {label:'Today', val:todayCount},
+        {label:'This Week', val:weekCount},
+      ];
+      kpis.forEach(k=>{
+        const d=document.createElement('div'); d.className='kpi';
+        d.innerHTML=`<div class="muted">${k.label}</div><div class="val">${k.val}</div>`;
+        kpiRow.appendChild(d);
+      });
+
+      // Recent bookings
+      fillTable($('#bkTable tbody'), bookings.slice(0,20), [
+        'date','time','salon','service', r=>r.name, r=>r.notes
+      ]);
+
+      // Top cities
+      const cityMap={};
+      salons.forEach(s=>{ if(!s.city) return; cityMap[s.city]=(cityMap[s.city]||0)+1; });
+      const cityRows=Object.entries(cityMap).sort((a,b)=>b[1]-a[1]).map(([city,count])=>({city,count}));
+      fillTable($('#cityTable tbody'), cityRows, ['city','count']);
+
+      // Top rated
+      const rated=salons.filter(s=>s.rCount>0).map(s=>({salon:s.name, avg:(s.rSum/s.rCount), count:s.rCount}));
+      rated.sort((a,b)=>b.avg-a.avg);
+      fillTable($('#topRated tbody'), rated.slice(0,10), [r=>r.salon, r=>r.avg.toFixed(2), 'count']);
+
+      // Most booked
+      const bkCountBySalon={};
+      bookings.forEach(b=>{ bkCountBySalon[b.salon]=(bkCountBySalon[b.salon]||0)+1; });
+      const topBooked=Object.entries(bkCountBySalon).map(([salon,count])=>({salon,count})).sort((a,b)=>b.count-a.count);
+      fillTable($('#topBooked tbody'), topBooked.slice(0,10), ['salon','count']);
+
+      // Buttons
+      $('#exportCsv').onclick=()=>{
+        const csv=toCSV(bookings);
+        const blob=new Blob([csv],{type:'text/csv'});
+        const url=URL.createObjectURL(blob);
+        const a=document.createElement('a');
+        a.href=url; a.download='salon-bookings.csv'; a.click(); URL.revokeObjectURL(url);
+      };
+      $('#clearBookings').onclick=()=>{
+        if(confirm('Pakka? Sirf local bookings data clear hoga.')){
+          localStorage.setItem(LSB, JSON.stringify({}));
+          toast('Bookings cleared'); renderAdmin();
+        }
+      };
+    }
+
+    /* ===== Router: #s/<slug> & #admin ===== */
+    function router(){
+      const h=(location.hash||'');
+      const m=h.match(/^#s\/([^/]+)$/);
+      if(m){ renderDetailPage(decodeURIComponent(m[1])); window.scrollTo({top:0,behavior:'smooth'}); return; }
+      if(h==='#admin'){ renderAdmin(); window.scrollTo({top:0,behavior:'smooth'}); return; }
+      // default home/list
+      hide($('#detailPage')); hide($('#adminPage')); show($('#home')); show($('#about')); show($('#register')); show($('#list'));
+      renderList();
+    }
+    window.addEventListener('hashchange',router);
+
+    /* ===== Login (owner) ===== */
+    const loginDlg=$('#loginDialog');
+    $('#loginBtn').addEventListener('click',()=>loginDlg.showModal());
+    $('#closeLogin').addEventListener('click',()=>loginDlg.close());
+    $('#doLogin').addEventListener('click',()=>{
+      const m=($('#loginMobile').value||'').trim().slice(-10);
+      const p=($('#loginPin').value||'').trim();
+      const a=load(); const s=a.find(x=>x.mobile===m && x.pin===p);
+      if(s){ setSession({id:s.id, at:Date.now()}); $('#loginMsg').textContent='Logged in ✅'; loginDlg.close(); toast('Owner mode ON'); renderList();}
+      else { $('#loginMsg').textContent='❌ Not found. Mobile/PIN check karein.'; }
+    });
+
+    /* ===== Init once ===== */
+    window.addEventListener('load',()=>{
+      const pref=localStorage.getItem('theme'); if(pref) document.documentElement.setAttribute('data-theme',pref);
+      router(); // single entry point
+    });
   </script>
 </body>
 </html>

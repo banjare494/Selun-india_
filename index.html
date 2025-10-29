@@ -353,11 +353,17 @@
     const SESS="salon-india:session";    // owner session
     const ME="si:me";                    // customer profile (local)
     const LANGK="si:lang";               // language pref
-    const SEOQ="si:seo:queries";         // [{q,count}]
+    const SEOQ="si:seo:queries";         // {query:count}
     const SEOV="si:seo:views";           // {slug:count}
 
-    const load = k => JSON.parse(localStorage.getItem(k)||"null");
-    const save = (k,v)=>localStorage.setItem(k, JSON.stringify(v));
+    // load/save helpers (key-based)
+    const load = k => {
+      try { return JSON.parse(localStorage.getItem(k) || "null"); }
+      catch(e){ return null; }
+    };
+    const save = (k,v) => {
+      try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){}
+    };
 
     const loadSalons = ()=>load(LS)??[];
     const saveSalons = v=>save(LS,v);
@@ -373,8 +379,8 @@
     /* ========= Helpers ========= */
     const $ = s => document.querySelector(s);
     const toast=(msg)=>{const t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2400);};
-    const show = el => el.classList.remove('hide');
-    const hide = el => el.classList.add('hide');
+    const show = el => el && el.classList && el.classList.remove('hide');
+    const hide = el => el && el.classList && el.classList.add('hide');
     const numOrNull = v => { const n=parseFloat(v); return Number.isFinite(n)?n:null; };
 
     // Theme ASAP
@@ -388,8 +394,48 @@
 
     /* ========= i18n (EN/HI) ========= */
     const I18N={
-      hi:{brand:'Salon India',heroTitle:'Register • List • Book — Premium, fast & free',heroSub:'Owners apna page register karein, prices set karein, aur customers WhatsApp/UPI se booking karein.',aboutTitle:'Bharat ke salon owners ke liye smart platform',aboutSub:'Koi complicated app nahi. Sirf form bhariye aur turant listing ready.',feat1:'Short link, prices, ratings, photo, WhatsApp',feat2:'Live City filter & Owner login',feat3:'Detail Page + Calendar + 📍 Maps',feat4:'PWA Install (Android App)',feat5:'UPI Advance Payment',feat6:'Customer Profile & Booking history',feat7:'SEO Dashboard',ctaRegister:'+ Register',ctaBrowse:'🔎 Browse',ownerRegister:'📝 Owner Register',salonList:'🔎 Salon List',back:'Back',profile:'Customer Profile',myBookings:'My Bookings',},
-      en:{brand:'Salon India',heroTitle:'Register • List • Book — Premium, fast & free',heroSub:'Owners register your page, set prices, customers book via WhatsApp/UPI.',aboutTitle:'Smart platform for salon owners in India',aboutSub:'No complicated app. Just a form & your listing is ready.',feat1:'Short link, prices, ratings, photo, WhatsApp',feat2:'Live City filter & Owner login',feat3:'Detail Page + Calendar + 📍 Maps',feat4:'PWA Install (Android App)',feat5:'UPI Advance Payment',feat6:'Customer Profile & Booking history',feat7:'SEO Dashboard',ctaRegister:'+ Register',ctaBrowse:'🔎 Browse',ownerRegister:'📝 Owner Register',salonList:'🔎 Salon List',back:'Back',profile:'Customer Profile',myBookings:'My Bookings',}
+      hi:{
+        brand:'Salon India',
+        heroTitle:'Register • List • Book — Premium, fast & free',
+        heroSub:'Owners apna page register karein, prices set karein, aur customers WhatsApp/UPI se booking karein.',
+        aboutTitle:'Bharat ke salon owners ke liye smart platform',
+        aboutSub:'Koi complicated app nahi. Sirf form bhariye aur turant listing ready.',
+        feat1:'Short link, prices, ratings, photo, WhatsApp',
+        feat2:'Live City filter & Owner login',
+        feat3:'Detail Page + Calendar + 📍 Maps',
+        feat4:'PWA Install (Android App)',
+        feat5:'UPI Advance Payment',
+        feat6:'Customer Profile & Booking history',
+        feat7:'SEO Dashboard',
+        ctaRegister:'+ Register',
+        ctaBrowse:'🔎 Browse',
+        ownerRegister:'📝 Owner Register',
+        salonList:'🔎 Salon List',
+        back:'Back',
+        profile:'Customer Profile',
+        myBookings:'My Bookings',
+      },
+      en:{
+        brand:'Salon India',
+        heroTitle:'Register • List • Book — Premium, fast & free',
+        heroSub:'Owners register your page, set prices, customers book via WhatsApp/UPI.',
+        aboutTitle:'Smart platform for salon owners in India',
+        aboutSub:'No complicated app. Just a form & your listing is ready.',
+        feat1:'Short link, prices, ratings, photo, WhatsApp',
+        feat2:'Live City filter & Owner login',
+        feat3:'Detail Page + Calendar + 📍 Maps',
+        feat4:'PWA Install (Android App)',
+        feat5:'UPI Advance Payment',
+        feat6:'Customer Profile & Booking history',
+        feat7:'SEO Dashboard',
+        ctaRegister:'+ Register',
+        ctaBrowse:'🔎 Browse',
+        ownerRegister:'📝 Owner Register',
+        salonList:'🔎 Salon List',
+        back:'Back',
+        profile:'Customer Profile',
+        myBookings:'My Bookings',
+      }
     };
     function applyLang(){
       const dict=I18N[getLang()]||I18N.hi;
@@ -409,6 +455,7 @@
       slugInput.addEventListener('input',()=>{ slugManuallyEdited=true; slugInput.value=makeSlug(slugInput.value); validateSlug(); });
     }
     function validateSlug(){
+      if(!slugInput) return;
       const s=slugInput.value; const bad=!/^[a-z0-9-]{3,}$/.test(s); const taken=slugExists(s);
       if(bad){ slugInput.style.borderColor='var(--err)'; slugHelp.textContent='Slug me sirf a-z, 0-9 aur “-” (min 3 chars).'; slugHelp.style.color='var(--err)'; }
       else if(taken){ slugInput.style.borderColor='var(--warn)'; slugHelp.textContent='Ye short link already use me hai. Koi aur try karein.'; slugHelp.style.color='var(--warn)'; }
@@ -435,7 +482,7 @@
     });
 
     /* ========= Register ========= */
-    function showMsg(t,type){ const el=$("#msg"); el.textContent=t; el.style.color= type==="ok"?"var(--ok)":"var(--warn)"; toast(t); }
+    function showMsg(t,type){ const el=$("#msg"); if(el) { el.textContent=t; el.style.color= type==="ok"?"var(--ok)":"var(--warn)"; } toast(t); }
     $('#btnCreate').addEventListener('click', ()=>{
       const salon={
         id:Date.now(),
@@ -450,7 +497,7 @@
           beard:   +($('#pBeard').value||0),
           facial:  +($('#pFacial').value||0)
         },
-        wa: $('#wa').value.trim(),
+        wa: ($('#wa').value||'').trim().replace(/^\+/, ''),
         pin: ($('#pin').value||"").trim(),
         photo: photoDataURL||"",
         rSum: 0, rCount: 0,
@@ -478,7 +525,7 @@
       const all=loadSalons(); all.push(salon); saveSalons(all);
       showMsg("✅ Salon add ho gaya! (Salon List me dekh sakte ho)","ok");
       ['owner','mobile','salonName','city','slug','wa','pin','pHaircut','pShave','pBeard','pFacial','addr','lat','lng','upi','advAmt'].forEach(id=>{const el=document.getElementById(id); if(el) el.value='';});
-      photoDataURL=""; prevEl.classList.add('hide'); prevEl.src="";
+      photoDataURL=""; if(prevEl){ prevEl.classList.add('hide'); prevEl.src=""; }
       slugManuallyEdited=false; renderList();
     });
 
@@ -503,7 +550,7 @@
               </div>
               <div class="row">
                 <button class="btn" data-open="${s.slug||s.id}">View / Book</button>
-                ${waBase?`<a class="btn ghost" target="_blank" href="${waBase}?text=${encodeURIComponent('Namaste '+s.name+' me booking karna hai.')}" title="WhatsApp">WhatsApp</a>`:''}
+                ${waBase?`<a class="btn ghost" target="_blank" rel="noopener" href="${waBase}?text=${encodeURIComponent('Namaste '+s.name+' me booking karna hai.')}" title="WhatsApp">WhatsApp</a>`:''}
               </div>
             </div>
           </div>
@@ -566,15 +613,19 @@
     function buildSlotGrid(dateStr, bookedSet){
       const wrap=document.createElement('div'); wrap.className='slots';
       const mk=n=>n.toString().padStart(2,'0');
+      // create start time date object (local)
       let t=new Date(dateStr+'T'+mk(workStart)+':00:00');
       const end=new Date(dateStr+'T'+mk(workEnd)+':00:00');
       while(t<end){
         const hh=mk(t.getHours()), mm=mk(t.getMinutes());
         const key=`${hh}:${mm}`;
         const b=document.createElement('button');
-        b.type='button'; b.className='slot'+(bookedSet.has(key)?' dis':''); b.textContent=key;
+        b.type='button';
+        b.className='slot'+(bookedSet.has(key)?' dis':'');
+        b.textContent=key;
         b.dataset.time=key;
         wrap.appendChild(b);
+        // increment by step
         t=new Date(t.getTime()+stepMin*60000);
       }
       return wrap;
@@ -620,9 +671,9 @@
             <div class="muted">Owner: ${s.owner} • ${s.city} • ⭐ ${avg(s).toFixed(1)} (${s.rCount})</div>
             ${s.loc?.address?`<div class="muted">📍 ${s.loc.address}</div>`:''}
             <div class="row" style="margin-top:8px">
-              ${waBase?`<a class="btn" target="_blank" href="${waBase}?text=${encodeURIComponent('Namaste '+s.name+' me booking karna hai.')}" title="WhatsApp">WhatsApp</a>`:''}
+              ${waBase?`<a class="btn" target="_blank" rel="noopener" href="${waBase}?text=${encodeURIComponent('Namaste '+s.name+' me booking karna hai.')}" title="WhatsApp">WhatsApp</a>`:''}
               <button class="btn ghost" id="copyLink">🔗 Copy Link</button>
-              ${hasLoc?`<a class="btn ghost" target="_blank" href="${gLink}">🗺️ Open Map</a>`:''}
+              ${hasLoc?`<a class="btn ghost" target="_blank" rel="noopener" href="${gLink}">🗺️ Open Map</a>`:''}
             </div>
           </div>
         </div>
@@ -635,7 +686,7 @@
           <span class="tag">💆 Facial ₹${s.price?.facial||'-'}</span>
         </div>
 
-        ${hasLoc?`<div class="sp"></div><div class="h2">📍 Location</div>${mapIframe(s.loc.lat,s.loc.lng)}<div class="row" style="margin-top:8px"><a class="btn" target="_blank" href="${dirLink}">🚗 Get Directions</a></div>`:''}
+        ${hasLoc?`<div class="sp"></div><div class="h2">📍 Location</div>${mapIframe(s.loc.lat,s.loc.lng)}<div class="row" style="margin-top:8px"><a class="btn" target="_blank" rel="noopener" href="${dirLink}">🚗 Get Directions</a></div>`:''}
 
         <div class="sp"></div>
         <div class="h2">📅 Book a time</div>
@@ -666,9 +717,10 @@
       const svcSelEl = document.getElementById('svcSel');
       if (!svcSelEl || !svcSelEl.options.length) {
         const slotsArea = document.getElementById('slotsArea');
-        slotsArea.innerHTML = '<div class="muted">Is salon ne abhi services ke prices set nahi kiye.</div>';
+        if (slotsArea) slotsArea.innerHTML = '<div class="muted">Is salon ne abhi services ke prices set nahi kiye.</div>';
         ['confirmBk','copyBk','payAdv'].forEach(id=>{ const b=document.getElementById(id); if(b) b.disabled=true; });
-        document.getElementById('dateSel').disabled = true;
+        const dateSel = document.getElementById('dateSel');
+        if (dateSel) dateSel.disabled = true;
         return;
       }
       // -------------------------------------------------------------------------
@@ -681,7 +733,7 @@
       // init date + slots
       const dateEl=$('#dateSel'); const slotsArea=$('#slotsArea');
       const d=new Date(); const min=d.toISOString().slice(0,10);
-      dateEl.min=min; dateEl.value=min;
+      if(dateEl){ dateEl.min=min; dateEl.value=min; }
       let selectedTime="";
 
       function drawSlots(){
@@ -697,8 +749,7 @@
           });
         });
       }
-      drawSlots();
-      dateEl.addEventListener('change',drawSlots);
+      if(dateEl){ drawSlots(); dateEl.addEventListener('change',drawSlots); }
 
       // ---- safer price reader (fix) ----
       function currSvcPrice(){
@@ -747,7 +798,8 @@
           const adv= s.advance>0 ? s.advance : Math.max(10, Math.round(price*0.2)); // at least ₹10
           const note=`Advance for ${svc} on ${dateEl.value} ${selectedTime}`;
           const link=upiLink(s.upi, s.name, adv, note);
-          location.href=link; // open UPI intent
+          // open UPI intent (if supported)
+          location.href=link;
         });
       }
 
@@ -774,7 +826,7 @@
       const me=getMe();
       $('#meName').value=me.name||'';
       $('#meMobile').value=me.mobile||'';
-      const tbody=$('#myBkTable tbody'); tbody.innerHTML='';
+      const tbody=$('#myBkTable tbody'); if(!tbody) return; tbody.innerHTML='';
       me.bookings.forEach(b=>{
         const tr=document.createElement('tr');
         tr.innerHTML=`<td>${b.date}</td><td>${b.time}</td><td>${b.salon||''}</td><td>${label(b.service)}</td><td>${b.notes||''}</td>`;
@@ -817,6 +869,7 @@
     }
 
     function fillTable(tbody, rows, cols){
+      if(!tbody) return;
       tbody.innerHTML='';
       rows.forEach(r=>{
         const tr=document.createElement('tr');
@@ -914,8 +967,8 @@
 
     /* ========= SEO Query Logger ========= */
     function logQuery(){
-      const city=($('#qCity').value||'').trim().toLowerCase();
-      const text=($('#qText').value||'').trim().toLowerCase();
+      const city=($('#qCity')?.value||'').trim().toLowerCase();
+      const text=($('#qText')?.value||'').trim().toLowerCase();
       const key=[city,text].filter(Boolean).join(' | ');
       if(!key) return;
       const map=load(SEOQ)??{}; map[key]=(map[key]||0)+1; save(SEOQ,map);

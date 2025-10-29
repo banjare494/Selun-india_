@@ -1040,6 +1040,19 @@
       renderList();
       router();
     });
-  </script>
+ /* ========= Notifications (local) ========= */
+const NOTIFK = 'si:notifications'; // { salonId: [ {id,msg,ts,read} ] }
+
+function loadNotifs(){ return load(NOTIFK) ?? {}; }
+function saveNotifs(n){ save(NOTIFK,n); }
+
+function pushNotif(salonId, msg){
+  const n = loadNotifs();
+  if(!n[salonId]) n[salonId] = [];
+  n[salonId].unshift({ id: Date.now(), msg, ts: new Date().toISOString(), read:false });
+  // keep last 200
+  n[salonId] = n[salonId].slice(0,200);
+  saveNotifs(n);
+} </script>
 </body>
 </html>

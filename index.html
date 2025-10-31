@@ -501,7 +501,11 @@
       if(!salon.owner || !(is10||is91) || !salon.name || !salon.city){
         showMsg("⚠️ Owner, 10-digit mobile (ya 91+10), Salon name aur City zaroori hain.","warn"); return;
       }
-      salon.mobile = salon.mobile.slice(-10);
+      // ... Register logic (line ~510)
+let waNum = ($('#wa').value||'').trim().replace(/^\+/, ''); // Remove leading '+'
+if(waNum.length === 10) waNum = '91' + waNum; // Add '91' if it's 10 digits
+// ... then use waNum to store in salon object
+
       if(!salon.pin || !/^\d{4,6}$/.test(salon.pin)){ showMsg("⚠️ PIN 4–6 digit ka set karein.","warn"); return; }
 
       if(!salon.slug) salon.slug=makeSlug(salon.name);
@@ -625,9 +629,12 @@
     const avg = s => s.rCount? (s.rSum/s.rCount) : 0;
     // FIX 3.1: Correcting Google Maps Embed URL
     const mapIframe = (lat,lng,zoom=15) => {
-      const src=`https://maps.google.com/maps?q=${lat},${lng}&z=${zoom}&output=embed`;
-      return `<div class="mapBox"><iframe width="100%" height="260" style="border:0" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="${src}"></iframe></div>`;
-    };
+    const mapIframe = (lat,lng,zoom=15) => {
+  // ✅ Correct Google Maps embed URL format
+  const src=`https://maps.google.com/maps?q=${lat},${lng}&z=${zoom}&output=embed`;
+  return `<div class="mapBox"><iframe width="100%" height="260" style="border:0" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="${src}"></iframe></div>`;
+};
+       }
 
     function upiLink(upi, pn, amt, note){
       const qp = new URLSearchParams({pa:upi,pn,am:String(amt||0),cu:'INR',tn:note});
@@ -666,9 +673,9 @@
       const shareUrl=`${location.origin}${location.pathname}#s/${encodeURIComponent(s.slug||s.id)}`;
       const hasLoc = Number.isFinite(s.loc?.lat) && Number.isFinite(s.loc?.lng);
       // FIX 3.2 & 3.3: Correcting Google Maps View/Direction Links
-      const gLink  = hasLoc ? `https://maps.google.com/?q=${s.loc.lat},${s.loc.lng}` : '';
-      const dirLink= hasLoc ? `https://www.google.com/maps/dir/?api=1&destination=${s.loc.lat},${s.loc.lng}` : '';
-
+     const gLink  = hasLoc ? `https://maps.google.com/?q=${s.loc.lat},${s.loc.lng}` : ''; // View Map
+const dirLink= hasLoc ? `https://maps.google.com/maps?daddr=${s.loc.lat},${s.loc.lng}` : ''; // Get Directions
+ 
       detailCard.innerHTML = `
         <div class="header">
           ${s.photo?`<img class="thumb" src="${s.photo}" alt="${s.name}">`:''}

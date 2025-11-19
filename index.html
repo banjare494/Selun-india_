@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="hi" data-theme="light">
-<head>
+<head><link rel="manifest" href="/manifest.json">
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Salon India • Register • List • Book</title>
@@ -1119,5 +1120,19 @@
       router();
     });
   </script>
+<!-- Yeh code Service Worker ko chalu (register) karta hai -->
+<script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => {
+            console.log('Service Worker: Chalu ho gaya!');
+          })
+          .catch(err => {
+            console.error('Service Worker: Chalu nahi ho paya:', err);
+          });
+      });
+    }
+</script>
 </body>
 </html>

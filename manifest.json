@@ -1,0 +1,21 @@
+{
+  "name": "Salon India – Aapka PWA",
+  "short_name": "SalonIndia",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff", 
+  "theme_color": "#28B463",       
+  "description": "Bharat ke salon owners ke liye smart platform.",
+  "icons": [
+    {
+      "src": "/images/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
